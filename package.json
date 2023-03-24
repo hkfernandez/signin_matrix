@@ -1,0 +1,12 @@
+{
+  "name": "favorite_memes",
+  "version": "1.0.0",
+  "description": "create a list of favorite memes - a docker experiment",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "Hector Fernandez",
+  "license": "ISC"
+}
