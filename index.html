@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>MemeTime</h1>
+    <p>Add a title and url of your favorite meme</p>
+    <form action="http://localhost:3000" method="POST">
+      <div class="form-control">
+        <label for="name">Name</label>
+        <input type="text" name="name" id="name" />
+      </div>
+      <div class="form-control">
+        <label for="url">Meme URL</label>
+        <input type="text" name="url" id="url" />
+      </div>
+      <button type="submit" id="submitButton">Add Meme!</button>
+    </form>
+    <div id="memeList">
+      <h2>Best of the Best</h2>
+    </div>
+    <div id="testDiv"></div>
+    <script src="./index.js"></script>
+  </body>
+</html>
