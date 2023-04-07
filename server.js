@@ -1,57 +1,69 @@
 //PACKAGES
+require("dotenv").config();
+const routes = require("./routes/meme_routes");
 const express = require("express");
 const cors = require("cors");
-const { MongoClient } = require("mongodb");
+//const { MongoClient } = require("mongodb");
+const mongoose = require("mongoose");
+const memesController = require("./controller/memes_controller");
+
+//HELPER FUNCTIONS
+//const returnVideoEmbedCode = require("./youtubeEmbedCode");
+//const js = require("./js/index.mjs");
+//import js from "./js/index.mjs";
 
 //VARIABLES
 const path = require("path");
 const app = express();
 const EXPRESS_PORT = 3000;
-const MONGODB_PORT = 27017;
-const DB_USERNAME = "admin";
-const DB_PASSWORD = "password";
-const DB_NAME = "favorites";
-const COLLECTION_NAME = "memes";
-const dbConnectionUrl = "mongodb://localhost:27017";
-//"mongodb://" + DB_USERNAME + ":" + DB_PASSWORD + "@localhost:" + MONGODB_PORT;
 
 //DATABASE CONFIG
-const client = new MongoClient(dbConnectionUrl);
+//const client = new MongoClient(dbConnectionUrl);
 
 //ROUTER CONFIG
-app.use(cors());
-app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(cors());
+app.use(routes);
+//app.use(express.urlencoded({ extended: true }));
 
 //ROUTES
 app.get("/", function (req, res) {
-  res.sendFile(path.join(__dirname, "/test.html"));
+  res.sendFile(path.join(__dirname, "./view/html/landingPage.html"));
+});
+app.get("/allMemes", function (req, res) {
+  memesController.findAll();
+  console.log("-------------all memes from db:");
 });
 
-app.post("/", async function (req, res) {
-  const newMeme = req.body;
-  const insertionResult = await insertRecord(newMeme);
-  console.log("===============INSERTION RESULT ", insertionResult.toString());
-  //res.status(insertionResult.status).send("request received" + insertionResult);
-});
-
-//DATABASE CONNECTION
-async function insertRecord(newMeme) {
-  // Use connect method to connect to the server
+//DB CONNECTION
+async function connectToDataBase() {
+  const dbConnectionUrl =
+    "mongodb://" +
+    process.env.DB_USERNAME +
+    ":" +
+    process.env.DB_PASSWORD +
+    "@localhost:" +
+    process.env.MONGODB_PORT +
+    "/favorites?authSource=admin";
   try {
-    const connection = await client.connect();
-    const collection = client.db(DB_NAME).collection(COLLECTION_NAME);
-    const result = await collection.insertOne(newMeme);
-    if (result.acknowledged) {
-      console.log("document inserted");
-      await connection.close();
-      console.log("connection closed");
-      console.log("insertedId: ", result.insertedId);
-      return result.insertedId;
-    }
+    await mongoose.connect(dbConnectionUrl, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
   } catch (error) {
-    console.log("================ERROR: ", error);
+    console.log("----------- db connection error: ", error);
   }
+}
+connectToDataBase();
+
+try {
+  const db = mongoose.connection;
+  db.on("error", console.error.bind(console, "connection error: "));
+  db.once("open", function () {
+    console.log("DATABASE CONNECTION SUCCESSFUL");
+  });
+} catch (error) {
+  console.log("mongoose.connection error: ", error);
 }
 
 //START ROUTER

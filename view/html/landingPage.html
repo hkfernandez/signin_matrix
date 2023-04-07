@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Favorites</title>
+  </head>
+  <body>
+    <h1>MemeTime</h1>
+    <p>Add a title and url of your favorite meme</p>
+    <form onsubmit="``" id="newMemeForm">
+      <div class="form-control">
+        <label for="name">Name</label>
+        <input type="text" name="name" id="name" />
+      </div>
+      <div class="form-control">
+        <label for="url">Meme URL</label>
+        <input type="text" name="youtubeUrl" id="url" />
+      </div>
+      <button type="submit" id="submitButton">Add Meme!</button>
+    </form>
+    <div id="memeList">
+      <h2>Best of the Best</h2>
+    </div>
+    <div id="memesWrapper"></div>
+    <script>
+      //const { returnYoutubeEmbedCode } = require("./youtubeEmbedCode.mjs");
+
+      const submitButton = document.getElementById("submitButton");
+      const memesWrapper = document.getElementById("memesWrapper");
+      let memeYoutubeUrls = [];
+
+      function compileNewMemeData(event) {
+        const form = event.currentTarget;
+        const formData = new FormData(form);
+        const formObject = Object.fromEntries(formData.entries());
+        const newMeme = {
+          name: formObject.name,
+          youtubeUrl: formObject.youtubeUrl,
+        };
+        return newMeme;
+      }
+      function addMemeToDb(newMemeData) {
+        fetch("http://localhost:3000/memes", {
+          method: "POST",
+          body: JSON.stringify(newMemeData),
+          headers: {
+            "Content-type": "application/json; charset=UTF-8",
+          },
+        })
+          .then((returnedData) => returnedData.json())
+          .catch((error) => console.log(error));
+      }
+      async function handleSubmit(event) {
+        event.preventDefault();
+        const newMemeData = compileNewMemeData(event);
+        addMemeToDb(newMemeData);
+      }
+      const newMemeForm = document.getElementById("newMemeForm");
+      newMemeForm.addEventListener("submit", handleSubmit);
+
+      function generateIframeTag(youtubeUrl) {
+        const iframeTag = document.createElement("iframe");
+        iframeTag.setAttribute("width", "560");
+        iframeTag.setAttribute("height", "315");
+        iframeTag.setAttribute("src", youtubeUrl.replace("watch?v=", "embed/"));
+        iframeTag.setAttribute("tile", "YouTube video player");
+        iframeTag.setAttribute("frameborder", "0");
+        iframeTag.setAttribute(
+          "allow",
+          "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        );
+        iframeTag.setAttribute("allowfullscreen", "");
+        return iframeTag;
+      }
+
+      async function fetchAllMemeYoutubeUrls() {
+        await fetch("http://localhost:3000/memes")
+          .then((memesData) => memesData.json())
+          .then((memes) =>
+            memes.forEach((meme) => memeYoutubeUrls.push(meme.youtubeUrl))
+          )
+          .catch((error) => console.log(error));
+      }
+      async function addMemeVideosToPage() {
+        await fetchAllMemeYoutubeUrls();
+        for (i = 0; i < memeYoutubeUrls.length; i++) {
+          const memeIframeTag = generateIframeTag(memeYoutubeUrls[i]);
+          memesWrapper.appendChild(memeIframeTag);
+        }
+      }
+      addMemeVideosToPage();
+    </script>
+  </body>
+</html>
