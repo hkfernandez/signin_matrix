@@ -8,14 +8,14 @@
   </head>
   <body>
     <h1>MemeTime</h1>
-    <p>Add a title and url of your favorite meme</p>
+    <p>Add a title and url of your favorite YouTube meme</p>
     <form onsubmit="``" id="newMemeForm">
       <div class="form-control">
         <label for="name">Name</label>
         <input type="text" name="name" id="name" />
       </div>
       <div class="form-control">
-        <label for="url">Meme URL</label>
+        <label for="url">YouTube URL</label>
         <input type="text" name="youtubeUrl" id="url" />
       </div>
       <button type="submit" id="submitButton">Add Meme!</button>
@@ -25,12 +25,34 @@
     </div>
     <div id="memesWrapper"></div>
     <script>
-      //const { returnYoutubeEmbedCode } = require("./youtubeEmbedCode.mjs");
-
+      //ELEMENTS & VARIABLES
       const submitButton = document.getElementById("submitButton");
       const memesWrapper = document.getElementById("memesWrapper");
       let memeYoutubeUrls = [];
 
+      //CREATE MEME IFRAME TAG
+      function generateIframeTag(youtubeUrl) {
+        const iframeTag = document.createElement("iframe");
+        iframeTag.setAttribute("width", "560");
+        iframeTag.setAttribute("height", "315");
+        iframeTag.setAttribute("src", youtubeUrl.replace("watch?v=", "embed/"));
+        iframeTag.setAttribute("tile", "YouTube video player");
+        iframeTag.setAttribute("frameborder", "0");
+        iframeTag.setAttribute(
+          "allow",
+          "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        );
+        iframeTag.setAttribute("allowfullscreen", "");
+        return iframeTag;
+      }
+
+      //ADD MEME TO PAGE
+      function addMemeToPage(youtubeUrl) {
+        const iframeTag = generateIframeTag(youtubeUrl);
+        memesWrapper.appendChild(iframeTag);
+      }
+
+      //ADD A NEW MEME
       function compileNewMemeData(event) {
         const form = event.currentTarget;
         const formData = new FormData(form);
@@ -41,40 +63,26 @@
         };
         return newMeme;
       }
-      function addMemeToDb(newMemeData) {
-        fetch("http://localhost:3000/memes", {
+      async function addMemeToDb(newMemeData) {
+        const returnedMemeData = await fetch("http://localhost:3000/memes", {
           method: "POST",
           body: JSON.stringify(newMemeData),
           headers: {
             "Content-type": "application/json; charset=UTF-8",
           },
-        })
-          .then((returnedData) => returnedData.json())
-          .catch((error) => console.log(error));
+        });
+        return await returnedMemeData.json();
       }
-      async function handleSubmit(event) {
+      async function handleFormSubmit(event) {
         event.preventDefault();
         const newMemeData = compileNewMemeData(event);
-        addMemeToDb(newMemeData);
+        const returnedMemeData = await addMemeToDb(newMemeData);
+        addMemeToPage(returnedMemeData.youtubeUrl);
       }
       const newMemeForm = document.getElementById("newMemeForm");
-      newMemeForm.addEventListener("submit", handleSubmit);
+      newMemeForm.addEventListener("submit", handleFormSubmit);
 
-      function generateIframeTag(youtubeUrl) {
-        const iframeTag = document.createElement("iframe");
-        iframeTag.setAttribute("width", "560");
-        iframeTag.setAttribute("height", "315");
-        iframeTag.setAttribute("src", youtubeUrl.replace("watch?v=", "embed/"));
-        iframeTag.setAttribute("tile", "YouTube video player");
-        iframeTag.setAttribute("frameborder", "0");
-        iframeTag.setAttribute(
-          "allow",
-          "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-        );
-        iframeTag.setAttribute("allowfullscreen", "");
-        return iframeTag;
-      }
-
+      //ADD MEMES TO PAGE ON PAGE LOAD
       async function fetchAllMemeYoutubeUrls() {
         await fetch("http://localhost:3000/memes")
           .then((memesData) => memesData.json())
@@ -86,8 +94,7 @@
       async function addMemeVideosToPage() {
         await fetchAllMemeYoutubeUrls();
         for (i = 0; i < memeYoutubeUrls.length; i++) {
-          const memeIframeTag = generateIframeTag(memeYoutubeUrls[i]);
-          memesWrapper.appendChild(memeIframeTag);
+          addMemeToPage(memeYoutubeUrls[i]);
         }
       }
       addMemeVideosToPage();
