@@ -20,7 +20,7 @@
         <input type="text" name="youtubeUrl" id="youtubeUrl" />
         <div id="youtubeUrlErrorMessage"></div>
       </div>
-      <button type="submit" id="submitButton">Add Meme!</button>
+      <button type="submit" id="submitButton" disabled>Add Meme!</button>
     </form>
     <div id="memeList">
       <h2>Best of the Best</h2>
@@ -79,16 +79,27 @@
         memesWrapper.appendChild(iframeTag);
       }
 
-      //VALIDATE INPUTS
+      //FORM VALIDATION
       function setErrorMessage(message, errorMessageDiv) {
         errorMessageDiv.textContent = message;
       }
+      function checkForValidForm() {
+        if (
+          nameErrorMessageDiv.textContent == "" &&
+          youtubeUrlErrorMessageDiv.textContent == "" &&
+          name.value !== "" &&
+          youtubeUrl.value !== ""
+        ) {
+          submitButton.removeAttribute("disabled");
+        } else {
+          submitButton.setAttribute("disabled", "");
+        }
+      }
       function validateNameInput(event) {
-        setErrorMessage("hello", nameErrorMessageDiv);
+        setErrorMessage("", nameErrorMessageDiv);
         const inputText = event.target.value.trim();
         if (inputText === "") {
           setErrorMessage(INPUT_ERROR_MESSAGES.NAME.BLANK, nameErrorMessageDiv);
-          return;
         }
         if (inputText.length > 100) {
           setErrorMessage(
@@ -96,6 +107,7 @@
             nameErrorMessageDiv
           );
         }
+        checkForValidForm();
       }
       function validateYoutubeUrlInput(event) {
         setErrorMessage("", youtubeUrlErrorMessageDiv);
@@ -105,7 +117,6 @@
             INPUT_ERROR_MESSAGES.YOUTUBE_URL.BLANK,
             youtubeUrlErrorMessageDiv
           );
-          return;
         }
         if (!youtubeUrlRegex.test(inputText)) {
           setErrorMessage(
@@ -113,6 +124,7 @@
             youtubeUrlErrorMessageDiv
           );
         }
+        checkForValidForm();
       }
 
       //ADD A NEW MEME
