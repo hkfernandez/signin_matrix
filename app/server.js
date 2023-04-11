@@ -3,36 +3,21 @@ require("dotenv").config();
 const routes = require("./routes/meme_routes");
 const express = require("express");
 const cors = require("cors");
-//const { MongoClient } = require("mongodb");
 const mongoose = require("mongoose");
-const memesController = require("./controller/memes_controller");
-
-//HELPER FUNCTIONS
-//const returnVideoEmbedCode = require("./youtubeEmbedCode");
-//const js = require("./js/index.mjs");
-//import js from "./js/index.mjs";
 
 //VARIABLES
 const path = require("path");
 const app = express();
 const EXPRESS_PORT = 3000;
 
-//DATABASE CONFIG
-//const client = new MongoClient(dbConnectionUrl);
-
 //ROUTER CONFIG
 app.use(express.json());
 app.use(cors());
 app.use(routes);
-//app.use(express.urlencoded({ extended: true }));
 
 //ROUTES
 app.get("/", function (req, res) {
   res.sendFile(path.join(__dirname, "./view/html/landingPage.html"));
-});
-app.get("/allMemes", function (req, res) {
-  memesController.findAll();
-  console.log("-------------all memes from db:");
 });
 
 //DB CONNECTION
@@ -42,9 +27,12 @@ async function connectToDataBase() {
     process.env.DB_USERNAME +
     ":" +
     process.env.DB_PASSWORD +
-    "@localhost:" +
+    "@" +
+    process.env.HOST_NAME +
+    ":" +
     process.env.MONGODB_PORT +
     "/favorites?authSource=admin";
+  console.log("connectionUrl: ", dbConnectionUrl);
   try {
     await mongoose.connect(dbConnectionUrl, {
       useNewUrlParser: true,

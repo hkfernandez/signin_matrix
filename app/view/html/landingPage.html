@@ -54,8 +54,7 @@
             "The URL entered is not a valid YouTube video address",
         },
       };
-      const youtubeUrlRegex =
-        /^https:\/\/www\.youtube\.com\/watch\?v=[A-Za-z0-9]+$/i;
+      const youtubeUrlRegex = /^https:\/\/www\.youtube\.com\/watch\?v=.+$/i;
 
       //CREATE MEME IFRAME TAG
       function generateIframeTag(youtubeUrl) {
@@ -134,12 +133,12 @@
         const formObject = Object.fromEntries(formData.entries());
         const newMeme = {
           name: formObject.name,
-          youtubeUrl: formObject.youtubeUrl,
+          youtubeUrl: formObject.youtubeUrl.replace("watch?v=", "embed/"),
         };
         return newMeme;
       }
       async function addMemeToDb(newMemeData) {
-        const returnedMemeData = await fetch("http://localhost:3000/memes", {
+        const returnedMemeData = await fetch("/memes", {
           method: "POST",
           body: JSON.stringify(newMemeData),
           headers: {
@@ -157,11 +156,13 @@
 
       //ADD MEMES TO PAGE ON PAGE LOAD
       async function fetchAllMemeYoutubeUrls() {
-        await fetch("http://localhost:3000/memes")
+        await fetch("/memes")
           .then((memesData) => memesData.json())
-          .then((memes) =>
-            memes.forEach((meme) => memeYoutubeUrls.push(meme.youtubeUrl))
-          )
+          .then((memes) => {
+            if (memes) {
+              memes.forEach((meme) => memeYoutubeUrls.push(meme.youtubeUrl));
+            }
+          })
           .catch((error) => console.log(error));
       }
       async function addMemeVideosToPage() {
