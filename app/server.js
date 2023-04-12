@@ -17,7 +17,7 @@ app.use(routes);
 
 //ROUTES
 app.get("/", function (req, res) {
-  res.sendFile(path.join(__dirname, "./view/html/landingPage.html"));
+  res.sendFile(path.join(__dirname, "./view/html/signUpPage.html"));
 });
 
 //DB CONNECTION
@@ -42,7 +42,7 @@ async function connectToDataBase() {
     console.log("----------- db connection error: ", error);
   }
 }
-connectToDataBase();
+//connectToDataBase();
 
 try {
   const db = mongoose.connection;

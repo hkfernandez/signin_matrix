@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign Up</title>
+  </head>
+  <body>
+    <h1>Sign Up</h1>
+    <form action="/signUp" id="signUpForm" method="POST">
+      <div class="form-control">
+        <label for="userName">User Name</label>
+        <input
+          id="userNameInput"
+          type="text"
+          name="userName"
+          autocomplete="username"
+        />
+        <div id="usernameErMsg"></div>
+      </div>
+      <div class="form-control">
+        <label for="password">Password</label>
+        <input
+          id="passwordInput"
+          type="password"
+          name="password"
+          autocomplete="current-password"
+        />
+        <button id="togglePwVisibilityBtn" type="button">Show</button>
+        <div id="passwordErMsg"></div>
+      </div>
+      <button id="formSubmitBtn" type="submit" disabled>Submit</button>
+    </form>
+    <script>
+      //ELEMENTS
+      const userNameInput = document.getElementById("userNameInput");
+      userNameInput.addEventListener("blur", validateUserName);
+      const passwordInput = document.getElementById("passwordInput");
+      passwordInput.addEventListener("blur", validatePassword);
+      const togglePwVisibiilityBtn = document.getElementById(
+        "togglePwVisibilityBtn"
+      );
+      togglePwVisibiilityBtn.addEventListener("click", togglePwVisibility);
+      const formSubmitBtn = document.getElementById("formSubmitBtn");
+      const usernameErMsgDiv = document.getElementById("usernameErMsg");
+      const passwordErMsgDiv = document.getElementById("passwordErMsg");
+
+      //CONSTANTS
+      const INPUT_ERROR_MESSAGES = {
+        USENAME: {
+          INVALID_FORMAT:
+            "Username can only be letters and numbers or an email address",
+        },
+        PASSWORD: {
+          TOO_LONG: "Password is limited to 10 characters",
+        },
+      };
+      const limitedToCharAndNumRegex = /^[a-zA-Z0-9]+$/;
+      const emailFormatRegex =
+        /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+      const limitedToTenCharRegex = /^.{0,10}$/;
+
+      //TOGGLE PASSWORD VISIBILITY
+      function togglePwVisibility() {
+        if (passwordInput.type === "password") {
+          passwordInput.type = "text";
+          togglePwVisibiilityBtn.textContent = "Hide";
+        } else {
+          passwordInput.type = "password";
+          togglePwVisibiilityBtn.textContent = "Show";
+        }
+      }
+      //INPUT VALIDATION
+      function setErrorMessage(message, errorMessageDiv) {
+        errorMessageDiv.textContent = message;
+      }
+      function checkFormValidity() {
+        let formValid = false;
+        const userNameErMessage = usernameErMsgDiv.textContent;
+        const passwordErMsg = passwordErMsgDiv.textContent;
+        if (
+          userNameErMessage === "" &&
+          passwordErMsg === "" &&
+          userNameInput.value !== "" &&
+          passwordInput.value !== ""
+        ) {
+          formValid = true;
+        }
+        if (formValid) {
+          formSubmitBtn.removeAttribute("disabled");
+        } else formSubmitBtn.setAttribute("disabled", "");
+      }
+      function validateUserName() {
+        setErrorMessage("", usernameErMsgDiv);
+        const userInput = userNameInput.value.trim();
+        if (userInput === "") {
+          return;
+        }
+        if (
+          !limitedToCharAndNumRegex.test(userInput) &&
+          !emailFormatRegex.test(userInput)
+        ) {
+          setErrorMessage(
+            INPUT_ERROR_MESSAGES.USENAME.INVALID_FORMAT,
+            usernameErMsgDiv
+          );
+        }
+        checkFormValidity();
+      }
+      function validatePassword() {
+        setErrorMessage("", passwordErMsgDiv);
+        const userInput = passwordInput.value.trim();
+        if (userInput === "") {
+          return;
+        }
+        if (!limitedToTenCharRegex.test(userInput)) {
+          setErrorMessage(
+            INPUT_ERROR_MESSAGES.PASSWORD.TOO_LONG,
+            passwordErMsgDiv
+          );
+        }
+        checkFormValidity();
+      }
+    </script>
+  </body>
+</html>
