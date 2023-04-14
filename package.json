@@ -1,7 +1,7 @@
 {
-  "name": "favorite_memes",
+  "name": "signin_matrix",
   "version": "1.0.0",
-  "description": "create a list of favorite memes - a docker experiment",
+  "description": "authenication and sign on the web - a firebase experiment",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -14,8 +14,6 @@
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
-    "firebase": "^9.19.1",
-    "mongodb": "^5.1.0",
-    "mongoose": "^7.0.3"
+    "firebase": "^9.19.1"
   }
 }
