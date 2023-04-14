@@ -1,3 +1,3 @@
-const firebaseRoutes = require("./firebase_routes");
+const authRoutes = require("./auth_routes");
 
-module.exports = [firebaseRoutes];
+module.exports = [authRoutes];

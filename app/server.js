@@ -1,20 +1,16 @@
-//PACKAGES
+//MODULES
 require("dotenv").config();
+require("./model/firebase_services");
 const routes = require("./routes/index");
 const express = require("express");
 const cors = require("cors");
-const { initializeApp } = require("firebase/app");
-
-//VARIABLES
 const path = require("path");
-const expressApp = express();
-const EXPRESS_PORT = 3000;
-const firebaseConfig = require("./utils/firebase_config");
 
-//FIREBASE CONFIG
-//const firebaseApp = initializeApp(firebaseConfig);
+//PORTS
+const EXPRESS_PORT = 3000;
 
 //ROUTER CONFIG
+const expressApp = express();
 expressApp.use(express.json());
 expressApp.use(cors());
 expressApp.use("/static", express.static(path.join(__dirname, "public")));

@@ -1,20 +1,11 @@
-const { initializeApp } = require("firebase/app");
 const {
-  getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
   onAuthStateChanged,
 } = require("firebase/auth");
-const firebaseConfig = require("../utils/firebase_config");
 
-const firebaseApp = initializeApp(firebaseConfig);
-const auth = getAuth(firebaseApp);
-if (auth) {
-  console.log("-----------FIREBASE CONNECTED---------------");
-} else {
-  console.log("-------FIREBASE UNABLE TO CONNECT-----------");
-}
+const { auth } = require("../model/firebase_services");
 
 module.exports = {
   signUpUserWithEmailandPassword: ({ body }, res) => {
