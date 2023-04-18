@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quotes</title>
+    <script type="module" src="/static/js/quotes.mjs" defer></script>
+  </head>
+  <body>
+    <h1>Quotes</h1>
+    <div id="addQuote">
+      <form action="" method="POST">
+        <div class="form-control">
+          <label for="quoteInput">Quote</label>
+          <input type="text" id="quoteInput" name="quoteInput" />
+        </div>
+        <div class="form-control">
+          <label for="authorInput">Author</label>
+          <input type="text" id="authorInput" name="authorInput" />
+        </div>
+        <button type="button" id="addQuoteBtn">Add Quote</button>
+      </form>
+    </div>
+    <div id="quotesWrapper"></div>
+  </body>
+</html>

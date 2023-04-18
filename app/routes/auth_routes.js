@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const authController = require("../controller/auth_controller");
 
-router.route("/auth").get(authController.checkUserAuthState);
+router.route("/").get(authController.getSigninPage);
 router
   .route("/auth/signUp")
   .post(authController.signUpUserWithEmailandPassword);

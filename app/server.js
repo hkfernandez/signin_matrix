@@ -16,13 +16,6 @@ expressApp.use(cors());
 expressApp.use("/static", express.static(path.join(__dirname, "public")));
 expressApp.use(routes);
 
-//ROUTES
-expressApp.get("/", function (req, res) {
-  res.sendFile(path.join(__dirname, "./view/html/signUpPage.html"));
-});
-
-//MONGODB CONNECTION
-
 //START ROUTER
 const listening = expressApp.listen(EXPRESS_PORT);
 if (listening) {

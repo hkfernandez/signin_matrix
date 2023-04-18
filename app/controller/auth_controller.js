@@ -1,3 +1,4 @@
+const path = require("path");
 const {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -8,6 +9,9 @@ const {
 const { auth } = require("../model/firebase_services");
 
 module.exports = {
+  getSigninPage: (req, res) => {
+    res.sendFile(path.join(__dirname, "../view/html/signupPage.html"));
+  },
   signUpUserWithEmailandPassword: ({ body }, res) => {
     console.log("firebase request body: ", body);
     createUserWithEmailAndPassword(auth, body.userName, body.password)

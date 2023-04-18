@@ -1,6 +1,6 @@
 const firebaseConfig = require("../utils/firebase_config");
 const { initializeApp } = require("firebase/app");
-const { getDatabase } = require("firebase/database");
+const { getFirestore } = require("firebase/firestore");
 const { getAuth } = require("firebase/auth");
 
 const firebaseApp = initializeApp(firebaseConfig);
@@ -14,12 +14,10 @@ try {
   console.log("FIREBASE AUTH CONNECTION ERROR: ", error);
 }
 try {
-  module.exports.db = getDatabase(firebaseApp);
+  module.exports.db = getFirestore(firebaseApp);
   if (module.exports.db) {
-    console.log("-----------FIREBASE DB CONNECTED-------------Í");
+    console.log("-----------FIRESTORE DB CONNECTED-------------Í");
   }
 } catch (error) {
-  console.log("FIREBASE DB CONNECTION ERROR: ", error);
+  console.log("FIRESTORE DB CONNECTION ERROR: ", error);
 }
-
-//module.exports = { auth, db };

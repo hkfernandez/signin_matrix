@@ -17,8 +17,6 @@ const usernameErMsgDiv = document.getElementById("usernameErMsg");
 const passwordErMsgDiv = document.getElementById("passwordErMsg");
 const signOutBtn = document.getElementById("signOutBtn");
 signOutBtn.addEventListener("click", signOutUser);
-const checkLoggedInStateBtn = document.getElementById("checkLoggedInStateBtn");
-checkLoggedInStateBtn.addEventListener("click", checkUserAuthState);
 
 //CONSTANTS
 const INPUT_ERROR_MESSAGES = {
@@ -139,18 +137,3 @@ function signOutUser() {
     })
     .catch((error) => console.log(error));
 }
-
-//CHECK USER LOGGED IN STATUS
-function checkUserAuthState() {
-  console.log("checking user auth state");
-  fetch("/auth")
-    .then((responsePromise) => responsePromise.json())
-    .then((message) => {
-      if (message) {
-        return;
-      }
-      helperFunctions.enableButtons([signOutBtn]);
-      helperFunctions.disableButtons([signUpBtn, signInBtn]);
-    });
-}
-checkUserAuthState();
