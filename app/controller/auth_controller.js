@@ -10,7 +10,7 @@ const { auth } = require("../model/firebase_services");
 
 module.exports = {
   getSigninPage: (req, res) => {
-    res.sendFile(path.join(__dirname, "../view/html/signupPage.html"));
+    res.sendFile(path.join(__dirname, "../view/html/index.html"));
   },
   signUpUserWithEmailandPassword: ({ body }, res) => {
     console.log("firebase request body: ", body);

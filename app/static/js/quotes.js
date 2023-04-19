@@ -1,26 +1,9 @@
-//PACKAGES
-import { getAuth, onAuthStateChanged } from "firebase/auth";
-
 // ELEMENTS;
 const quoteInput = document.getElementById("quoteInput");
 const addQuoteBtn = document.getElementById("addQuoteBtn");
 addQuoteBtn.addEventListener("click", addQuote);
 const authorInput = document.getElementById("authorInput");
 const quotesWrapper = document.getElementById("quotesWrapper");
-const userId = "";
-
-function setUserId() {
-  const auth = getAuth();
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      userId = user.uid;
-      console.log("user logged in");
-    } else {
-      userId = "";
-      console.log("no user logged in");
-    }
-  });
-}
 
 function addQuote() {
   const text = quoteInput.value;
@@ -79,4 +62,3 @@ async function addQuotesToPage() {
 }
 
 addQuotesToPage();
-setUserId();

@@ -1,9 +1,10 @@
 //MODULES
 require("dotenv").config();
-require("./model/firebase_services");
-const routes = require("./routes/index");
+require("./app/model/firebase_services");
+const routes = require("./app/routes/index");
 const express = require("express");
 const cors = require("cors");
+const cookieParser = require("cookie-parser");
 const path = require("path");
 
 //PORTS
@@ -13,7 +14,8 @@ const EXPRESS_PORT = 3000;
 const expressApp = express();
 expressApp.use(express.json());
 expressApp.use(cors());
-expressApp.use("/static", express.static(path.join(__dirname, "public")));
+expressApp.use(cookieParser());
+expressApp.use("/static", express.static(path.join(__dirname, "app/static")));
 expressApp.use(routes);
 
 //START ROUTER

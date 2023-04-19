@@ -1,4 +1,4 @@
-import { helperFunctions } from "./helperFunctions.mjs";
+const { helperFunctions } = require("./helperFunctions.js");
 
 //ELEMENTS
 const signInBtn = document.getElementById("signInBtn");

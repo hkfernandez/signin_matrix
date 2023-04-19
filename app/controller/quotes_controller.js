@@ -11,10 +11,9 @@ const currentUser = auth.currentUser;
 
 module.exports = {
   getQuotesPage: (req, res) => {
-    console.log("in controller");
     res.sendFile(path.join(__dirname, "../view/html/quotes.html"));
   },
-  getAllQuotes: (req, res) => {
+  getAllQuotes: (ßreq, res) => {
     getDocs(quotesCollection)
       .then((snapshot) => {
         let quotes = [];
