@@ -1,4 +1,4 @@
-const { helperFunctions } = require("./helperFunctions.js");
+const { helperFunctions } = require("./dependencies/helperFunctions.js");
 
 //ELEMENTS
 const signInBtn = document.getElementById("signInBtn");
