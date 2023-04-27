@@ -13,7 +13,7 @@ module.exports = {
   getQuotesPage: (req, res) => {
     res.sendFile(path.join(__dirname, "../view/html/quotes.html"));
   },
-  getAllQuotes: (ßreq, res) => {
+  getAllQuotes: (req, res) => {
     getDocs(quotesCollection)
       .then((snapshot) => {
         let quotes = [];
@@ -33,7 +33,7 @@ module.exports = {
       userId: currentUser ? currentUser.uid : "",
     };
     addDoc(quotesCollection, quote)
-      .then((quoteRef) => console.log("new quote id: ", quoteRef.id))
+      .then((quoteData) => console.log("new quote id: ", quoteData.id))
       .catch((error) => console.log(error));
   },
 };

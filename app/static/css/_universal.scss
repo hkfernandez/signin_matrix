@@ -1,0 +1,12 @@
+@use "_variables.scss";
+* {
+  font-family: "Dosis", sans-serif;
+  color: variables.$lightGreen;
+}
+body {
+  background-color: variables.$black;
+  color: variables.$lightGreen;
+}
+button {
+  border: none;
+}

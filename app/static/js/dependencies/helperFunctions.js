@@ -14,4 +14,21 @@ export const helperFunctions = {
       toggleButton.textContent = "Show";
     }
   },
+  addListenerReturnElement: (querySelector, eventType, callback) => {
+    const selection = document.querySelectorAll(querySelector);
+    if (!selection) {
+      console.log("NO ELEMENTS FOUND WITH QUERY SELECTOR: ", querySelector);
+      return null;
+    }
+    const selectionArray = Array.from(selection);
+    if (selectionArray.length === 1) {
+      selection.addEventListener(eventType, callback);
+      return selection;
+    } else {
+      selectionArray.forEach((element) =>
+        element.addEventListener(eventType, callback)
+      );
+      return selectionArray;
+    }
+  },
 };

@@ -55,7 +55,7 @@ function addQuoteToPage(quote) {
 }
 async function addQuotesToPage() {
   const quotes = await getAllQuotes();
-  console.log("quotes: ", quotes);
+  console.log("updated");
   quotes.forEach((quote) => {
     addQuoteToPage(quote);
   });
