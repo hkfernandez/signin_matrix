@@ -3,6 +3,10 @@ import { helperFunctions } from "/static/js/dependencies/helperFunctions.js";
 
 //ELEMENTS
 helperFunctions.addListenerReturnElement(".pill", "click", togglePill);
+const redPillWrapperOverlay = document.getElementById("redPillWrapperOverlay");
+const bluePillWrapperOverlay = document.getElementById(
+  "bluePillWrapperOverlay"
+);
 
 let redPillState = "closed";
 let bluePillState = "closed";
@@ -12,10 +16,16 @@ function addRemoveClass(element, addClass, removeClass) {
   element.classList.remove(removeClass);
 }
 
-function animate(color, leftPill, rightPill) {
+function fadeOverlay(overlay, newAnimationClass) {
+  overlay.className = "overlay";
+  overlay.classList.add(newAnimationClass);
+}
+
+function animatePill(color, leftPill, rightPill) {
   if (color === "red") {
     rightPill.classList.remove("text-hidden");
     if (redPillState === "closed") {
+      fadeOverlay(bluePillWrapperOverlay, "fade-overlay-in");
       addRemoveClass(leftPill, "open-left-hide-text", "close-left-show-text");
       addRemoveClass(
         rightPill,
@@ -24,6 +34,7 @@ function animate(color, leftPill, rightPill) {
       );
       redPillState = "open";
     } else {
+      fadeOverlay(bluePillWrapperOverlay, "fade-overlay-out");
       addRemoveClass(leftPill, "close-left-show-text", "open-left-hide-text");
       addRemoveClass(
         rightPill,
@@ -36,15 +47,16 @@ function animate(color, leftPill, rightPill) {
     //BLUE PILL
     leftPill.classList.remove("text-hidden");
     if (bluePillState === "closed") {
+      fadeOverlay(redPillWrapperOverlay, "fade-overlay-in");
       addRemoveClass(leftPill, "open-left-show-text", "close-left-hide-text");
       addRemoveClass(
         rightPill,
         "open-right-hide-text",
         "close-right-show-text"
       );
-      console.log("after class change: ", rightPill.classList);
       bluePillState = "open";
     } else {
+      fadeOverlay(redPillWrapperOverlay, "fade-overlay-out");
       addRemoveClass(leftPill, "close-left-hide-text", "open-left-show-text");
       addRemoveClass(
         rightPill,
@@ -66,5 +78,5 @@ function togglePill({ currentTarget: pill }) {
     rightPill = pill;
     leftPill = pill.previousElementSibling;
   }
-  animate(pillColor, leftPill, rightPill);
+  animatePill(pillColor, leftPill, rightPill);
 }

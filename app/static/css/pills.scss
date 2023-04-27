@@ -22,6 +22,13 @@ $btnLightBlue: #7dc3f1;
   width: 500px;
   height: 200px;
 }
+.overlay {
+  z-index: -1;
+  position: absolute;
+  width: 500px;
+  height: 200px;
+  background-color: transparent;
+}
 .pill {
   display: flex;
   align-items: center;
@@ -114,6 +121,13 @@ $btnLightBlue: #7dc3f1;
 .close-right-hide-text {
   animation: rightPillCloseHideText ease-in-out 3s forwards;
 }
+.fade-overlay-out {
+  animation: fadeOverlayOut ease-in 3s forwards;
+}
+.fade-overlay-in {
+  z-index: 10;
+  animation: fadeOverlayIn ease-in 3s forwards;
+}
 
 //PILLS
 //PILL - OPENING ANIMATIONS
@@ -198,6 +212,22 @@ $btnLightBlue: #7dc3f1;
     color: transparent;
   }
 }
+@keyframes fadePillTextIn {
+  from {
+    color: transparent;
+  }
+  to {
+    color: var.$black;
+  }
+}
+@keyframes fadePillTextOut {
+  from {
+    color: var.$black;
+  }
+  to {
+    color: transparent;
+  }
+}
 
 //BUTTON
 @keyframes greenPulse {
@@ -228,19 +258,23 @@ $btnLightBlue: #7dc3f1;
     box-shadow: 0 0 0.5em 0.125em $pillMediumBlue;
   }
 }
-@keyframes fadePillTextIn {
+
+//PILL WRAPPER OVERLAYS
+@keyframes fadeOverlayOut {
   from {
-    color: transparent;
+    background: var.$black;
+    z-index: 3;
   }
   to {
-    color: var.$black;
+    background: transparent;
+    z-index: -1;
   }
 }
-@keyframes fadePillTextOut {
+@keyframes fadeOverlayIn {
   from {
-    color: var.$black;
+    background: transparent;
   }
   to {
-    color: transparent;
+    background: var.$black;
   }
 }
