@@ -1,5 +1,6 @@
 @use "_universal.scss" as univ;
 @use "_variables.scss" as var;
+@use "./dependencies/pillAnimations";
 
 $pillMediumRed: #9e0028;
 $pillMediumBlue: #005f9e;
@@ -21,12 +22,6 @@ $btnLightBlue: #7dc3f1;
   width: 100vw;
   background: transparent;
 }
-//.show-overlay {
-//  display: block;
-//}
-//.hide-overlay {
-//  display: none;
-//}
 .digital-rain-drop {
   width: 1em;
   position: absolute;
@@ -108,116 +103,7 @@ $btnLightBlue: #7dc3f1;
   box-shadow: 0 0 0.25em 0.5em var.$mediumGreen;
   animation: greenPulse 4s infinite;
 }
-//ANIMATION CLASSES
-//ANIMATION CLASSES - PILL MOVEMENT
-.left-pill-open-red {
-  animation: leftPillOpen ease-in-out 3s forwards;
-}
-.right-pill-open-red {
-  animation: rightPillOpen ease-in-out 3s forwards,
-    fadeTextIn ease-in 3s forwards;
-}
-.left-pill-open-blue {
-  animation: leftPillOpen ease-in-out 3s forwards,
-    fadeTextIn ease-in 3s forwards;
-}
-.right-pill-open-blue {
-  animation: rightPillOpen ease-in-out 3s forwards;
-}
-.left-pill-close-red {
-  animation: leftPillClose ease-in-out 3s forwards;
-}
-.right-pill-close-red {
-  animation: rightPillClose ease-in-out 3s forwards,
-    fadeTextOut ease-in 3s forwards;
-}
-.left-pill-close-blue {
-  animation: leftPillClose ease-in-out 3s forwards,
-    fadeTextOut ease-in 3s forwards;
-}
-.right-pill-close-blue {
-  animation: rightPillClose ease-in-out 3s forwards;
-}
-//ANIMATION CLASSES - FADE ELEMENTS
-.fade-element-out {
-  animation: fadeElementOut ease-in 3s forwards;
-}
-.fade-element-in {
-  animation: fadeElementIn ease-in 3s forwards;
-}
-.fade-text-out {
-  animation: fadeTextOut ease-in 3s forwards;
-}
-.fade-text-in {
-  animation: fadeTextIn ease-in 3s forwards;
-}
-//ANIMATION KEYFRAMES
-//ANIMATION KEYFRAMES - PILL MOVEMENT
-@keyframes leftPillOpen {
-  from {
-    transform: translateX(0px);
-  }
-  to {
-    transform: translateX(-90px);
-  }
-}
-@keyframes leftPillClose {
-  from {
-    transform: translateX(-90px);
-  }
-  to {
-    transform: translateX(0px);
-  }
-}
-@keyframes rightPillOpen {
-  from {
-    transform: translateX(0px);
-  }
-  to {
-    transform: translateX(90px);
-  }
-}
-@keyframes rightPillClose {
-  from {
-    transform: translateX(90px);
-  }
-  to {
-    transform: translateX(0px);
-  }
-}
-//ANIMATION KEYFRAMES - FADE ELEMENTS
-@keyframes fadeTextIn {
-  from {
-    color: transparent;
-  }
-  to {
-    color: var.$black;
-  }
-}
-@keyframes fadeTextOut {
-  from {
-    color: var.$black;
-  }
-  to {
-    color: transparent;
-  }
-}
-@keyframes fadeElementOut {
-  from {
-    opacity: 100%;
-  }
-  to {
-    opacity: 0%;
-  }
-}
-@keyframes fadeElementIn {
-  from {
-    opacity: 0%;
-  }
-  to {
-    opacity: 100%;
-  }
-}
+
 //ANIMATION KEYFRAMES - BUTTON ANIMATIONS
 @keyframes greenPulse {
   0% {

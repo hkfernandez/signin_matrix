@@ -5,10 +5,6 @@ import { rain } from "/static/js/dependencies/digitalRain.js";
 //ELEMENTS
 helperFunctions.addListenerReturnElement(".pill", "click", togglePillPosition);
 document.getElementById("wakeUpBtn").addEventListener("click", wakeUp);
-//const redPillWrapperOverlay = document.getElementById("redPillWrapperOverlay");
-//const bluePillWrapperOverlay = document.getElementById(
-//  "bluePillWrapperOverlay"
-//);
 const digitalRainOverlay = document.getElementById("digitalRainOverlay");
 const redPillWrapper = document.getElementById("redPillWrapper");
 const bluePillWrapper = document.getElementById("bluePillWrapper");
@@ -77,6 +73,5 @@ function togglePillPosition({ currentTarget: pill }) {
 }
 
 function wakeUp() {
-  //addRemoveClass(digitalRainOverlay, "show-overlay", "hide-overlay");
   rain();
 }
