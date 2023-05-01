@@ -12,11 +12,13 @@
       href="https://fonts.googleapis.com/css2?family=Dosis:wght@200;400;700&display=swap"
       rel="stylesheet"
     />
-    <script type="module" src="/static/js/pills.js" defer></script>
+    <script type="module" src="static/js/pillsPage.js" defer></script>
+    <!--<script type="module" src="static/js/digitalRain.js" defer></script>-->
     <title>Pills</title>
   </head>
   <body>
     <div class="pills-wrapper">
+      <div id="digitalRainOverlay" ></div>
       <div id="redPillWrapper" class="pill-wrapper">
         <div id="redPillWrapperOverlay" class="overlay"></div>
           <div
@@ -35,14 +37,13 @@
           >
             ...is made
           </div>
-          <button id="wakeUpBtn" class="navigation-btn btn-green">
+          <button href="/digitalRain" id="wakeUpBtn" class="navigation-btn btn-green">
             WAKE <br />
             UP
           </button>
         </div>
     
       <div id="bluePillWrapper" class="pill-wrapper">
-        <div id="bluePillWrapperOverlay" class="overlay"></div>
           <div
             id="blueLeft"
             class="pill blue left shiny text-hidden"

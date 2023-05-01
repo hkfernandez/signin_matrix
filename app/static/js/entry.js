@@ -1,2 +1,2 @@
 require("./signupPage.js");
-require("./quotes.js");
+require("./quotesPage.js");

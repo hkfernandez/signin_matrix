@@ -11,7 +11,7 @@ const currentUser = auth.currentUser;
 
 module.exports = {
   getQuotesPage: (req, res) => {
-    res.sendFile(path.join(__dirname, "../view/html/quotes.html"));
+    res.sendFile(path.join(__dirname, "../view/html/quotesPage.html"));
   },
   getAllQuotes: (req, res) => {
     getDocs(quotesCollection)
@@ -35,5 +35,8 @@ module.exports = {
     addDoc(quotesCollection, quote)
       .then((quoteData) => console.log("new quote id: ", quoteData.id))
       .catch((error) => console.log(error));
+  },
+  getDigitalRainPage: (req, res) => {
+    res.sendFile(path.join(__dirname, "../view/html/DigitalRainPage.html"));
   },
 };

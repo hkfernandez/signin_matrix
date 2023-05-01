@@ -6,12 +6,31 @@ $pillMediumBlue: #005f9e;
 $btnLightBlue: #7dc3f1;
 
 .pills-wrapper {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   width: 100vw;
   height: 100vh;
+}
+#digitalRainOverlay {
+  z-index: -2;
+  position: absolute;
+  height: 100vh;
+  width: 100vw;
+  background: transparent;
+}
+//.show-overlay {
+//  display: block;
+//}
+//.hide-overlay {
+//  display: none;
+//}
+.digital-rain-drop {
+  width: 1em;
+  position: absolute;
+  color: var.$mediumGreen;
 }
 .pill-wrapper {
   display: flex;
@@ -21,13 +40,6 @@ $btnLightBlue: #7dc3f1;
   position: relative;
   width: 500px;
   height: 200px;
-}
-.overlay {
-  z-index: -1;
-  position: absolute;
-  width: 500px;
-  height: 200px;
-  background-color: transparent;
 }
 .pill {
   display: flex;
@@ -54,15 +66,15 @@ $btnLightBlue: #7dc3f1;
     0 -1.25rem 1.25rem rgba(0, 0, 0, 0.3) inset,
     0 1.25rem 1.25rem rgba(255, 255, 255, 0.1) inset;
 }
-
 .left {
-  z-index: 1;
+  z-index: 2;
   width: 180px;
   height: 120px;
   border-radius: 120px 0 0 120px;
   box-shadow: 0.5em -0.125em -0.25em 0.25em 0;
 }
 .right {
+  z-index: 1;
   margin-left: -40px;
   width: 180px;
   height: 110px;
@@ -72,7 +84,7 @@ $btnLightBlue: #7dc3f1;
   color: transparent;
 }
 .navigation-btn {
-  z-index: -1;
+  z-index: 0;
   position: absolute;
   top: 0;
   bottom: 0;
@@ -96,123 +108,85 @@ $btnLightBlue: #7dc3f1;
   box-shadow: 0 0 0.25em 0.5em var.$mediumGreen;
   animation: greenPulse 4s infinite;
 }
-//ANIMATIONS
-.open-left-show-text {
-  animation: leftPillOpenShowText ease-in-out 3s forwards;
+//ANIMATION CLASSES
+//ANIMATION CLASSES - PILL MOVEMENT
+.left-pill-open-red {
+  animation: leftPillOpen ease-in-out 3s forwards;
 }
-.open-left-hide-text {
-  animation: leftPillOpenHideText ease-in-out 3s forwards;
+.right-pill-open-red {
+  animation: rightPillOpen ease-in-out 3s forwards,
+    fadeTextIn ease-in 3s forwards;
 }
-.open-right-show-text {
-  animation: rightPillOpenShowText ease-in-out 3s forwards;
+.left-pill-open-blue {
+  animation: leftPillOpen ease-in-out 3s forwards,
+    fadeTextIn ease-in 3s forwards;
 }
-.open-right-hide-text {
-  animation: rightPillOpenHideText ease-in-out 3s forwards;
+.right-pill-open-blue {
+  animation: rightPillOpen ease-in-out 3s forwards;
 }
-.close-left-show-text {
-  animation: leftPillCloseShowText ease-in-out 3s forwards;
+.left-pill-close-red {
+  animation: leftPillClose ease-in-out 3s forwards;
 }
-.close-left-hide-text {
-  animation: leftPillCloseHideText ease-in-out 3s forwards;
+.right-pill-close-red {
+  animation: rightPillClose ease-in-out 3s forwards,
+    fadeTextOut ease-in 3s forwards;
 }
-.close-right-show-text {
-  animation: rightPillCloseShowText ease-in-out 3s forwards;
+.left-pill-close-blue {
+  animation: leftPillClose ease-in-out 3s forwards,
+    fadeTextOut ease-in 3s forwards;
 }
-.close-right-hide-text {
-  animation: rightPillCloseHideText ease-in-out 3s forwards;
+.right-pill-close-blue {
+  animation: rightPillClose ease-in-out 3s forwards;
 }
-.fade-overlay-out {
-  animation: fadeOverlayOut ease-in 3s forwards;
+//ANIMATION CLASSES - FADE ELEMENTS
+.fade-element-out {
+  animation: fadeElementOut ease-in 3s forwards;
 }
-.fade-overlay-in {
-  z-index: 10;
-  animation: fadeOverlayIn ease-in 3s forwards;
+.fade-element-in {
+  animation: fadeElementIn ease-in 3s forwards;
 }
-
-//PILLS
-//PILL - OPENING ANIMATIONS
-@keyframes leftPillOpenShowText {
+.fade-text-out {
+  animation: fadeTextOut ease-in 3s forwards;
+}
+.fade-text-in {
+  animation: fadeTextIn ease-in 3s forwards;
+}
+//ANIMATION KEYFRAMES
+//ANIMATION KEYFRAMES - PILL MOVEMENT
+@keyframes leftPillOpen {
   from {
     transform: translateX(0px);
-    color: transparent;
   }
   to {
     transform: translateX(-90px);
-    color: var.$black;
   }
 }
-@keyframes leftPillOpenHideText {
-  from {
-    transform: translateX(0px);
-    color: var.$black;
-  }
-  to {
-    transform: translateX(-90px);
-    color: transparent;
-  }
-}
-@keyframes rightPillOpenShowText {
-  from {
-    transform: translateX(0px);
-    color: transparent;
-  }
-  to {
-    transform: translateX(90px);
-    color: var.$black;
-  }
-}
-@keyframes rightPillOpenHideText {
-  from {
-    transform: translateX(0px);
-    color: var.$black;
-  }
-  to {
-    transform: translateX(90px);
-    color: transparent;
-  }
-}
-//PILL - CLOSING ANIMATIONS
-@keyframes leftPillCloseShowText {
+@keyframes leftPillClose {
   from {
     transform: translateX(-90px);
-    color: transparent;
   }
   to {
     transform: translateX(0px);
-    color: var.$black;
   }
 }
-@keyframes leftPillCloseHideText {
+@keyframes rightPillOpen {
   from {
-    transform: translateX(-90px);
-    color: var.$black;
+    transform: translateX(0px);
   }
   to {
-    transform: translateX(0px);
-    color: transparent;
+    transform: translateX(90px);
   }
 }
-@keyframes rightPillCloseShowText {
+@keyframes rightPillClose {
   from {
     transform: translateX(90px);
-    color: transparent;
   }
   to {
     transform: translateX(0px);
-    color: var.$black;
   }
 }
-@keyframes rightPillCloseHideText {
-  from {
-    transform: translateX(90px);
-    color: var.$black;
-  }
-  to {
-    transform: translateX(0px);
-    color: transparent;
-  }
-}
-@keyframes fadePillTextIn {
+//ANIMATION KEYFRAMES - FADE ELEMENTS
+@keyframes fadeTextIn {
   from {
     color: transparent;
   }
@@ -220,7 +194,7 @@ $btnLightBlue: #7dc3f1;
     color: var.$black;
   }
 }
-@keyframes fadePillTextOut {
+@keyframes fadeTextOut {
   from {
     color: var.$black;
   }
@@ -228,8 +202,23 @@ $btnLightBlue: #7dc3f1;
     color: transparent;
   }
 }
-
-//BUTTON
+@keyframes fadeElementOut {
+  from {
+    opacity: 100%;
+  }
+  to {
+    opacity: 0%;
+  }
+}
+@keyframes fadeElementIn {
+  from {
+    opacity: 0%;
+  }
+  to {
+    opacity: 100%;
+  }
+}
+//ANIMATION KEYFRAMES - BUTTON ANIMATIONS
 @keyframes greenPulse {
   0% {
     transform: scale(0.99);
@@ -256,25 +245,5 @@ $btnLightBlue: #7dc3f1;
   100% {
     transform: scale(0.99);
     box-shadow: 0 0 0.5em 0.125em $pillMediumBlue;
-  }
-}
-
-//PILL WRAPPER OVERLAYS
-@keyframes fadeOverlayOut {
-  from {
-    background: var.$black;
-    z-index: 3;
-  }
-  to {
-    background: transparent;
-    z-index: -1;
-  }
-}
-@keyframes fadeOverlayIn {
-  from {
-    background: transparent;
-  }
-  to {
-    background: var.$black;
   }
 }
