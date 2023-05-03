@@ -26,7 +26,8 @@ export function rain() {
     trail.style.fontSize = rand_int(10, 25) + "px";
 
     digitalRainOverlay.appendChild(trail);
-    setInterval(() => update(i), rand_int(60, 120));
+    const intervalId = setInterval(() => update(i), rand_int(60, 120));
+    setTimeout(() => clearInterval(intervalId), 10000);
   }
 }
 
@@ -51,7 +52,6 @@ function update(j) {
   for (let i = timer; i > 0 && i > timer - 12; i--) {
     let opacity = 1 - (timer - i) / 16;
     if (i < chars.length && chars[i].style) {
-      console.log("setting opacity ", opacity);
       chars[i].style.opacity = opacity;
     }
   }

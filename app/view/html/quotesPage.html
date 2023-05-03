@@ -5,23 +5,59 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Quotes</title>
-    <script type="module" src="/static/dist/quotes.bundle.js" defer></script>
+    <link rel="stylesheet" href="/static/css/quotesPage.css" />
+    <script type="module" src="/static/js/quotesPage.js" defer></script>
   </head>
   <body>
     <h1>Quotes</h1>
-    <div id="addQuote">
-      <form action="" method="POST">
-        <div class="form-control">
-          <label for="quoteInput">Quote</label>
-          <input type="text" id="quoteInput" name="quoteInput" />
+    <div id="phone">
+      <div id="receiver">
+        <div id="antenna"></div>
+        <div id="openBtn"></div>
+        <div id="speakerShadow">
+          <div class="speaker">
+            <div class="hole-group">.<br />.<br />.</div>
+            <div class="hole-group">.<br />.<br />.</div>
+          </div>
         </div>
-        <div class="form-control">
-          <label for="authorInput">Author</label>
-          <input type="text" id="authorInput" name="authorInput" />
+        <div id="screenBezel">
+          <div id="screen" class="btn-disabled">ANSWER THE PHONE</div>
         </div>
-        <button type="button" id="addQuoteBtn">Add Quote</button>
-      </form>
+        <form action="" method="POST">
+          <div class="form-control">
+            <label for="quoteInput">Quote</label>
+            <textarea
+              rows="4"
+              type="text"
+              id="quoteInput"
+              name="quoteInput"
+              placeholder="Quote"
+            ></textarea>
+          </div>
+          <div class="form-control">
+            <label for="authorInput">Author</label>
+            <input
+              type="text"
+              id="authorInput"
+              name="authorInput"
+              placeholder="Author"
+            />
+          </div>
+        </form>
+      </div>
+      <div id="mouthPiece">
+        <div class="mouth-piece-shadow shadow-top"></div>
+        <div id="micWrapper">
+          <div class="mouth-piece-speaker speaker">
+            <div class="hole-group">.<br />.<br />.</div>
+            <div class="hole-group">.<br />.<br />.</div>
+          </div>
+          <div class="hole-group mouth-piece-mic">.<br />.<br />.</div>
+        </div>
+        <div class="mouth-piece-shadow shadow-bottom"></div>
+      </div>
     </div>
     <div id="quotesWrapper"></div>
+    <!--<button type="button" id="addQuoteBtn">Add Quote</button>-->
   </body>
 </html>

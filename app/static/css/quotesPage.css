@@ -1,0 +1,307 @@
+* {
+  font-family: "Dosis", sans-serif;
+}
+
+body {
+  background-color: #0d0208;
+}
+
+button {
+  margin: 1em 1em 0em 1em;
+  border: none;
+}
+
+.form-control {
+  display: flex;
+}
+
+@keyframes greenPulse {
+  0% {
+    transform: scale(0.99);
+    box-shadow: 0 0 0.5em 0.125em #008f11;
+  }
+  50% {
+    transform: scale(1);
+    box-shadow: 0 0 0.75em 0.5em #008f11;
+  }
+  100% {
+    transform: scale(0.99);
+    box-shadow: 0 0 0.5em 0.125em #008f11;
+  }
+}
+@keyframes bluePulse {
+  0% {
+    transform: scale(0.99);
+    box-shadow: 0 0 0.5em 0.125em #005f9e;
+  }
+  50% {
+    transform: scale(1);
+    box-shadow: 0 0 0.75em 0.5em #005f9e;
+  }
+  100% {
+    transform: scale(0.99);
+    box-shadow: 0 0 0.5em 0.125em #005f9e;
+  }
+}
+body {
+  background: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#phone {
+  position: relative;
+  width: 600px;
+  height: 180px;
+}
+
+#receiver {
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 480px;
+  height: 180px;
+  border-radius: 7% 0 0 7%/10em 0 0 10em;
+  background: #0d0208;
+  box-shadow: inset 0 0 0.5rem white;
+}
+
+#antenna {
+  position: relative;
+  top: -60px;
+  right: 0px;
+  bottom: 0px;
+  left: -40px;
+  z-index: -1;
+  width: 60px;
+  height: 25px;
+  border-radius: 5% 0 0 5%/1em 0 0 1em;
+  background: #0d0208;
+  box-shadow: inset 0 0 0.5rem white;
+}
+
+#openBtn {
+  position: absolute;
+  bottom: -5px;
+  left: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 5px;
+  width: 50px;
+  background: #0d0208;
+  border-radius: 0 0 40% 40%/0 0 2rem 2rem;
+  color: white;
+  font-size: 8px;
+  cursor: pointer;
+}
+
+#openBtn:after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: -30%;
+  width: 80px;
+  height: 20px;
+}
+
+#openBtn:hover {
+  background-color: #00ff41;
+}
+
+.btn-disabled {
+  pointer-events: none;
+}
+
+#speakerShadow {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: start;
+  width: 100px;
+  height: 150px;
+  margin-left: -60px;
+  border-radius: 40% 0 0 40%/4em 0em 0 4em;
+  background: linear-gradient(to right, rgb(42, 42, 42), #0d0208 50%);
+}
+
+.speaker {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin-left: 20px;
+  padding-bottom: 5px;
+}
+
+.hole-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  width: 10px;
+  height: 40px;
+  padding: 2px 2px 6px 2px;
+  color: rgb(105, 105, 105);
+}
+
+#screenBezel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-left: 20px;
+  margin-left: -60px;
+  border-radius: 10% 0 0 10%/4em 0em 0 4em;
+  border-left: 3px solid rgb(42, 42, 42);
+  padding: -20px 0 -20px 0;
+  width: 120px;
+  height: 160px;
+  z-index: 2;
+}
+
+#screen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  vertical-align: center;
+  width: 180px;
+  height: 80px;
+  padding: 0.5em;
+  border-radius: 1.5rem;
+  border: 6px solid black;
+  border-style: inset;
+  background: #00ff41;
+  box-shadow: inset 0 0 1rem white;
+  transform: rotate(-90deg);
+  font-size: 12px;
+  cursor: pointer;
+}
+
+form {
+  display: inline;
+  margin: 0px 20px 0 0px;
+  width: 220px;
+  height: 140px;
+  background: #003b00;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  animation: greenPulse 4s infinite;
+  border-radius: 2rem;
+}
+form input {
+  width: 150px;
+  height: 20px;
+  color: #0d0208;
+  border-radius: 4px;
+}
+form textarea {
+  margin-bottom: 1em;
+  width: 150px;
+  border-radius: 4px;
+}
+
+.form-control {
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.form-control label {
+  display: none;
+}
+
+#mouthPiece {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: absolute;
+  top: 0px;
+  right: 0;
+  bottom: 0px;
+  left: 230px;
+  width: 300px;
+  height: 180px;
+  border-radius: 0.5rem;
+  background: #0d0208;
+  box-shadow: inset 0 0 0.5rem white;
+}
+
+.mouth-piece-shadow {
+  height: 60px;
+  width: 240px;
+  border-radius: 1rem;
+}
+
+.shadow-top {
+  transform: skew(40deg);
+  background: linear-gradient(to right top, rgb(42, 42, 42) 3%, #0d0208 30%);
+  cursor: pointer;
+}
+
+.shadow-bottom {
+  transform: skew(-40deg);
+  background: linear-gradient(to right bottom, rgb(42, 42, 42) 3%, #0d0208 30%);
+  cursor: pointer;
+}
+
+#micWrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  cursor: pointer;
+}
+
+.mouth-piece-speaker {
+  width: 30px;
+  margin: 0;
+}
+
+.mouth-piece-mic {
+  width: 10px;
+  margin-left: 220px;
+}
+
+#quotesWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #008f11;
+}
+
+.quote-div {
+  text-align: center;
+  width: 70%;
+}
+
+.open-phone {
+  animation: openPhone 0.06125s forwards;
+}
+
+.close-phone {
+  animation: closePhone 1s forwards;
+}
+
+@keyframes openPhone {
+  from {
+    transform: translateX(0px);
+  }
+  to {
+    transform: translateX(240px);
+  }
+}
+@keyframes closePhone {
+  from {
+    transform: translateX(240px);
+  }
+  to {
+    transform: translateX(0px);
+  }
+}/*# sourceMappingURL=quotesPage.css.map */

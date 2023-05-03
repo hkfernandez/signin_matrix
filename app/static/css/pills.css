@@ -1,123 +1,48 @@
 * {
   font-family: "Dosis", sans-serif;
-  color: #00ff41;
 }
 
 body {
   background-color: #0d0208;
-  color: #00ff41;
 }
 
 button {
+  margin: 1em 1em 0em 1em;
   border: none;
 }
 
-.pills-wrapper {
-  position: relative;
+.form-control {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100vw;
-  height: 100vh;
 }
 
-#digitalRainOverlay {
-  z-index: -2;
-  position: absolute;
-  height: 100vh;
-  width: 100vw;
-  background: transparent;
+@keyframes greenPulse {
+  0% {
+    transform: scale(0.99);
+    box-shadow: 0 0 0.5em 0.125em #008f11;
+  }
+  50% {
+    transform: scale(1);
+    box-shadow: 0 0 0.75em 0.5em #008f11;
+  }
+  100% {
+    transform: scale(0.99);
+    box-shadow: 0 0 0.5em 0.125em #008f11;
+  }
 }
-
-.digital-rain-drop {
-  width: 1em;
-  position: absolute;
-  color: #008f11;
+@keyframes bluePulse {
+  0% {
+    transform: scale(0.99);
+    box-shadow: 0 0 0.5em 0.125em #005f9e;
+  }
+  50% {
+    transform: scale(1);
+    box-shadow: 0 0 0.75em 0.5em #005f9e;
+  }
+  100% {
+    transform: scale(0.99);
+    box-shadow: 0 0 0.5em 0.125em #005f9e;
+  }
 }
-
-.pill-wrapper {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  width: 500px;
-  height: 200px;
-}
-
-.pill {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: "Dosis", sans-serif;
-  font-size: 20px;
-  font-weight: 400;
-  border: 1px solid #0d0208;
-  color: #0d0208;
-  cursor: pointer;
-}
-
-.red {
-  background-color: #9e0028;
-}
-
-.blue {
-  background-color: #005f9e;
-}
-
-.shiny {
-  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.25), 0 1px 0 rgba(255, 255, 255, 0.25) inset, 0 0 0 rgba(0, 0, 0, 0.5) inset, 0 1.25rem 0 rgba(255, 255, 255, 0.08) inset, 0 -1.25rem 1.25rem rgba(0, 0, 0, 0.3) inset, 0 1.25rem 1.25rem rgba(255, 255, 255, 0.1) inset;
-}
-
-.left {
-  z-index: 2;
-  width: 180px;
-  height: 120px;
-  border-radius: 120px 0 0 120px;
-  box-shadow: 0.5em -0.125em -0.25em 0.25em 0;
-}
-
-.right {
-  z-index: 1;
-  margin-left: -40px;
-  width: 180px;
-  height: 110px;
-  border-radius: 0 120px 120px 0;
-}
-
-.text-hidden {
-  color: transparent;
-}
-
-.navigation-btn {
-  z-index: 0;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  width: 80px;
-  height: 80px;
-  margin: auto;
-  font-size: 0.75em;
-  color: #0d0208;
-  border-radius: 0.25em;
-  cursor: pointer;
-}
-
-.btn-blue {
-  background: #7dc3f1;
-  box-shadow: 0 0 0.25em 0.5em #005f9e;
-  animation: bluePulse 4s infinite;
-}
-
-.btn-green {
-  background: #00ff41;
-  box-shadow: 0 0 0.25em 0.5em #008f11;
-  animation: greenPulse 4s infinite;
-}
-
 .left-pill-open-red {
   animation: leftPillOpen ease-in-out 3s forwards;
 }
@@ -230,31 +155,112 @@ button {
     opacity: 100%;
   }
 }
-@keyframes greenPulse {
-  0% {
-    transform: scale(0.99);
-    box-shadow: 0 0 0.5em 0.125em #008f11;
-  }
-  50% {
-    transform: scale(1);
-    box-shadow: 0 0 0.75em 0.5em #008f11;
-  }
-  100% {
-    transform: scale(0.99);
-    box-shadow: 0 0 0.5em 0.125em #008f11;
-  }
+.pills-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
 }
-@keyframes bluePulse {
-  0% {
-    transform: scale(0.99);
-    box-shadow: 0 0 0.5em 0.125em #005f9e;
-  }
-  50% {
-    transform: scale(1);
-    box-shadow: 0 0 0.75em 0.5em #005f9e;
-  }
-  100% {
-    transform: scale(0.99);
-    box-shadow: 0 0 0.5em 0.125em #005f9e;
-  }
+
+#digitalRainOverlay {
+  z-index: -2;
+  position: absolute;
+  height: 100vh;
+  width: 100vw;
+  background: transparent;
+  color: #00ff41;
+}
+
+.digital-rain-drop {
+  width: 1em;
+  position: absolute;
+}
+
+.pill-wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 500px;
+  height: 200px;
+}
+
+.pill {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Dosis", sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+  border: 1px solid #0d0208;
+  color: #0d0208;
+  cursor: pointer;
+}
+
+.red {
+  background-color: #9e0028;
+}
+
+.blue {
+  background-color: #005f9e;
+}
+
+.shiny {
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.25), 0 1px 0 rgba(255, 255, 255, 0.25) inset, 0 0 0 rgba(0, 0, 0, 0.5) inset, 0 1.25rem 0 rgba(255, 255, 255, 0.08) inset, 0 -1.25rem 1.25rem rgba(0, 0, 0, 0.3) inset, 0 1.25rem 1.25rem rgba(255, 255, 255, 0.1) inset;
+}
+
+.left {
+  z-index: 2;
+  width: 180px;
+  height: 120px;
+  border-radius: 120px 0 0 120px;
+  box-shadow: 0.5em -0.125em -0.25em 0.25em 0;
+}
+
+.right {
+  z-index: 1;
+  margin-left: -40px;
+  width: 180px;
+  height: 110px;
+  border-radius: 0 120px 120px 0;
+}
+
+.text-hidden {
+  color: transparent;
+}
+
+.navigation-btn {
+  z-index: 0;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 80px;
+  height: 80px;
+  margin: auto;
+  font-size: 0.75em;
+  color: #0d0208;
+  border-radius: 0.25em;
+  cursor: pointer;
+}
+
+.btn-blue {
+  background: #7dc3f1;
+  box-shadow: 0 0 0.25em 0.5em #005f9e;
+  animation: bluePulse 4s infinite;
+}
+
+.btn-green {
+  background: #00ff41;
+  box-shadow: 0 0 0.25em 0.5em #008f11;
+  animation: greenPulse 4s infinite;
+}
+
+.fade-in-green-background {
+  animation: fadeInGreenBackground 8s forwards;
 }/*# sourceMappingURL=pills.css.map */

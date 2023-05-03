@@ -1,10 +1,6 @@
-@use "_universal.scss" as univ;
-@use "_variables.scss" as var;
+@use "./dependencies/universal" as univ;
+@use "./dependencies/variables" as var;
 @use "./dependencies/pillAnimations";
-
-$pillMediumRed: #9e0028;
-$pillMediumBlue: #005f9e;
-$btnLightBlue: #7dc3f1;
 
 .pills-wrapper {
   position: relative;
@@ -21,11 +17,11 @@ $btnLightBlue: #7dc3f1;
   height: 100vh;
   width: 100vw;
   background: transparent;
+  color: var.$lightGreen;
 }
 .digital-rain-drop {
   width: 1em;
   position: absolute;
-  color: var.$mediumGreen;
 }
 .pill-wrapper {
   display: flex;
@@ -48,10 +44,10 @@ $btnLightBlue: #7dc3f1;
   cursor: pointer;
 }
 .red {
-  background-color: $pillMediumRed;
+  background-color: var.$pillMediumRed;
 }
 .blue {
-  background-color: $pillMediumBlue;
+  background-color: var.$pillMediumBlue;
 }
 .shiny {
   //button styling credit: https://websemantics.uk/articles/shiny-buttons/
@@ -94,8 +90,8 @@ $btnLightBlue: #7dc3f1;
   cursor: pointer;
 }
 .btn-blue {
-  background: $btnLightBlue;
-  box-shadow: 0 0 0.25em 0.5em $pillMediumBlue;
+  background: var.$btnLightBlue;
+  box-shadow: 0 0 0.25em 0.5em var.$pillMediumBlue;
   animation: bluePulse 4s infinite;
 }
 .btn-green {
@@ -103,33 +99,6 @@ $btnLightBlue: #7dc3f1;
   box-shadow: 0 0 0.25em 0.5em var.$mediumGreen;
   animation: greenPulse 4s infinite;
 }
-
-//ANIMATION KEYFRAMES - BUTTON ANIMATIONS
-@keyframes greenPulse {
-  0% {
-    transform: scale(0.99);
-    box-shadow: 0 0 0.5em 0.125em var.$mediumGreen;
-  }
-  50% {
-    transform: scale(1);
-    box-shadow: 0 0 0.75em 0.5em var.$mediumGreen;
-  }
-  100% {
-    transform: scale(0.99);
-    box-shadow: 0 0 0.5em 0.125em var.$mediumGreen;
-  }
-}
-@keyframes bluePulse {
-  0% {
-    transform: scale(0.99);
-    box-shadow: 0 0 0.5em 0.125em $pillMediumBlue;
-  }
-  50% {
-    transform: scale(1);
-    box-shadow: 0 0 0.75em 0.5em $pillMediumBlue;
-  }
-  100% {
-    transform: scale(0.99);
-    box-shadow: 0 0 0.5em 0.125em $pillMediumBlue;
-  }
+.fade-in-green-background {
+  animation: fadeInGreenBackground 8s forwards;
 }

@@ -36,7 +36,4 @@ module.exports = {
       .then((quoteData) => console.log("new quote id: ", quoteData.id))
       .catch((error) => console.log(error));
   },
-  getDigitalRainPage: (req, res) => {
-    res.sendFile(path.join(__dirname, "../view/html/DigitalRainPage.html"));
-  },
 };

@@ -1,11 +1,65 @@
+import { helperFunctions } from "/static/js/dependencies/helperFunctions.js";
+const { addListenerReturnElement, addRemoveClass } = helperFunctions;
+
 // ELEMENTS;
 const quoteInput = document.getElementById("quoteInput");
-const addQuoteBtn = document.getElementById("addQuoteBtn");
-addQuoteBtn.addEventListener("click", addQuote);
 const authorInput = document.getElementById("authorInput");
 const quotesWrapper = document.getElementById("quotesWrapper");
+const screen = addListenerReturnElement("#screen", "click", selectScreen);
+const mouthPiece = addListenerReturnElement(
+  "#mouthPiece",
+  "click",
+  openClosePhone
+);
+const openBtn = addListenerReturnElement("#openBtn", "click", openClosePhone);
+
+//VARIABLES
+const phoneMessages = {
+  answer: "ANSWER THE PHONE",
+  addQuote: "ADD A QUOTE",
+};
+
+//HELPER FUNCTIONS
+function createElementWithTextAndClass(elementType, text, classString) {
+  const element = document.createElement(elementType);
+  element.textContent = text;
+  element.classList.add(classString);
+  return element;
+}
+function appendChildren(parentElement, childernArray) {
+  childernArray.forEach((child) => parentElement.appendChild(child));
+}
+
+function selectScreen() {
+  if (screen.textContent === phoneMessages.answer) {
+    return;
+  } else {
+    addQuote();
+  }
+}
+
+function openClosePhone({ target }) {
+  if (screen.textContent === phoneMessages.answer) {
+    addRemoveClass(mouthPiece, "open-phone", "close-phone");
+    screen.textContent = phoneMessages.addQuote;
+    openBtn.classList.add("btn-disabled");
+    screen.classList.remove("btn-disabled");
+    return;
+  }
+  if (target.id === "openBtn") {
+    return;
+  } else {
+    addRemoveClass(mouthPiece, "close-phone", "open-phone");
+    screen.textContent = phoneMessages.answer;
+    openBtn.classList.remove("btn-disabled");
+    screen.classList.add("btn-disabled");
+    quoteInput.value = "";
+    authorInput.value = "";
+  }
+}
 
 function addQuote() {
+  console.log("adding quote");
   const text = quoteInput.value;
   const author = authorInput.value;
   fetch("/quotes/api", {
@@ -33,20 +87,22 @@ async function getAllQuotes() {
   }
 }
 function createQuoteDiv(quote) {
-  const quoteDiv = document.createElement("div");
-  quoteDiv.className = "quote-div";
+  const quoteDiv = createElementWithTextAndClass("div", "", "quote-div");
   quoteDiv.dataset.id = quote.id;
-  const text = document.createElement("p");
-  text.textContent = quote.text;
-  text.class = "quote-text";
-  const author = document.createElement("p");
-  author.textContent = quote.author;
-  author.class = "quote-author";
-  const user = document.createElement("p");
-  user.textContent = quote.userName ? quote.userName : "anonymous";
-  quoteDiv.appendChild(text);
-  quoteDiv.appendChild(author);
-  quoteDiv.appendChild(user);
+  const text = createElementWithTextAndClass("p", quote.text, "quote-text");
+  const textEmphasisTag = document.createElement("em");
+  textEmphasisTag.appendChild(text);
+  const author = createElementWithTextAndClass(
+    "p",
+    `- ${quote.author}`,
+    "quote-author"
+  );
+  const user = createElementWithTextAndClass(
+    "p",
+    quote.userName ? quote.userName : "anonymous",
+    "quote-user"
+  );
+  appendChildren(quoteDiv, [textEmphasisTag, author, user]);
   return quoteDiv;
 }
 function addQuoteToPage(quote) {
@@ -55,7 +111,6 @@ function addQuoteToPage(quote) {
 }
 async function addQuotesToPage() {
   const quotes = await getAllQuotes();
-  console.log("updated");
   quotes.forEach((quote) => {
     addQuoteToPage(quote);
   });

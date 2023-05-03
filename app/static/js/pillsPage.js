@@ -13,43 +13,77 @@ const bluePillWrapper = document.getElementById("bluePillWrapper");
 let redPillState = "closed";
 let bluePillState = "closed";
 
-function addRemoveClass(element, addClass, removeClass) {
-  console.log(element);
-  element.classList.add(addClass);
-  element.classList.remove(removeClass);
-}
-
 function animatePill(color, leftPill, rightPill) {
   if (color === "red") {
     //CLICKING ON RED PILL
     rightPill.classList.remove("text-hidden");
     if (redPillState === "closed") {
-      addRemoveClass(bluePillWrapper, "fade-element-out", "fade-element-in");
-      addRemoveClass(leftPill, "left-pill-open-red", "left-pill-close-red");
-      addRemoveClass(rightPill, "right-pill-open-red", "right-pill-close-red");
+      helperFunctions.addRemoveClass(
+        bluePillWrapper,
+        "fade-element-out",
+        "fade-element-in"
+      );
+      helperFunctions.addRemoveClass(
+        leftPill,
+        "left-pill-open-red",
+        "left-pill-close-red"
+      );
+      helperFunctions.addRemoveClass(
+        rightPill,
+        "right-pill-open-red",
+        "right-pill-close-red"
+      );
       redPillState = "open";
     } else {
-      addRemoveClass(bluePillWrapper, "fade-element-in", "fade-element-out");
-      addRemoveClass(leftPill, "left-pill-close-red", "left-pill-open-red");
-      addRemoveClass(rightPill, "right-pill-close-red", "right-pill-open-red");
+      helperFunctions.addRemoveClass(
+        bluePillWrapper,
+        "fade-element-in",
+        "fade-element-out"
+      );
+      helperFunctions.addRemoveClass(
+        leftPill,
+        "left-pill-close-red",
+        "left-pill-open-red"
+      );
+      helperFunctions.addRemoveClass(
+        rightPill,
+        "right-pill-close-red",
+        "right-pill-open-red"
+      );
       redPillState = "closed";
     }
   } else {
     //CLICKING ON BLUE PILL
     leftPill.classList.remove("text-hidden");
     if (bluePillState === "closed") {
-      addRemoveClass(redPillWrapper, "fade-element-out", "fade-element-in");
-      addRemoveClass(leftPill, "left-pill-open-blue", "left-pill-close-blue");
-      addRemoveClass(
+      helperFunctions.addRemoveClass(
+        redPillWrapper,
+        "fade-element-out",
+        "fade-element-in"
+      );
+      helperFunctions.addRemoveClass(
+        leftPill,
+        "left-pill-open-blue",
+        "left-pill-close-blue"
+      );
+      helperFunctions.addRemoveClass(
         rightPill,
         "right-pill-open-blue",
         "right-pill-close-blue"
       );
       bluePillState = "open";
     } else {
-      addRemoveClass(redPillWrapper, "fade-element-in", "fade-element-out");
-      addRemoveClass(leftPill, "left-pill-close-blue", "left-pill-open-blue");
-      addRemoveClass(
+      helperFunctions.addRemoveClass(
+        redPillWrapper,
+        "fade-element-in",
+        "fade-element-out"
+      );
+      helperFunctions.addRemoveClass(
+        leftPill,
+        "left-pill-close-blue",
+        "left-pill-open-blue"
+      );
+      helperFunctions.addRemoveClass(
         rightPill,
         "right-pill-close-blue",
         "right-pill-open-blue"
@@ -74,4 +108,24 @@ function togglePillPosition({ currentTarget: pill }) {
 
 function wakeUp() {
   rain();
+  setTimeout(
+    () =>
+      helperFunctions.addRemoveClass(
+        redPillWrapper,
+        "fade-element-out",
+        "fade-element-in"
+      ),
+    3000
+  );
+  setTimeout(
+    () => digitalRainOverlay.classList.add("fade-in-green-background"),
+    8000
+  );
+  setTimeout(
+    () =>
+      fetch("/quotes")
+        .then((response) => response.text())
+        .then((pageHtml) => (document.body.innerHTML = pageHtml)),
+    13000
+  );
 }

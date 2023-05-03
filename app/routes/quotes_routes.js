@@ -8,6 +8,4 @@ router
   .get(quotesController.getAllQuotes)
   .post(quotesController.addQuote);
 
-router.route("/digitalRain").get(quotesController.getDigitalRainPage);
-
 module.exports = router;

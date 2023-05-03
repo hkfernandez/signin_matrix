@@ -22,13 +22,18 @@ export const helperFunctions = {
     }
     const selectionArray = Array.from(selection);
     if (selectionArray.length === 1) {
-      selection.addEventListener(eventType, callback);
-      return selection;
+      const element = document.querySelector(querySelector);
+      element.addEventListener(eventType, callback);
+      return element;
     } else {
       selectionArray.forEach((element) =>
         element.addEventListener(eventType, callback)
       );
       return selectionArray;
     }
+  },
+  addRemoveClass: (element, addClass, removeClass) => {
+    element.classList.add(addClass);
+    element.classList.remove(removeClass);
   },
 };
