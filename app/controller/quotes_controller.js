@@ -33,7 +33,10 @@ module.exports = {
       userId: currentUser ? currentUser.uid : "",
     };
     addDoc(quotesCollection, quote)
-      .then((quoteData) => console.log("new quote id: ", quoteData.id))
+      .then((quoteData) => {
+        console.log("new quote id: ", quoteData.id);
+        res.send(quoteData.id);
+      })
       .catch((error) => console.log(error));
   },
 };

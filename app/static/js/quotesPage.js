@@ -29,6 +29,10 @@ function createElementWithTextAndClass(elementType, text, classString) {
 function appendChildren(parentElement, childernArray) {
   childernArray.forEach((child) => parentElement.appendChild(child));
 }
+function clearFormInputs() {
+  quoteInput.value = "";
+  authorInput.value = "";
+}
 
 function selectScreen() {
   if (screen.textContent === phoneMessages.answer) {
@@ -58,23 +62,48 @@ function openClosePhone({ target }) {
   }
 }
 
+function cleanUpUserInput() {
+  let text = quoteInput.value.trim();
+  let author = authorInput.value.trim();
+  const textFirstCharacter = text[0];
+  const textLastCharacter = text[text.length - 1];
+  const authorFirstCharacter = author[0];
+  if (textFirstCharacter === '"') {
+    text = text.slice(1, text.length - 1).trim();
+  }
+  if (textLastCharacter === '"') {
+    text = text.slice(0, text.length).trim();
+  }
+  if (authorFirstCharacter === "-") {
+    author = author.slice(1).trim();
+  }
+  return { text, author };
+}
+function isValidQuote(quoteData) {
+  let formValidity = true;
+  if (quoteData.text === "" || quoteData.author === "") {
+    formValidity = false;
+  }
+  return formValidity;
+}
+
 function addQuote() {
-  console.log("adding quote");
-  const text = quoteInput.value;
-  const author = authorInput.value;
+  const quoteData = cleanUpUserInput();
+  if (!isValidQuote(quoteData)) {
+    return;
+  }
   fetch("/quotes/api", {
     method: "POST",
-    body: JSON.stringify({
-      text,
-      author,
-    }),
+    body: JSON.stringify(quoteData),
     headers: {
       "Content-type": "application/json; charset=UTF-8",
     },
   })
-    .then((response) => response.json())
-    .then((response) => console.log(response))
-    .catch((error) => console.log(error));
+    .then((response) => {
+      clearFormInputs();
+      console.log(response);
+    })
+    .catch((error) => console.log("POST quote error: ", error));
 }
 
 async function getAllQuotes() {
