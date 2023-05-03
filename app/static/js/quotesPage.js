@@ -101,7 +101,11 @@ function addQuote() {
   })
     .then((response) => {
       clearFormInputs();
-      console.log(response);
+      return response.text();
+    })
+    .then((quoteId) => {
+      quoteData.id = quoteId;
+      addQuoteToPage(quoteData);
     })
     .catch((error) => console.log("POST quote error: ", error));
 }
