@@ -1,12 +1,7 @@
 const router = require("express").Router();
-const quotesController = require("../controller/quotes_controller");
 const pagesController = require("../controller/pages_controller");
 
 router.route("/quotes").get(pagesController.getQuotesPage);
-
-router
-  .route("/quotes/api")
-  .get(quotesController.getAllQuotes)
-  .post(quotesController.addQuote);
+router.route("/pills").get(pagesController.getPillsPage);
 
 module.exports = router;

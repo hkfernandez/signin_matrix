@@ -1,22 +1,34 @@
-const { helperFunctions } = require("./dependencies/helperFunctions.js");
+import { helperFunctions } from "./helperFunctions.js";
+import { fetchQuotesPage } from "../index.js";
+
+//IMPORTED FUNCTIONS
+const {
+  addRemoveClass,
+  addListenerReturnElement,
+  disableButtons,
+  enableButtons,
+  togglePwVisibility,
+} = helperFunctions;
 
 //ELEMENTS
-const signInBtn = document.getElementById("signInBtn");
-signInBtn.addEventListener("click", signInUser);
-const userNameInput = document.getElementById("userNameInput");
-userNameInput.addEventListener("blur", validateUserName);
-const passwordInput = document.getElementById("passwordInput");
-passwordInput.addEventListener("blur", validatePassword);
-const togglePwVisibilityBtn = document.getElementById("togglePwVisibilityBtn");
-togglePwVisibilityBtn.addEventListener("click", () =>
-  helperFunctions.togglePwVisibility(passwordInput, togglePwVisibilityBtn)
+const userNameInput = addListenerReturnElement(
+  "#userNameInput",
+  "blur",
+  validateUserName
 );
-const signUpBtn = document.getElementById("signUpBtn");
-signUpBtn.addEventListener("click", signUpUser);
+const passwordInput = addListenerReturnElement(
+  "#passwordInput",
+  "blur",
+  validatePassword
+);
+addListenerReturnElement(".togglePwVisibilityBtn", "click", togglePwVisibility);
 const usernameErMsgDiv = document.getElementById("usernameErMsg");
 const passwordErMsgDiv = document.getElementById("passwordErMsg");
-const signOutBtn = document.getElementById("signOutBtn");
-signOutBtn.addEventListener("click", signOutUser);
+const signOutBtn = addListenerReturnElement(
+  "#signOutBtn",
+  "click",
+  signOutUser
+);
 
 //CONSTANTS
 const INPUT_ERROR_MESSAGES = {
@@ -49,10 +61,12 @@ function checkFormValidity() {
   ) {
     formValid = true;
   }
+  //console.log("formValid: ", formValid);
   if (formValid) {
-    helperFunctions.enableButtons([signUpBtn]);
-  } else helperFunctions.disableButtons([signUpBtn]);
+    enableButtons([signUpInBtn]);
+  } else disableButtons([signUpInBtn]);
 }
+
 function validateUserName() {
   setErrorMessage("", usernameErMsgDiv);
   const userInput = userNameInput.value.trim();
@@ -83,7 +97,7 @@ function validatePassword() {
 }
 
 //SIGN UP USER
-function signUpUser() {
+export function signUpUser() {
   fetch("/auth/signUp", {
     method: "POST",
     body: JSON.stringify({
@@ -95,16 +109,19 @@ function signUpUser() {
     },
   })
     .then((response) => response.json())
-    .then((message) => {
-      if (message) {
-        helperFunctions.enableButtons([signOutBtn]);
-      }
-    })
+    //.then((message) => {
+    //if (message) {
+    //  helperFunctions.enableButtons([signOutBtn]);
+    //}
+    //  return message;
+    //})
     .catch((error) => console.log(error));
 }
 
 //SIGN IN USER
-function signInUser() {
+export function signInUser() {
+  //console.log("signing in user");
+  //console.log("userNameInput: ", userNameInput.value);
   fetch("/auth/signIn", {
     method: "POST",
     body: JSON.stringify({
@@ -115,11 +132,11 @@ function signInUser() {
       "Content-type": "application/json; charset=UTF-8",
     },
   })
-    .then((responsePromise) => responsePromise.json())
+    .then((responsePromise) => responsePromise.text())
     .then((message) => {
       if (message) {
-        helperFunctions.enableButtons([signOutBtn]);
-        helperFunctions.disableButtons([signInBtn, signUpBtn]);
+        alert(message);
+        fetchQuotesPage();
       }
     })
     .catch((error) => console.log(error));
@@ -131,8 +148,8 @@ function signOutUser() {
     .then((response) => response.json())
     .then((message) => {
       if (message) {
-        helperFunctions.enableButtons([signInBtn, signUpBtn]);
-        helperFunctions.disableButtons(signOutBtn);
+        //enableButtons([signInBtn, signUpBtn]);
+        //disableButtons(signOutBtn);
       }
     })
     .catch((error) => console.log(error));

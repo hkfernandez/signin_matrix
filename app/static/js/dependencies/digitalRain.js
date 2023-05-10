@@ -1,4 +1,4 @@
-const digitalRainOverlay = document.getElementById("digitalRainOverlay");
+const fullPageOverlay = document.getElementById("fullPageOverlay");
 
 // CODE CREDIT TO: https://ruletheweb.co.uk/matrix.html
 function rand_int(a, b) {
@@ -25,7 +25,7 @@ export function rain() {
     trail.style.top = rand_int(-window.innerHeight, 0) + "px";
     trail.style.fontSize = rand_int(10, 25) + "px";
 
-    digitalRainOverlay.appendChild(trail);
+    fullPageOverlay.appendChild(trail);
     const intervalId = setInterval(() => update(i), rand_int(60, 120));
     setTimeout(() => clearInterval(intervalId), 10000);
   }

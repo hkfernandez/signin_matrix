@@ -1,70 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+  <head id="head">
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" type="text/css" href="/static/css/reset.css" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="stylesheet" type="text/css" href="/static/css/pills.css" />
     <link
       href="https://fonts.googleapis.com/css2?family=Dosis:wght@200;400;700&display=swap"
       rel="stylesheet"
     />
-    <script type="module" src="static/js/pillsPage.js" defer></script>
-    <!--<script type="module" src="static/js/digitalRain.js" defer></script>-->
-    <title>Pills</title>
+    <script type="module" src="static/js/index.js" defer></script>
+    <script src="../../static/components/Header.js" defer></script>
+    <title>Favs</title>
   </head>
   <body>
-    <div class="pills-wrapper">
-      <div id="digitalRainOverlay" ></div>
-      <div id="redPillWrapper" class="pill-wrapper">
-        <div id="redPillWrapperOverlay" class="overlay"></div>
-          <div
-            id="redLeft"
-            class="pill red left shiny"
-            data-side="left"
-            data-color="red"
-          >
-            The choice...
-          </div>
-          <div
-            id="redRight"
-            class="pill red right shiny text-hidden"
-            data-side="right"
-            data-color="red"
-          >
-            ...is made
-          </div>
-          <button href="/digitalRain" id="wakeUpBtn" class="navigation-btn btn-green">
-            WAKE <br />
-            UP
-          </button>
-        </div>
-    
-      <div id="bluePillWrapper" class="pill-wrapper">
-          <div
-            id="blueLeft"
-            class="pill blue left shiny text-hidden"
-            data-side="left"
-            data-color="blue"
-          >
-            Oblivion...
-          </div>
-          <div
-            id="blueRight"
-            class="pill blue right shiny"
-            data-side="right"
-            data-color="blue"
-          >
-            ...is yours
-          </div>
-          <button id="restWellBtn" class="navigation-btn btn-blue">
-            REST <br />
-            WELL
-          </button>
-        </div>
-      
+    <header-component id="pageHeader"></header-component>
+    <div id="pageWrapper">
+      <h1>Main Page</h1>
+      <p>Lorem text</p>
+    </div>
   </body>
 </html>

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" type="text/css" href="/static/css/index.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Dosis:wght@200;400;700&display=swap"
+      rel="stylesheet"
+    />
+    <!--<script type="module" src="static/js/pillsPage.js" defer></script>-->
+    <script type="module" src="static/js/dependencies/signup.js" defer></script>
+    <title>Pills</title>
+  </head>
+  <body>
+    <div class="pills-wrapper" style="position: relative;">
+      <div id="fullPageOverlay" style="position: absolute;"></div>
+      <div id="redPillWrapper" class="pill-wrapper" style="position: relative;">
+        <div id="redPillPopup" class="popup">
+          <div id="popupSymbol">?</div> 
+          <div class="popupContentWrapper hidden">
+            <div class="popup-content">
+              Sign in for the full user experience
+              <button class="popup-more-btn">What's the difference?</button>
+            </div> 
+            <div class="popup-more-content">If you sign up the site offers more interactivity. No need to use a real email account when creating an account - its all just for fun. I used Google Firestore to develop the authenication procedures for these pages and it requires an email address.</div>
+          </div>
+        </div>
+          <div
+            id="redLeft"
+            class="pill red left shiny"
+            data-side="left"
+            data-color="red"
+          >
+            The choice...
+          </div>
+          <div
+            id="redRight"
+            class="pill red right shiny text-hidden"
+            data-side="right"
+            data-color="red"
+          >
+            ...is made
+          </div>
+          <!--remove-->
+          <button id="wakeUpBtn" style="position: absolute; display: none">
+          </button>
+          <div id="signUpInWrapper" style="position: absolute;">
+            <form id="signUpInForm">
+              <div id="inputsWrapper">
+                <div class="form-control">
+                  <label aria-label="username">
+                  <input
+                    id="userNameInput"
+                    type="text"
+                    name="userName"
+                    autocomplete="username"
+                    placeholder="email"
+                  />
+                  </label>
+                  <div id="usernameErMsg" class="error-message"></div>
+                </div>
+                <div class="form-control">
+                  <label aria-label="password">
+                    <div class="relative-wrapper" style="position: relative;">
+                      <input
+                      id="passwordInput"
+                      type="password"
+                      name="password"
+                      autocomplete="current-password"
+                      placeholder="password"
+                      style="position: relative;"
+                      />
+                      <button class="togglePwVisibilityBtn" type="button" style="position: absolute; top: 0; left: calc(100% - 24px);">
+                        <img src="static/images/show-svgrepo-com.svg" alt="show password" class="show-hide-icon">
+                      </button>
+                    </div>
+                  </label>
+                  <div id="passwordErMsg" class="error-message"></div>
+                </div>
+                <div class="form-control">
+                  <label aria-label="confirm password">
+                    <div class="relative-wrapper" style="position: relative;">
+                      <input
+                      id="confirmPasswordInput"
+                      type="password"
+                      name="password"
+                      autocomplete="current-password"
+                      placeholder=" confirm password"
+                      style="position: relative;"
+                      />
+                      <button class="togglePwVisibilityBtn" type="button" style="position: absolute; top: 0; left: calc(100% - 24px);">
+                        <img src="static/images/show-svgrepo-com.svg" alt="show password" class="show-hide-icon">
+                      </button>
+                    </div>
+                  </label>
+                </div>
+              </div>
+              <!--animation wrapper allows the button to pulse and move at the same time-->
+              <div id="btnAnimationWrapper" style="position: absolute;">
+                <button id="signUpInBtn" class='navigation-btn btn-green' type="button">SIGN UP</button>
+              </div>
+              <p id="signUpInMessage" style="position: absolute; top:0;">
+                <span id="signUpInMessageText"></span>
+                <button id="toggleSignUpInFormBtn" type="button" class="btn-text">
+                  HERE
+                </button>
+              </p>
+            </form>
+            <!--currently display none-->
+            <button id="signOutBtn" type="button" disabled style="display: none;">Sign Out</button>
+          </div>
+        </div>
+    
+      <div id="bluePillWrapper" class="pill-wrapper" style="position: relative;">
+          <div
+            id="blueLeft"
+            class="pill blue left shiny text-hidden"
+            data-side="left"
+            data-color="blue"
+          >
+            Ignorance
+          </div>
+          <div
+            id="blueRight"
+            class="pill blue right shiny"
+            data-side="right"
+            data-color="blue"
+          >
+            ...is yours
+          </div>
+          <div id="continueBtnAndMessagesWrapper" style="position: absolute;">
+            <p id="cypherQuote" class="quote">
+              Ignorance is bliss.
+              <br>
+              <span>-Cypher</span> 
+            </p>
+            <a href="/static/quotesPage.html">
+              <button  id="continueWithoutSigningInBtn" class="navigation-btn btn-blue" >
+                REST <br />
+                WELL
+              </button>
+            </a>
+            <p id="continueMessage" class="message">Contine with a more limited experience</p>
+          </div>
+        </div>
+        <button id="test">TEST</button>
+      
+  </body>
+</html>
