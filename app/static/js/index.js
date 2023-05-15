@@ -10,8 +10,15 @@ const pageWrapper = document.getElementById("pageWrapper");
 const headTag = document.getElementById("head");
 const pageHeader = document.getElementById("pageHeader");
 
+//LISTENERS
+window.addEventListener("popstate", (event) => renderPage(event));
+
 //PASS FUNCTIONS TO HEADER COMPONENT
-pageHeader.fetchPillsPage = fetchPillsPage;
+pageHeader.fetchPillsPage = () =>
+  fetchPage("/pillsPage", "/pills", [
+    "/static/js/pillsPage.js",
+    "/static/js/dependencies/signup.js",
+  ]);
 
 function removePreviousPageScripts() {
   const scriptTags = document.getElementsByTagName("script");
@@ -21,42 +28,41 @@ function removePreviousPageScripts() {
     }
   });
 }
-
-function fetchPillsPage() {
-  fetch("/pills")
+function fetchPage(route, path, scriptUrls) {
+  //as a single page application boweser only renders index.html
+  //fetchPage retreives html from browser and renders it to div
+  //paths in browser are not defined on server but are used as parameters in fetchPage
+  fetch(route)
     .then((response) => response.text())
     .then((pageHtml) => {
+      history.pushState({ path }, null, path);
       removePreviousPageScripts();
       pageWrapper.innerHTML = pageHtml;
-      let pillsScript = createScriptTag(
-        "pageScript1",
-        "/static/js/pillsPage.js",
-        "module"
-      );
-      let signUpScript = createScriptTag(
-        "pageScript2",
-        "/static/js/dependencies/signup.js",
-        "module"
-      );
-      headTag.appendChild(pillsScript);
-      headTag.appendChild(signUpScript);
+      for (let index = 0; index < scriptUrls.length; index++) {
+        let scriptTag = createScriptTag(
+          `pageScript${index}`,
+          scriptUrls[index],
+          "module"
+        );
+        headTag.appendChild(scriptTag);
+      }
     })
-    .catch((error) => console.log(error));
+    .catch((error) => console.log("ERROR IN FETCHING PAGE", error));
 }
 
-export function fetchQuotesPage() {
-  fetch("/quotes")
-    .then((response) => response.text())
-    .then((pageHtml) => {
-      removePreviousPageScripts();
-      pageWrapper.innerHTML = pageHtml;
-      let quotesScript = createScriptTag(
-        "pageScript1",
-        "/static/js/quotesPage.js",
-        "module"
-      );
-
-      headTag.appendChild(quotesScript);
-    })
-    .catch((error) => console.log(error));
+function renderPage(event) {
+  //if there is an event the back button has been used
+  let path = window.location.pathname;
+  if (event) path = event.state.path;
+  if (path === "/") path = "/home";
+  if (path === "/home")
+    fetchPage("/homePage", path, ["/static/js/homePage.js"]);
+  if (path === "/pills")
+    fetchPage("/pillsPage", path, [
+      "/static/js/pillsPage.js",
+      "/static/js/dependencies/signup.js",
+    ]);
+  if (path === "/quotes")
+    fetchPage("/quotesPage", path, ["/static/js/quotesPage.js"]);
 }
+window.onload = () => renderPage();

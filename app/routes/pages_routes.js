@@ -1,7 +1,8 @@
 const router = require("express").Router();
 const pagesController = require("../controller/pages_controller");
 
-router.route("/quotes").get(pagesController.getQuotesPage);
-router.route("/pills").get(pagesController.getPillsPage);
+router.route("/homePage").get(pagesController.getHomePage);
+router.route("/pillsPage").get(pagesController.getPillsPage);
+router.route("/quotesPage").get(pagesController.getQuotesPage);
 
 module.exports = router;

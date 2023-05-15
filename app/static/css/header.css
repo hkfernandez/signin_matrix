@@ -243,6 +243,7 @@ input {
 }
 header {
   background: white;
+  width: 100%;
 }
 
 #tileAndLinksWrapper {

@@ -1,8 +1,8 @@
 const path = require("path");
 
 module.exports = {
-  getHomePage: (req, res) => {
-    console.log("getting home page");
+  getSinglePageApp: (req, res) => {
+    console.log("getting single page app");
     res.sendFile(path.join(__dirname, "../view/html/index.html"));
   },
 };
