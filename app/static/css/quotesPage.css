@@ -132,7 +132,8 @@ table {
 body {
   font-family: "Dosis", sans-serif;
   font-size: 16px;
-  background-color: #0d0208;
+  background-color: #e6cfa8;
+  color: black;
 }
 
 button {
@@ -146,8 +147,13 @@ button {
 .btn-text {
   background-color: transparent;
   padding: 0;
-  color: #00ff41;
+  color: #f55d3e;
   cursor: pointer;
+}
+
+h1 {
+  font-size: 64px;
+  font-family: "Bakbak One", cursive;
 }
 
 input[type=text i] {
@@ -190,8 +196,8 @@ input {
   border: 2px solid red;
 }
 .popup .popup-content {
-  background-color: #008f11;
-  color: white;
+  background-color: #e6cfa8;
+  color: black;
   border-radius: 2em 2em 0 0;
   padding: 1em 1em 0 1em;
   text-align: center;
@@ -202,7 +208,7 @@ input {
 }
 .popup .popup-more-btn {
   background-color: transparent;
-  color: #00ff41;
+  color: #f55d3e;
   display: block;
   text-align: right;
   border: 2px solid blue;
@@ -210,7 +216,31 @@ input {
 .popup .popup-more-content {
   border-radius: 0 0 2em 2em;
   padding: 1em;
-  background-color: white;
+  background-color: #e6cfa8;
+}
+
+.title-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 2em;
+}
+.title-wrapper h1 {
+  font-family: "Bakbak One", cursive;
+  font-size: 72px;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+.title-wrapper h2 {
+  font-family: "Bakbak One", cursive;
+  font-size: 32px;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+.title-wrapper h3 {
+  font-size: 24px;
+  max-width: 600px;
+  text-align: center;
 }
 
 @keyframes greenPulse {
@@ -319,7 +349,7 @@ body {
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: start;
+  justify-content: flex-start;
   width: 100px;
   height: 150px;
   margin-left: -60px;

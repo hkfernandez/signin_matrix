@@ -25,13 +25,6 @@ export const helperFunctions = {
     element.removeEventListener("click", oldFunction);
     element.addEventListener("click", newFunction);
   },
-  createScriptTag: (tagId, source, tagType) => {
-    const scriptTag = document.createElement("script");
-    scriptTag.id = tagId;
-    scriptTag.src = source;
-    scriptTag.type = tagType;
-    return scriptTag;
-  },
   disableButtons: (buttons) => {
     buttons.forEach((button) => button.setAttribute("disabled", ""));
   },
@@ -39,9 +32,7 @@ export const helperFunctions = {
     buttons.forEach((button) => button.removeAttribute("disabled"));
   },
   togglePwVisibility: ({ target: image }) => {
-    console.log("event.target ", image);
     const input = image.parentElement.previousElementSibling;
-    console.log(input);
     if (input.type === "password") {
       input.type = "text";
       //toggleButton.textContent = "Hide";
@@ -51,5 +42,38 @@ export const helperFunctions = {
       //toggleButton.textContent = "Show";
       image.src = "static/images/show-svgrepo-com.svg";
     }
+  },
+  updatePageScriptTags: (scriptPaths) => {
+    //for single page app need to remove and add scripts with each new page load
+    //this will reassign event listeners for the new page as DOM elements have been removed and reloaded
+    function removePreviousPageScripts() {
+      const scriptTags = document.getElementsByTagName("script");
+      Array.from(scriptTags).forEach((scriptTag) => {
+        if (scriptTag.id.includes("pageScript")) {
+          scriptTag.remove();
+        }
+      });
+    }
+    function addNewPageScriptTags(scriptPaths) {
+      function createScriptTag(tagId, source, tagType) {
+        const scriptTag = document.createElement("script");
+        scriptTag.id = tagId;
+        scriptTag.src = source;
+        scriptTag.type = tagType;
+        return scriptTag;
+      }
+
+      for (let index = 0; index < scriptPaths.length; index++) {
+        let scriptTag = createScriptTag(
+          `pageScript${index + 1}`,
+          scriptPaths[index],
+          "module"
+        );
+        document.getElementsByTagName("body")[0].appendChild(scriptTag);
+      }
+    }
+
+    removePreviousPageScripts();
+    addNewPageScriptTags(scriptPaths);
   },
 };
