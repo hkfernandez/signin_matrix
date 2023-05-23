@@ -15,7 +15,7 @@
   height: 100vh;
   width: 100vw;
   background: transparent;
-  color: var.$lightGreen;
+  color: var.$matrixLightGreen;
 }
 .digital-rain-drop {
   width: 1em;
@@ -36,15 +36,15 @@
   font-family: "Dosis", sans-serif;
   font-size: 20px;
   font-weight: 400;
-  border: 1px solid var.$black;
-  color: var.$black;
+  border: 1px solid var.$matrixBlack;
+  color: var.$matrixBlack;
   cursor: pointer;
 }
 .red {
-  background-color: var.$pillMediumRed;
+  background-color: var.$matrixPillMediumRed;
 }
 .blue {
-  background-color: var.$pillMediumBlue;
+  background-color: var.$matrixPillMediumBlue;
 }
 .shiny {
   //button styling credit: https://websemantics.uk/articles/shiny-buttons/
@@ -73,7 +73,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: var.$black;
+  background-color: var.$background;
 
   #signUpInForm {
     display: flex;
@@ -131,13 +131,13 @@
   width: 200px;
   margin: auto;
   font-size: 0.75em;
-  color: var.$black;
+  color: var.$matrixBlack;
   border-radius: 0.25em;
   cursor: pointer;
 }
 .btn-green {
-  background: var.$lightGreen;
-  box-shadow: 0 0 0.25em 0.5em var.$mediumGreen;
+  background: var.$matrixLightGreen;
+  box-shadow: 0 0 0.25em 0.5em var.$matrixMediumGreen;
   animation: greenPulse 4s infinite;
 }
 #continueBtnAndMessagesWrapper {
@@ -151,7 +151,7 @@
   text-align: center;
   .quote {
     font-style: italic;
-    color: var.$lightGreen;
+    color: var.$matrixLightGreen;
     padding-right: 10px;
     span {
       font-style: normal;
@@ -161,8 +161,8 @@
     }
   }
   .btn-blue {
-    background: var.$btnLightBlue;
-    box-shadow: 0 0 0.25em 0.5em var.$pillMediumBlue;
+    background: var.$matrixBtnLightBlue;
+    box-shadow: 0 0 0.25em 0.5em var.$matrixPillMediumBlue;
     animation: bluePulse 4s infinite;
   }
   .message {

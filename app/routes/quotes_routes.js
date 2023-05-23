@@ -2,7 +2,7 @@ const router = require("express").Router();
 const quotesController = require("../controller/quotes_controller");
 const pagesController = require("../controller/pages_controller");
 
-router.route("/quotes").get(pagesController.getQuotesPage);
+router.route("/quotesPage").get(pagesController.getQuotesPage);
 
 router
   .route("/quotes/api")

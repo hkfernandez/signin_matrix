@@ -119,10 +119,10 @@ export function signUpUser() {
 }
 
 //SIGN IN USER
-export function signInUser() {
+export async function signInUser() {
   //console.log("signing in user");
   //console.log("userNameInput: ", userNameInput.value);
-  fetch("/auth/signIn", {
+  const message = await fetch("/auth/signIn", {
     method: "POST",
     body: JSON.stringify({
       userName: userNameInput.value,
@@ -132,14 +132,11 @@ export function signInUser() {
       "Content-type": "application/json; charset=UTF-8",
     },
   })
-    .then((responsePromise) => responsePromise.text())
-    .then((message) => {
-      if (message) {
-        alert(message);
-        fetchQuotesPage();
-      }
-    })
+    .then((responsePromise) => responsePromise.json())
+    .then((response) => response.message)
     .catch((error) => console.log(error));
+  console.log("message in fetch");
+  return message;
 }
 
 //SIGN OUT USER

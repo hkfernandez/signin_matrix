@@ -14,6 +14,7 @@ window.addEventListener("click", delegateClickEvent);
 function delegateClickEvent(event) {
   //composed path helps when clicking on a web component
   //returns an array of the nodes crossed - innermost node first
+  event.preventDefault();
   const linkPath = event.composedPath()[0].dataset.path;
   if (!linkPath || linkPath === window.location.pathname) return;
   fetchPage(linkPath);
@@ -40,7 +41,12 @@ function fetchPage(path) {
     .then((pageHtml) => {
       setHistoryPageHtmlAndScripts(path, pageHtml);
     })
-    .catch((error) => console.log("ERROR IN FETCHING PAGE", error));
+    .catch((error) => {
+      console.log("ERROR IN FETCHING PAGE", error);
+      console.log(window.location.pathname);
+      if (window.location.pathname === "/about") return;
+      fetchPage("/about");
+    });
 }
 function setHistoryPageHtmlAndScripts(path, pageHtml) {
   let pageScriptsPaths = javascriptPaths[path.slice(1) + "Page"];
@@ -52,8 +58,8 @@ function setHistoryPageHtmlAndScripts(path, pageHtml) {
 function renderPage(event) {
   //if there is an event the back button has been used
   let path = window.location.pathname;
-  if (event) path = event.state.path;
   if (path === "/") path = "/about";
+  console.log("path: ", path);
   if (event) {
     path = event.state.path;
     let pageHtml = event.state.pageHtml;

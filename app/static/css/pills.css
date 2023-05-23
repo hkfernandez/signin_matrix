@@ -132,7 +132,8 @@ table {
 body {
   font-family: "Dosis", sans-serif;
   font-size: 16px;
-  background-color: #0d0208;
+  background-color: white;
+  color: black;
 }
 
 button {
@@ -146,8 +147,13 @@ button {
 .btn-text {
   background-color: transparent;
   padding: 0;
-  color: #00ff41;
+  color: #f55d3e;
   cursor: pointer;
+}
+
+h1 {
+  font-size: 64px;
+  font-family: "Bakbak One", cursive;
 }
 
 input[type=text i] {
@@ -172,45 +178,28 @@ input {
   transform: rotateY(90deg);
 }
 
-.popup {
-  position: absolute;
-  top: 100px;
-  right: -100px;
+.title-wrapper {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
+  margin-bottom: 2em;
 }
-.popup .popupSymbol {
-  position: absolute;
-  top: 20px;
-  right: -20px;
-}
-.popup .popupContentWrapper {
-  border: 2px solid red;
-}
-.popup .popup-content {
-  background-color: #008f11;
-  color: white;
-  border-radius: 2em 2em 0 0;
-  padding: 1em 1em 0 1em;
+.title-wrapper h1 {
+  font-family: "Bakbak One", cursive;
+  font-size: 72px;
+  margin-bottom: 1rem;
   text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  justify-content: flex-end;
 }
-.popup .popup-more-btn {
-  background-color: transparent;
-  color: #00ff41;
-  display: block;
-  text-align: right;
-  border: 2px solid blue;
+.title-wrapper h2 {
+  font-family: "Bakbak One", cursive;
+  font-size: 32px;
+  margin-bottom: 1rem;
+  text-align: center;
 }
-.popup .popup-more-content {
-  border-radius: 0 0 2em 2em;
-  padding: 1em;
-  background-color: white;
+.title-wrapper h3 {
+  font-size: 24px;
+  max-width: 600px;
+  text-align: center;
 }
 
 @keyframes greenPulse {
@@ -287,6 +276,12 @@ input {
 
 .fade-text-in {
   animation: fadeTextIn ease-in 3s forwards;
+}
+
+.fade-overlay-in {
+  background: #0d0208;
+  z-index: 10;
+  animation: fadeElementIn ease-in 6 sec forwards;
 }
 
 .scroll-sign-in-message-out {
@@ -471,7 +466,7 @@ input {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #0d0208;
+  background-color: white;
 }
 #signUpInWrapper #signUpInForm {
   display: flex;

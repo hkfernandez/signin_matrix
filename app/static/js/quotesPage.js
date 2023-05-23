@@ -1,10 +1,11 @@
 import { helperFunctions } from "/static/js/dependencies/helperFunctions.js";
 const { addListenerReturnElement, addRemoveClass } = helperFunctions;
+import { QuoteLi } from "../components/QuoteLi.js";
 
 // ELEMENTS;
 const quoteInput = document.getElementById("quoteInput");
 const authorInput = document.getElementById("authorInput");
-const quotesWrapper = document.getElementById("quotesWrapper");
+const quotesList = document.getElementById("quotesList");
 const screen = addListenerReturnElement("#screen", "click", selectScreen);
 const mouthPiece = addListenerReturnElement(
   "#mouthPiece",
@@ -14,9 +15,9 @@ const mouthPiece = addListenerReturnElement(
 const openBtn = addListenerReturnElement("#openBtn", "click", openClosePhone);
 
 //VARIABLES
-const phoneMessages = {
-  answer: "ANSWER THE PHONE",
-  addQuote: "ADD A QUOTE",
+const PHONE_MESSAGES = {
+  ANSWER: "ANSWER THE PHONE",
+  ADD_QUOTE: "ADD A QUOTE",
 };
 
 //HELPER FUNCTIONS
@@ -35,7 +36,7 @@ function clearFormInputs() {
 }
 
 function selectScreen() {
-  if (screen.textContent === phoneMessages.answer) {
+  if (screen.textContent === PHONE_MESSAGES.ANSWER) {
     return;
   } else {
     addQuote();
@@ -43,9 +44,9 @@ function selectScreen() {
 }
 
 function openClosePhone({ target }) {
-  if (screen.textContent === phoneMessages.answer) {
+  if (screen.textContent === PHONE_MESSAGES.ANSWER) {
     addRemoveClass(mouthPiece, "open-phone", "close-phone");
-    screen.textContent = phoneMessages.addQuote;
+    screen.textContent = PHONE_MESSAGES.ADD_QUOTE;
     openBtn.classList.add("btn-disabled");
     screen.classList.remove("btn-disabled");
     return;
@@ -54,7 +55,7 @@ function openClosePhone({ target }) {
     return;
   } else {
     addRemoveClass(mouthPiece, "close-phone", "open-phone");
-    screen.textContent = phoneMessages.answer;
+    screen.textContent = PHONE_MESSAGES.ANSWER;
     openBtn.classList.remove("btn-disabled");
     screen.classList.add("btn-disabled");
     quoteInput.value = "";
@@ -119,28 +120,20 @@ async function getAllQuotes() {
     (error) => console.log(error);
   }
 }
-function createQuoteDiv(quote) {
-  const quoteDiv = createElementWithTextAndClass("div", "", "quote-div");
-  quoteDiv.dataset.id = quote.id;
-  const text = createElementWithTextAndClass("p", quote.text, "quote-text");
-  const textEmphasisTag = document.createElement("em");
-  textEmphasisTag.appendChild(text);
-  const author = createElementWithTextAndClass(
-    "p",
-    `- ${quote.author}`,
-    "quote-author"
-  );
-  const user = createElementWithTextAndClass(
-    "p",
-    quote.userName ? quote.userName : "anonymous",
-    "quote-user"
-  );
-  appendChildren(quoteDiv, [textEmphasisTag, author, user]);
-  return quoteDiv;
+function createQuoteLi(quote) {
+  const quoteLi = new QuoteLi();
+  quoteLi.id = quote.id;
+  quoteLi.shadowRoot.querySelector(
+    ".quote-text"
+  ).textContent = `"${quote.text}"`;
+  quoteLi.shadowRoot.querySelector(
+    ".quote-author"
+  ).textContent = `- ${quote.author}`;
+  return quoteLi;
 }
 function addQuoteToPage(quote) {
-  const quoteDiv = createQuoteDiv(quote);
-  quotesWrapper.appendChild(quoteDiv);
+  const quoteLi = createQuoteLi(quote);
+  quotesList.appendChild(quoteLi);
 }
 async function addQuotesToPage() {
   const quotes = await getAllQuotes();

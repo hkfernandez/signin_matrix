@@ -132,7 +132,7 @@ table {
 body {
   font-family: "Dosis", sans-serif;
   font-size: 16px;
-  background-color: #e6cfa8;
+  background-color: white;
   color: black;
 }
 
@@ -176,47 +176,6 @@ input {
 
 .hidden {
   transform: rotateY(90deg);
-}
-
-.popup {
-  position: absolute;
-  top: 100px;
-  right: -100px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-}
-.popup .popupSymbol {
-  position: absolute;
-  top: 20px;
-  right: -20px;
-}
-.popup .popupContentWrapper {
-  border: 2px solid red;
-}
-.popup .popup-content {
-  background-color: #e6cfa8;
-  color: black;
-  border-radius: 2em 2em 0 0;
-  padding: 1em 1em 0 1em;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  justify-content: flex-end;
-}
-.popup .popup-more-btn {
-  background-color: transparent;
-  color: #f55d3e;
-  display: block;
-  text-align: right;
-  border: 2px solid blue;
-}
-.popup .popup-more-content {
-  border-radius: 0 0 2em 2em;
-  padding: 1em;
-  background-color: #e6cfa8;
 }
 
 .title-wrapper {
@@ -277,7 +236,7 @@ header {
 }
 
 .standard-colors {
-  background: #e6cfa8;
+  background: white;
   color: black;
 }
 
