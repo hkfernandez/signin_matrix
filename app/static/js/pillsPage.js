@@ -63,11 +63,13 @@ const animations = {
       "If you have already created an account and remember your email and password, click ";
     signUpInBtn.innerHTML = "WAKE UP";
     if (RED_PILL_STATE === "closed") {
+      console.log("signUpInBtn moving");
       addRemoveClass(
         btnAnimationWrapper,
         "scroll-sign-up-btn-in-with-delay",
         "scoll-sign-up-btn-to-cover-input"
       );
+      btnAnimationWrapper.classList.remove("scoll-sign-up-btn-out");
     } else {
       addRemoveClass(
         btnAnimationWrapper,
@@ -104,13 +106,14 @@ const animations = {
         if (RED_PILL_STATE === "closed") {
           rightPill.classList.remove("text-hidden");
           openClosePill("red", "open");
-          console.log("before adding class", bluePillWrapper.classList);
+          //console.log("before adding class", bluePillWrapper.classList);
           addRemoveClass(
-            bluePillWrapper,
-            "fade-element-out",
-            "fade-element-in"
+            redPillWrapper,
+            "scroll-red-pill-down",
+            "scroll-red-pill-up"
           );
-          console.log("after adding class", bluePillWrapper.classList);
+          addRemoveClass(bluePillWrapper, "fade-pill-out", "fade-pill-in");
+          //console.log("after adding class", bluePillWrapper.classList);
           addRemoveClass(
             signUpInMessage,
             "scroll-sign-in-message-in",
@@ -118,23 +121,38 @@ const animations = {
           );
           animations.switchToSignUp();
           RED_PILL_STATE = "open";
-          console.log(
-            "classList at end of animation",
-            bluePillWrapper.classList
-          );
+          //console.log(
+          //  "classList at end of animation",
+          //  bluePillWrapper.classList
+          //);
         } else {
           openClosePill("red", "close");
           addRemoveClass(
-            bluePillWrapper,
-            "fade-element-in",
-            "fade-element-out"
+            redPillWrapper,
+            "scroll-red-pill-up",
+            "scroll-red-pill-down"
+          );
+          setTimeout(
+            addRemoveClass(bluePillWrapper, "fade-pill-in", "fade-pill-out"),
+            2000
           );
           addRemoveClass(
             signUpInMessage,
             "scroll-sign-in-message-out",
             "scroll-sign-in-message-in"
           );
-          animations.switchToSignIn();
+          //animations.switchToSignIn();
+          addRemoveClass(
+            btnAnimationWrapper,
+            "scoll-sign-up-btn-out",
+            "scroll-sign-up-btn-in-with-delay"
+          );
+          btnAnimationWrapper.classList.remove(
+            "scroll-sign-up-btn-in-no-delay"
+          );
+          btnAnimationWrapper.classList.remove(
+            "scoll-sign-up-btn-to-cover-input"
+          );
           RED_PILL_STATE = "closed";
         }
       } else {
@@ -142,11 +160,25 @@ const animations = {
         if (BLUE_PILL_STATE === "closed") {
           leftPill.classList.remove("text-hidden");
           openClosePill("blue", "open");
-          addRemoveClass(redPillWrapper, "fade-element-out", "fade-element-in");
+          addRemoveClass(
+            bluePillWrapper,
+            "scroll-blue-pill-up",
+            "scroll-blue-pill-down"
+          );
+          addRemoveClass(redPillWrapper, "fade-pill-out", "fade-pill-in");
           BLUE_PILL_STATE = "open";
         } else {
-          addRemoveClass(redPillWrapper, "fade-element-in", "fade-element-out");
+          setTimeout(
+            () =>
+              addRemoveClass(redPillWrapper, "fade-pill-in", "fade-pill-out"),
+            3000
+          );
           openClosePill("blue", "close");
+          addRemoveClass(
+            bluePillWrapper,
+            "scroll-blue-pill-down",
+            "scroll-blue-pill-up"
+          );
           BLUE_PILL_STATE = "closed";
         }
       }
@@ -171,8 +203,7 @@ const animations = {
     fullPageOverlay.classList.add("fade-in-overlay");
     rain();
     setTimeout(
-      () =>
-        addRemoveClass(redPillWrapper, "fade-element-out", "fade-element-in"),
+      () => addRemoveClass(redPillWrapper, "fade-pill-out", "fade-pill-in"),
       3000
     );
     setTimeout(() => {

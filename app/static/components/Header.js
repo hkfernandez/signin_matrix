@@ -1,18 +1,14 @@
-const template = document.createElement("template");
-template.innerHTML = `
-  <link rel="stylesheet" href="/static/css/header.css" />
-  <header id="headerComponent">
+const template = `
+  <header>
     <div id="tileAndLinksWrapper">
-      <div id="siteNameWrapper">
-        <button>
-          <h1 data-path="/about">Favorites</h1>
-        </button>
-        <h2>a tech stack portfolio</h2>
-      </div>
+      <button id='backToAboutBtn' data-path="/about" class="btn-text-with-border">
+        <p data-path="/about">Favorites</p>
+        <span data-path="/about">a tech stack portfolio</span>
+      </button>
       <nav>
         <ul>
-          <li><button data-path="/pills">Auth</button><li>
-          <li><button id="dockerBtn">Docker</button><li>
+          <li><button data-path="/pills" class="btn-text btn-header">Auth</button><li>
+          <li><button id="dockerBtn" class="btn-text btn-header">Docker</button><li>
         </ul>
       </nav>
     </div>
@@ -21,13 +17,9 @@ template.innerHTML = `
 class Header extends HTMLElement {
   constructor() {
     super();
-    const shadow = this.attachShadow({ mode: "open" });
-    shadow.append(template.content.cloneNode(true));
   }
   connectedCallback() {
-    //this.shadowRoot
-    //  .getElementById("authBtn")
-    //  .addEventListener("click", () => this.fetchPillsPage());
+    this.innerHTML = template;
   }
 }
 customElements.define("header-component", Header);

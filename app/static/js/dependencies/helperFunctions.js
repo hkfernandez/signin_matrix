@@ -19,6 +19,7 @@ export const helperFunctions = {
   },
   addRemoveClass: (element, addClass, removeClass) => {
     element.classList.add(addClass);
+    void element.offsetWidth;
     element.classList.remove(removeClass);
   },
   addRemoveClickListener: (element, newFunction, oldFunction) => {

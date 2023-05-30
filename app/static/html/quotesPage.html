@@ -9,7 +9,11 @@
     <script type="module" src="/static/js/quotesPage.js" defer></script>
   </head>
   <body>
-    <h1>Quotes</h1>
+    <div class="page-title-wrapper">
+      <h1>NoSQL Database</h1>
+      <h2>Google Firestore</h2>
+      <h3>Javascript Web Components and more CSS Styling and Animations</h3>
+    </div>
     <div id="phone">
       <div id="receiver">
         <div id="antenna"></div>
@@ -23,11 +27,11 @@
         <div id="screenBezel">
           <div id="screen" class="btn-disabled">ANSWER THE PHONE</div>
         </div>
-        <form action="" method="POST">
+        <form id="addQuoteForm" action="" method="POST">
           <div class="form-control">
             <label for="quoteInput" aria-label="quote text"> </label>
             <textarea
-              rows="4"
+              rows="3"
               type="text"
               id="quoteInput"
               name="quoteInput"
