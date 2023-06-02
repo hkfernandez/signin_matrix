@@ -13,7 +13,7 @@ module.exports = {
     res.sendFile(path.join(__dirname, "../view/html/index.html"));
   },
   signUpUserWithEmailandPassword: ({ body }, res) => {
-    console.log("firebase request body: ", body);
+    //console.log("firebase request body: ", body);
     createUserWithEmailAndPassword(auth, body.userName, body.password)
       .then(() => {
         res.json({ message: "sign up success" });
@@ -23,7 +23,7 @@ module.exports = {
       });
   },
   signInUserWithEmailAndPassword: ({ body }, res) => {
-    console.log("firebase request body: ", body);
+    //console.log("firebase request body: ", body);
     signInWithEmailAndPassword(auth, body.userName, body.password)
       .then(() => {
         res.json({ message: "user signed in" });

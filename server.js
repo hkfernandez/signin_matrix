@@ -15,6 +15,7 @@ const expressApp = express();
 expressApp.use(express.json());
 expressApp.use(cors());
 expressApp.use(cookieParser());
+expressApp.use("/favicon.ico", express.static("images/favicon.ico"));
 expressApp.use("/static", express.static(path.join(__dirname, "app/static")));
 expressApp.use(routes);
 
@@ -25,3 +26,6 @@ if (listening) {
 } else {
   console.log("--------- Uable to start server ----------");
 }
+
+//favicon attribution
+//https://www.flaticon.com/free-icons/star

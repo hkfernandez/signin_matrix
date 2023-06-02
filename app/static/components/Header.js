@@ -2,7 +2,7 @@ const template = `
   <header>
     <div id="tileAndLinksWrapper">
       <button id='backToAboutBtn' data-path="/about" class="btn-text-with-border">
-        <p data-path="/about">Favorites</p>
+        <p data-path="/about"><img src="/static/images/star_in_circle_32x32.png">Favorites</p>
         <span data-path="/about">a tech stack portfolio</span>
       </button>
       <nav>

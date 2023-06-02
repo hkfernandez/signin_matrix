@@ -29,7 +29,6 @@ return Math.floor(Math.random() * (b - a) + a);
 character_set = " 0123456789ｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜﾝ";
 
 function rain() {
-  console.log("raining")
     for (i = 0; i < 90; i++) {
         trail = document.createElement("div");
         for (j = rand_int(20, 50); j; j--) {
@@ -52,7 +51,6 @@ function rain() {
 }
 
 function update(j) {
-  console.log('updating')
     trail = document.getElementById("trail" + j);
     chars = trail.childNodes;
     timer = trail.timer + 1;

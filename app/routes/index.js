@@ -5,7 +5,6 @@ const authRoutes = require("./auth_routes");
 const quotesRoutes = require("./quotes_routes");
 const indexController = require("../controller/index_controller");
 
-router.route("/").get(indexController.getSinglePageApp);
 router.route("/*").get(indexController.getSinglePageApp);
 
 module.exports = [pagesRoutes, authRoutes, quotesRoutes, router];

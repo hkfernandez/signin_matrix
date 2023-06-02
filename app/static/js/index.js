@@ -3,7 +3,11 @@
 //some functions are passed to the header component and others are passed to other scripts
 
 import { helperFunctions } from "/static/js/dependencies/helperFunctions.js";
-const { updatePageScriptTags } = helperFunctions;
+const {
+  removePreviousPageScriptTags,
+  addNewPageScriptTags,
+  removeContentWrapperRecreateAndAddToDom,
+} = helperFunctions;
 
 //ELEMENTS
 const contentWrapper = document.getElementById("contentWrapper");
@@ -39,38 +43,38 @@ function fetchPage(path) {
   fetch(serverRoute)
     .then((response) => response.text())
     .then((pageHtml) => {
-      setHistoryPageHtmlAndScripts(path, pageHtml);
+      setHistoryLoadScriptsAndHtml(path, pageHtml);
     })
     .catch((error) => {
       console.log("ERROR IN FETCHING PAGE", error);
-      console.log(window.location.pathname);
       if (window.location.pathname === "/about") return;
       fetchPage("/about");
     });
 }
-function setHistoryPageHtmlAndScripts(path, pageHtml) {
+async function setHistoryLoadScriptsAndHtml(path, pageHtml) {
   let pageScriptsPaths = javascriptPaths[path.slice(1) + "Page"];
   history.pushState({ path, pageHtml }, null, path);
-  updatePageScriptTags(pageScriptsPaths);
+  //removeContentWrapperRecreateAndAddToDom();
+  removePreviousPageScriptTags();
   contentWrapper.innerHTML = pageHtml;
+  addNewPageScriptTags(pageScriptsPaths);
 }
 
 function renderPage(event) {
   //if there is an event the back button has been used
   let path = window.location.pathname;
   if (path === "/") path = "/about";
-  console.log("path: ", path);
   if (event) {
+    event.preventDefault();
     path = event.state.path;
     let pageHtml = event.state.pageHtml;
-    setHistoryPageHtmlAndScripts(path, pageHtml);
+    setHistoryLoadScriptsAndHtml(path, pageHtml);
     return;
   }
   fetchPage(path);
 }
 
-export const fetchQuotesPage = () =>
-  fetchPage("/quotes", javascriptPaths.quotesPage);
+export const fetchQuotesPage = () => fetchPage("/quotes");
 
 window.onload = () => {
   renderPage();

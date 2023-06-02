@@ -44,37 +44,41 @@ export const helperFunctions = {
       image.src = "static/images/show-svgrepo-com.svg";
     }
   },
-  updatePageScriptTags: (scriptPaths) => {
-    //for single page app need to remove and add scripts with each new page load
-    //this will reassign event listeners for the new page as DOM elements have been removed and reloaded
-    function removePreviousPageScripts() {
-      const scriptTags = document.getElementsByTagName("script");
-      Array.from(scriptTags).forEach((scriptTag) => {
-        if (scriptTag.id.includes("pageScript")) {
-          scriptTag.remove();
-        }
-      });
-    }
-    function addNewPageScriptTags(scriptPaths) {
-      function createScriptTag(tagId, source, tagType) {
-        const scriptTag = document.createElement("script");
-        scriptTag.id = tagId;
-        scriptTag.src = source;
-        scriptTag.type = tagType;
-        return scriptTag;
+  removePreviousPageScriptTags: () => {
+    const scriptTags = document.getElementsByTagName("script");
+    Array.from(scriptTags).forEach((scriptTag) => {
+      if (scriptTag.id.includes("pageScript")) {
+        scriptTag.remove();
       }
-
-      for (let index = 0; index < scriptPaths.length; index++) {
-        let scriptTag = createScriptTag(
-          `pageScript${index + 1}`,
-          scriptPaths[index],
-          "module"
-        );
-        document.getElementsByTagName("body")[0].appendChild(scriptTag);
-      }
+    });
+  },
+  addNewPageScriptTags: (scriptPaths) => {
+    function createScriptTag(tagId, source, tagType) {
+      const scriptTag = document.createElement("script");
+      scriptTag.id = tagId;
+      scriptTag.src = source;
+      scriptTag.type = tagType;
+      return scriptTag;
     }
 
-    removePreviousPageScripts();
-    addNewPageScriptTags(scriptPaths);
+    for (let index = 0; index < scriptPaths.length; index++) {
+      let scriptTag = createScriptTag(
+        `pageScript${index + 1}`,
+        scriptPaths[index],
+        "module"
+      );
+      document.getElementsByTagName("body")[0].appendChild(scriptTag);
+    }
+  },
+  removeContentWrapperRecreateAndAddToDom: () => {
+    const oldContentWrapper = document.getElementById("contentWrapper");
+    while (oldContentWrapper.firstChild) {
+      oldContentWrapper.removeChild(oldContentWrapper.firstChild);
+    }
+    oldContentWrapper.remove();
+    const newContentWrapper = document.createElement("div");
+    newContentWrapper.id = "contentWrapper";
+    newContentWrapper.style = "position: relative";
+    document.body.appendChild(newContentWrapper);
   },
 };
