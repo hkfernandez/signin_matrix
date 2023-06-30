@@ -1,0 +1,169 @@
+<div id="fullPageOverlay" style="position: absolute" class="hidden"></div>
+<div class="page-title-wrapper">
+  <h1>User Authentication</h1>
+  <h2>Google Firebase</h2>
+  <h3>Down the rabbit hole with CSS Animations</h3>
+</div>
+<div class="pills-wrapper">
+  <div id="redPillWrapper" class="pill-wrapper" style="position: relative">
+    <div
+      id="redLeft"
+      class="pill red left shiny"
+      data-side="left"
+      data-color="red"
+      data-animation="togglePillOpenClose"
+    >
+      The choice...
+    </div>
+    <div
+      id="redRight"
+      class="pill red right shiny text-hidden"
+      data-side="right"
+      data-color="red"
+      data-animation="togglePillOpenClose"
+    >
+      ...is made
+    </div>
+    <!--remove-->
+    <button id="wakeUpBtn" style="position: absolute; display: none"></button>
+    <div id="signUpInWrapper" style="position: absolute">
+      <form id="signUpInForm">
+        <div id="inputsWrapper">
+          <div class="form-control">
+            <label aria-label="username">
+              <input
+                id="userNameInput"
+                type="text"
+                name="userName"
+                autocomplete="username"
+                placeholder="email"
+              />
+            </label>
+            <div id="usernameErMsg" class="error-message"></div>
+          </div>
+          <div class="form-control">
+            <label aria-label="password">
+              <div class="relative-wrapper" style="position: relative">
+                <input
+                  id="passwordInput"
+                  type="password"
+                  name="password"
+                  autocomplete="current-password"
+                  placeholder="password"
+                  style="position: relative"
+                />
+                <button
+                  class="togglePwVisibilityBtn"
+                  type="button"
+                  style="position: absolute; top: 0; left: calc(100% - 30px)"
+                >
+                  <img
+                    src="static/images/show-svgrepo-com.svg"
+                    alt="show password"
+                    class="show-hide-icon"
+                  />
+                </button>
+              </div>
+            </label>
+            <div id="passwordErMsg" class="error-message"></div>
+          </div>
+          <div class="form-control">
+            <label aria-label="confirm password">
+              <div class="relative-wrapper" style="position: relative">
+                <input
+                  id="confirmPasswordInput"
+                  type="password"
+                  name="password"
+                  autocomplete="current-password"
+                  placeholder=" confirm password"
+                  style="position: relative"
+                />
+                <button
+                  class="togglePwVisibilityBtn"
+                  type="button"
+                  style="position: absolute; top: 0; left: calc(100% - 30px)"
+                >
+                  <img
+                    src="static/images/show-svgrepo-com.svg"
+                    alt="show password"
+                    class="show-hide-icon"
+                  />
+                </button>
+              </div>
+            </label>
+          </div>
+        </div>
+        <!--animation wrapper allows the button to pulse and move at the same time-->
+        <div id="btnAnimationWrapper" style="position: absolute">
+          <button
+            id="signUpInBtn"
+            class="navigation-btn btn-green"
+            type="button"
+            data-animation=""
+          >
+            SIGN UP
+          </button>
+        </div>
+        <p
+          id="signUpInMessage"
+          style="position: absolute; top: 0"
+          class="message"
+        >
+          <span id="signUpInMessageSpan"></span>
+          <button
+            id="toggleSignUpInFormBtn"
+            type="button"
+            class="btn-text"
+            data-animation="switchToSignIn"
+          >
+            HERE
+          </button>
+        </p>
+      </form>
+      <!--currently display none-->
+      <button id="signOutBtn" type="button" disabled style="display: none">
+        Sign Out
+      </button>
+    </div>
+  </div>
+
+  <div id="bluePillWrapper" class="pill-wrapper" style="position: relative">
+    <div
+      id="blueLeft"
+      class="pill blue left shiny text-hidden"
+      data-side="left"
+      data-color="blue"
+      data-animation="togglePillOpenClose"
+    >
+      Ignorance
+    </div>
+    <div
+      id="blueRight"
+      class="pill blue right shiny"
+      data-side="right"
+      data-color="blue"
+      data-animation="togglePillOpenClose"
+    >
+      ...is yours
+    </div>
+    <div id="continueBtnAndMessagesWrapper" style="position: absolute">
+      <p class="quote">
+        Ignorance is bliss.
+        <br />
+        <span>-Cypher</span>
+      </p>
+      <a href="/static/quotesPage.html">
+        <button
+          id="continueWithoutSigningInBtn"
+          class="navigation-btn btn-blue"
+        >
+          REST <br />
+          WELL
+        </button>
+      </a>
+      <p id="continueMessage" class="message">
+        Contine with a more limited experience
+      </p>
+    </div>
+  </div>
+</div>
