@@ -19,15 +19,7 @@ const contentWrapper = document.getElementById("contentWrapper");
 const siteHeader = document.getElementById("siteHeader");
 
 //LISTENERS
-window.addEventListener("click", delegateClickEvent);
-function delegateClickEvent(event) {
-  //composed path helps when clicking on a web component
-  //returns an array of the nodes crossed - innermost node first
-  event.preventDefault();
-  const linkPath = event.composedPath()[0].dataset.path;
-  if (!linkPath || linkPath === window.location.pathname) return;
-  renderPage(linkPath);
-}
+
 window.onpopstate = (event) => {
   event.preventDefault();
   renderPage(event);

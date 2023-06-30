@@ -2,29 +2,29 @@ import html from "./page-router.html";
 import css from "./page-router.css";
 import { pages } from "../../js/dependencies/pages.js";
 
-import { helperFunctions } from "../../js/dependencies/helperFunctions.js";
-const { setUpShadow } = helperFunctions;
-
 export class PageRouter extends HTMLElement {
-  #currentPage;
-  #defaultPage = pages.about;
+  #currentPageInfo;
+  #defaultPageInfo = pages.about;
   constructor() {
     super();
-    //setUpShadow(this, html, css);
+    window.addEventListener("click", (event) => {
+      this.renderPageLinkOnClick(event);
+    });
   }
   //when the component load render the page in url path
   connectedCallback() {
     this.innerHTML = html;
-    this.#currentPage = this.getCurrentPageFromUrl();
+    this.#currentPageInfo = this.getCurrentPageInfoFromUrl();
     this.renderPage();
   }
-  getCurrentPageFromUrl() {
+
+  getCurrentPageInfoFromUrl() {
     for (const current in pages) {
       if (pages[current].path === window.location.pathname) {
         return pages[current];
       }
     }
-    return this.#defaultPage;
+    return this.#defaultPageInfo;
   }
   renderPage() {
     //remove the previous page
@@ -34,11 +34,21 @@ export class PageRouter extends HTMLElement {
       this.removeChild(prevPage);
     }
 
-    const newPage = document.createElement(this.#currentPage.component);
+    const newPage = document.createElement(this.#currentPageInfo.component);
     //TODO
     //newPage.addEventListener("ChangePage", (event) =>
     //  this.#gotoNewPage(event.detail)
     //);
     this.appendChild(newPage);
+  }
+  renderPageLinkOnClick(event) {
+    //composed path helps when clicking on a web component
+    //returns an array of the nodes crossed - innermost node first
+    event.preventDefault();
+    const linkPath = event.composedPath()[0].dataset.path;
+    if (!linkPath || linkPath === window.location.pathname) return;
+    window.location.pathname = linkPath;
+    this.#currentPageInfo = this.getCurrentPageInfoFromUrl();
+    this.renderPage();
   }
 }
