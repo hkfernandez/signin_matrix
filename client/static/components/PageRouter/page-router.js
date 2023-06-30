@@ -7,14 +7,23 @@ export class PageRouter extends HTMLElement {
   #defaultPageInfo = pages.about;
   constructor() {
     super();
-    window.addEventListener("click", (event) => {
-      this.renderPageLinkOnClick(event);
-    });
   }
-  //when the component load render the page in url path
+  //when the component loads
   connectedCallback() {
     this.innerHTML = html;
     this.#currentPageInfo = this.getCurrentPageInfoFromUrl();
+    this.renderPage();
+
+    window.addEventListener("click", (event) =>
+      this.renderPageLinkOnClick(event)
+    );
+
+    window.addEventListener("click", (event) => this.manageBackBtnUse(event));
+  }
+
+  manageBackBtnUse(event) {
+    if (!event.state) return;
+    this.#currentPageInfo = event.state;
     this.renderPage();
   }
 
@@ -35,18 +44,25 @@ export class PageRouter extends HTMLElement {
     }
 
     const newPage = document.createElement(this.#currentPageInfo.component);
+    newPage.id = pageId;
     //TODO
     //newPage.addEventListener("ChangePage", (event) =>
     //  this.#gotoNewPage(event.detail)
     //);
     this.appendChild(newPage);
+    document.title = this.#currentPageInfo.title;
+    history.pushState(
+      this.#currentPageInfo,
+      this.#currentPageInfo,
+      window.location.origin + this.#currentPageInfo.path
+    );
   }
   renderPageLinkOnClick(event) {
     //composed path helps when clicking on a web component
     //returns an array of the nodes crossed - innermost node first
     event.preventDefault();
     const linkPath = event.composedPath()[0].dataset.path;
-    if (!linkPath || linkPath === window.location.pathname) return;
+    if (linkPath === undefined || linkPath === window.location.pathname) return;
     window.location.pathname = linkPath;
     this.#currentPageInfo = this.getCurrentPageInfoFromUrl();
     this.renderPage();
