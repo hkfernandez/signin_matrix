@@ -17,7 +17,6 @@ export class PageRouter extends HTMLElement {
     window.addEventListener("click", (event) =>
       this.renderPageLinkOnClick(event)
     );
-
     window.addEventListener("click", (event) => this.manageBackBtnUse(event));
   }
 
