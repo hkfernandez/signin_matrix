@@ -6,16 +6,15 @@ import { rain } from "../../js/dependencies/digitalRain.js";
 export class PillsPage extends HTMLElement {
   #RED_PILL_STATE = "closed";
   #BLUE_PILL_STATE = "closed";
-  #elements = {
-    signUpInMessage: () => document.getElementById("signUpInMessage"),
-    bluePillWrapper: () => document.getElementById("bluePillWrapper"),
-    redPillWrapper: () => document.getElementById("redPillWrapper"),
-    signUpInMessageSpan: () => document.getElementById("signUpInMessageSpan"),
-    signUpInBtn: () => document.getElementById("signUpInBtn"),
-    btnAnimationWrapper: () => document.getElementById("btnAnimationWrapper"),
-    toggleSignUpInFormBtn: () =>
-      document.getElementById("toggleSignUpInFormBtn"),
-    fullPageOverlay: () => document.getElementById("fullPageOverlay"),
+  #elements = () => {
+    return {
+      signUpInMessage: document.getElementById("signUpInMessage"),
+      bluePillWrapper: document.getElementById("bluePillWrapper"),
+      redPillWrapper: document.getElementById("redPillWrapper"),
+      signUpInBtn: document.getElementById("signUpInBtn"),
+      signUpInForm: document.getElementById("signUpInForm"),
+      fullPageOverlay: document.getElementById("fullPageOverlay"),
+    };
   };
   #animations = {
     //secondary functions called by other animation functions
@@ -50,28 +49,16 @@ export class PillsPage extends HTMLElement {
         }
         return { pillColor, leftPill, rightPill };
       },
-      scrollSignUpInBtnToClosePosition: () => {
-        const { btnAnimationWrapper } = this.#elements;
-        addRemoveClass(
-          btnAnimationWrapper(),
-          "scoll-sign-up-btn-out",
-          "scroll-sign-up-btn-in-with-delay"
-        );
-        btnAnimationWrapper().classList.remove(
-          "scroll-sign-up-btn-in-no-delay"
-        );
-        btnAnimationWrapper().classList.remove(
-          "scoll-sign-up-btn-to-cover-input"
-        );
-      },
       transitionToQuotesPage: () => {
-        const { fullPageOverlay } = elements;
-        addRemoveClass(fullPageOverlay(), "fade-overlay-in", "hidden");
+        console.log("transitioning to quotes page");
+        const { fullPageOverlay } = this.#elements();
+        addRemoveClass(fullPageOverlay, "fade-overlay-in", "hidden");
         rain();
         //setTimeout(() => {
         //  fullPageOverlay().classList.add("fade-overlay-to-green");
         //}, 3000);
-        setTimeout(() => fetchQuotesPage(), 13000);
+        //TODO
+        setTimeout(() => (window.location.pathname = "/quotes"), 13000);
       },
       validatePillState: (leftPill) => {
         if (
@@ -90,57 +77,21 @@ export class PillsPage extends HTMLElement {
         }
       },
     },
-    switchToSignIn: () => {
-      const {
-        signUpInMessageSpan,
-        signUpInBtn,
-        btnAnimationWrapper,
-        toggleSignUpInFormBtn,
-      } = this.#elements;
-
-      signUpInMessageSpan().textContent =
-        "If you need to create an account click ";
-      signUpInBtn().innerHTML = "RE-ENTER";
-      addRemoveClass(
-        btnAnimationWrapper(),
-        "scoll-sign-up-btn-to-cover-input",
-        "scroll-sign-up-btn-in-with-delay"
-      );
-      btnAnimationWrapper().classList.remove("scroll-sign-up-btn-in-no-delay");
-      signUpInBtn().dataset.animation = "signInAndContinue";
-      toggleSignUpInFormBtn().dataset.animation = "switchToSignUp";
-    },
-    switchToSignUp: () => {
-      const {
-        signUpInMessageSpan,
-        signUpInBtn,
-        btnAnimationWrapper,
-        toggleSignUpInFormBtn,
-      } = this.#elements;
-
-      signUpInMessageSpan().innerHTML =
-        "If you have already created an account and remember your email and password, click ";
-      signUpInBtn().innerHTML = "WAKE UP";
-      if (this.#RED_PILL_STATE === "closed") {
-        addRemoveClass(
-          btnAnimationWrapper(),
-          "scroll-sign-up-btn-in-with-delay",
-          "scoll-sign-up-btn-to-cover-input"
-        );
-        btnAnimationWrapper().classList.remove("scoll-sign-up-btn-out");
-      } else {
-        addRemoveClass(
-          btnAnimationWrapper(),
-          "scroll-sign-up-btn-in-no-delay",
-          "scoll-sign-up-btn-to-cover-input"
-        );
+    signInAndContinue: async () => {
+      const { signUpInForm } = this.#elements();
+      const user = await signUpInForm.signIn();
+      console.log("userInfo: ", user);
+      if (user.uid) {
+        this.#animations.secondary.transitionToQuotesPage();
       }
-      signUpInBtn().dataset.animation = "signUpAndContinue";
-      toggleSignUpInFormBtn().dataset.animation = "switchToSignIn";
+    },
+    switchToSignIn: () => {
+      const { signUpInForm } = this.#elements();
+      signUpInForm.animations.switchToSignIn();
     },
     togglePillOpenClose: (pill) => {
-      const { signUpInMessage, bluePillWrapper, redPillWrapper } =
-        this.#elements;
+      const { signUpInMessage, bluePillWrapper, redPillWrapper, signUpInForm } =
+        this.#elements();
       const { openClosePill, parsePill, validatePillState } =
         this.#animations.secondary;
       const parsedPill = parsePill(pill);
@@ -154,40 +105,37 @@ export class PillsPage extends HTMLElement {
           rightPill.classList.remove("text-hidden");
           openClosePill(parsedPill, "open");
           addRemoveClass(
-            redPillWrapper(),
+            redPillWrapper,
             "scroll-red-pill-down",
             "scroll-red-pill-up"
           );
-          addRemoveClass(bluePillWrapper(), "fade-pill-out", "fade-pill-in");
+          addRemoveClass(bluePillWrapper, "fade-pill-out", "fade-pill-in");
           addRemoveClass(
-            signUpInMessage(),
+            signUpInMessage,
             "scroll-sign-in-message-in",
             "scroll-sign-in-message-out"
           );
-          this.#animations.switchToSignUp();
+          signUpInForm.animations.switchToSignUp(this.#RED_PILL_STATE);
           this.#RED_PILL_STATE = "open";
         } else {
           openClosePill(parsedPill, "close");
           addRemoveClass(
-            redPillWrapper(),
+            redPillWrapper,
             "scroll-red-pill-up",
             "scroll-red-pill-down"
           );
           setTimeout(
             () =>
-              addRemoveClass(
-                bluePillWrapper(),
-                "fade-pill-in",
-                "fade-pill-out"
-              ),
+              addRemoveClass(bluePillWrapper, "fade-pill-in", "fade-pill-out"),
             2000
           );
           addRemoveClass(
-            signUpInMessage(),
+            signUpInMessage,
             "scroll-sign-in-message-out",
             "scroll-sign-in-message-in"
           );
-          this.#animations.secondary.scrollSignUpInBtnToClosePosition();
+          signUpInForm().animations.scrollSignUpInBtnToClosePosition();
+          //this.#animations.secondary.scrollSignUpInBtnToClosePosition();
           this.#RED_PILL_STATE = "closed";
         }
       } else {
@@ -196,32 +144,26 @@ export class PillsPage extends HTMLElement {
           leftPill.classList.remove("text-hidden");
           openClosePill(parsedPill, "open");
           addRemoveClass(
-            bluePillWrapper(),
+            bluePillWrapper,
             "scroll-blue-pill-up",
             "scroll-blue-pill-down"
           );
-          addRemoveClass(redPillWrapper(), "fade-pill-out", "fade-pill-in");
+          addRemoveClass(redPillWrapper, "fade-pill-out", "fade-pill-in");
           this.#BLUE_PILL_STATE = "open";
         } else {
           setTimeout(
             () =>
-              addRemoveClass(redPillWrapper(), "fade-pill-in", "fade-pill-out"),
+              addRemoveClass(redPillWrapper, "fade-pill-in", "fade-pill-out"),
             3000
           );
           openClosePill(parsedPill, "close");
           addRemoveClass(
-            bluePillWrapper(),
+            bluePillWrapper,
             "scroll-blue-pill-down",
             "scroll-blue-pill-up"
           );
           this.#BLUE_PILL_STATE = "closed";
         }
-      }
-    },
-    signInAndContinue: async () => {
-      const userSignedIn = await signInUser();
-      if (userSignedIn) {
-        this.#animations.secondary.transitionToQuotesPage();
       }
     },
   };
@@ -239,8 +181,9 @@ export class PillsPage extends HTMLElement {
     event.preventDefault();
     const target = event.composedPath()[0];
     const animation = target.dataset.animation;
-    console.log("animation name: ", animation);
     if (!animation) return;
+    console.log("animation name: ", animation);
+    if (this.#animations[animation] === undefined) return;
     this.#animations[animation](target);
   }
 }

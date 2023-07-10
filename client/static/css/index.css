@@ -751,7 +751,7 @@ quote-component {
   transition-delay: 0s;
 }
 
-.scoll-sign-up-btn-out {
+.scroll-sign-up-btn-out {
   transform: translateY(0px);
   transition-timing-function: linear;
   transition-duration: 1s;

@@ -34,15 +34,14 @@ export function createUser(email, password) {
     });
 }
 export function signInUser(email, password) {
-  signInWithEmailAndPassword(auth, email, password)
+  return signInWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
-      // Signed in
-      const user = userCredential.user;
-      // ...
+      console.log("user signed in");
+      return userCredential.user;
     })
     .catch((error) => {
-      const errorCode = error.code;
       const errorMessage = error.message;
+      console.log("error in signing in", errorMessage);
     });
 }
 

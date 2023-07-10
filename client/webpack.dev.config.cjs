@@ -14,6 +14,7 @@ module.exports = (env, argv) => {
       //adds the static path to the bundle.js path in the index.html when copied to dist
       publicPath: "./static",
     },
+    mode: "development",
     target: "web", // needed or live reload fails
     devtool:
       argv.mode === "production" ? "cheap-source-map" : "inline-source-map",
@@ -55,10 +56,17 @@ module.exports = (env, argv) => {
       }),
       new CopyPlugin({
         patterns: [
-          { from: path.resolve(__dirname, "./static"), to: "" },
+          //{ from: path.resolve(__dirname, "./static"), to: "" },
           //    { from: "src/assets", to: "assets" },
           //    { from: "src/styles.css", to: "styles.css" },
-          //    { from: "src/index.css", to: "index.css" },
+          {
+            from: path.resolve(__dirname, "./static/css/index.css"),
+            to: "",
+          },
+          {
+            from: path.resolve(__dirname, "./static/images"),
+            to: "images",
+          },
           //    { from: "src/normalize.css", to: "normalize.css" },
         ],
       }),

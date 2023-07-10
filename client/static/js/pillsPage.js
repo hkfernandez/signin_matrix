@@ -70,7 +70,7 @@ import { fetchQuotesPage } from "/static/js/index.js";
 //      const { btnAnimationWrapper } = elements;
 //      addRemoveClass(
 //        btnAnimationWrapper(),
-//        "scoll-sign-up-btn-out",
+//        "scroll-sign-up-btn-out",
 //        "scroll-sign-up-btn-in-with-delay"
 //      );
 //      btnAnimationWrapper().classList.remove("scroll-sign-up-btn-in-no-delay");

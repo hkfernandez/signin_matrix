@@ -9,4 +9,9 @@ export const pages = {
     component: "pills-page",
     title: "Pills",
   },
+  quotes: {
+    path: "/quotes",
+    component: "quotes-page",
+    title: "quotes",
+  },
 };

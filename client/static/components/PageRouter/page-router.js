@@ -63,7 +63,5 @@ export class PageRouter extends HTMLElement {
     const linkPath = event.composedPath()[0].dataset.path;
     if (linkPath === undefined || linkPath === window.location.pathname) return;
     window.location.pathname = linkPath;
-    this.#currentPageInfo = this.getCurrentPageInfoFromUrl();
-    this.renderPage();
   }
 }

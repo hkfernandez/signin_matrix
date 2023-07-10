@@ -1,5 +1,3 @@
-const fullPageOverlay = document.getElementById("fullPageOverlay");
-
 // CODE CREDIT TO: https://ruletheweb.co.uk/matrix.html
 function rand_int(a, b) {
   return Math.floor(Math.random() * (b - a) + a);
@@ -9,6 +7,7 @@ const character_set =
   " 0123456789ｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜﾝ";
 
 export function rain() {
+  const fullPageOverlay = document.getElementById("fullPageOverlay");
   for (let i = 0; i < 90; i++) {
     const trail = document.createElement("div");
     trail.classList.add("digital-rain-drop");

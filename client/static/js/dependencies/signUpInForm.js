@@ -98,7 +98,7 @@ function validatePassword() {
 
 //SIGN UP USER
 export function signUpUser() {
-  fetch("/auth/signUp", {
+  fetch("/authApi/signUp", {
     method: "POST",
     body: JSON.stringify({
       userName: userNameInput.value,
@@ -120,7 +120,7 @@ export function signUpUser() {
 
 //SIGN IN USER
 export async function signInUser() {
-  const message = await fetch("/auth/signIn", {
+  const message = await fetch("/authApi/signIn", {
     method: "POST",
     body: JSON.stringify({
       userName: userNameInput.value,
@@ -140,7 +140,7 @@ export async function signInUser() {
 
 //SIGN OUT USER
 function signOutUser() {
-  fetch("/auth/signOut")
+  fetch("/authApi/signOut")
     .then((response) => response.json())
     .then((message) => {
       if (message) {
