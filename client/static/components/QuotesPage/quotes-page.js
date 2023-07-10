@@ -6,11 +6,12 @@ import { QuoteLi } from "../QuoteLi.js";
 export class QuotesPage extends HTMLElement {
   #elements = () => {
     return {
-      quoteInput: document.getElementById("quoteInput"),
       authorInput: document.getElementById("authorInput"),
-      quotesList: document.getElementById("quotesList"),
       mouthPiece: document.getElementById("mouthPiece"),
       openBtn: document.getElementById("openBtn"),
+      quoteInput: document.getElementById("quoteInput"),
+      quotesList: document.getElementById("quotesList"),
+      screen: document.getElementById("screen"),
     };
   };
   #PHONE_MESSAGES = {
@@ -23,9 +24,11 @@ export class QuotesPage extends HTMLElement {
   connectedCallback() {
     this.innerHTML = html;
     const { screen, mouthPiece, openBtn } = this.#elements();
-    screen.addEventListener("click", this.#selectScreen);
-    mouthPiece.addEventListener("click", this.#openClosePhone);
-    openBtn.addEventListener("click", this.#openClosePhone);
+    screen.addEventListener("click", (event) => this.#clickScreen(event));
+    mouthPiece.addEventListener("click", (event) =>
+      this.#openClosePhone(event)
+    );
+    openBtn.addEventListener("click", (event) => this.#openClosePhone(event));
 
     this.#addQuotesToPage();
   }
@@ -47,7 +50,7 @@ export class QuotesPage extends HTMLElement {
   }
 
   //UI & ANIMATIONS
-  #selectScreen() {
+  #clickScreen() {
     const { screen } = this.#elements();
     if (screen.textContent === this.#PHONE_MESSAGES.ANSWER) {
       return;
@@ -68,10 +71,10 @@ export class QuotesPage extends HTMLElement {
     if (target.id === "openBtn") {
       return;
     } else {
-      addRemoveClass(this.#elements.mouthPiece, "close-phone", "open-phone");
-      screen.textContent = PHONE_MESSAGES.ANSWER;
+      addRemoveClass(mouthPiece, "close-phone", "open-phone");
+      screen.textContent = this.#PHONE_MESSAGES.ANSWER;
       openBtn.classList.remove("btn-disabled");
-      classList.add("btn-disabled");
+      screen.classList.add("btn-disabled");
       quoteInput.value = "";
       authorInput.value = "";
     }
@@ -109,7 +112,7 @@ export class QuotesPage extends HTMLElement {
     if (!this.#isValidQuote(quoteData)) {
       return;
     }
-    fetch("/quotes/api", {
+    fetch("/quotesApi", {
       method: "POST",
       body: JSON.stringify(quoteData),
       headers: {
@@ -129,7 +132,7 @@ export class QuotesPage extends HTMLElement {
 
   async #getAllQuotes() {
     try {
-      const response = await fetch("/quotes/api");
+      const response = await fetch("/quotesApi");
       const quotes = response.json();
       return quotes;
     } catch {
@@ -152,7 +155,7 @@ export class QuotesPage extends HTMLElement {
   #addQuoteToPage(quote) {
     const { quotesList } = this.#elements();
     const quoteLi = this.#createQuoteLi(quote);
-    quotesList.appendChild(quoteLi);
+    quotesList.insertBefore(quoteLi, quotesList.firstChild);
   }
 
   async #addQuotesToPage() {
