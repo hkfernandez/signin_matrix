@@ -1,6 +1,7 @@
 import html from "./page-router.html";
 import css from "./page-router.css";
 import { pages } from "../../js/dependencies/pages.js";
+//import { validateUser } from "../../js/dependencies/firebaseaAuth.js";
 
 export class PageRouter extends HTMLElement {
   #currentPageInfo;
@@ -36,12 +37,13 @@ export class PageRouter extends HTMLElement {
   }
   renderPage() {
     //remove the previous page
+    console.log("rendering");
     const pageId = "currentPage";
     const prevPage = document.getElementById(pageId);
-    if (prevPage) {
-      this.removeChild(prevPage);
+    if (prevPage != null) {
+      prevPage.remove();
     }
-
+    //const user = validateUser();
     const newPage = document.createElement(this.#currentPageInfo.component);
     newPage.id = pageId;
     //TODO
@@ -57,11 +59,18 @@ export class PageRouter extends HTMLElement {
     );
   }
   renderPageLinkOnClick(event) {
+    console.log("renderingPageOnClickEvent");
     //composed path helps when clicking on a web component
     //returns an array of the nodes crossed - innermost node first
     event.preventDefault();
     const linkPath = event.composedPath()[0].dataset.path;
-    if (linkPath === undefined || linkPath === window.location.pathname) return;
-    window.location.pathname = linkPath;
+    if (linkPath) {
+      for (const current in pages) {
+        if (pages[current].path === linkPath) {
+          this.#currentPageInfo = pages[current];
+        }
+      }
+      this.renderPage();
+    }
   }
 }

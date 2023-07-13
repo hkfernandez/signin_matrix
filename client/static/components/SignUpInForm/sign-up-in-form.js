@@ -6,7 +6,7 @@ import {
   createUser,
   signInUser,
   signOutUser,
-} from "../../js/dependencies/auth.js";
+} from "../../js/dependencies/firebaseServices.js";
 
 export class SignUpInForm extends HTMLElement {
   #elements = () => {

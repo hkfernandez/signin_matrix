@@ -1,3 +1,5 @@
+redirecting user to about page on auth state change is creating an infinate loop
+
 working on migrating the quotes page into a custom HTML element
 
 form and page now working as separate components

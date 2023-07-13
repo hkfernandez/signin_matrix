@@ -90,6 +90,7 @@ export class PillsPage extends HTMLElement {
       signUpInForm.animations.switchToSignIn();
     },
     togglePillOpenClose: (pill) => {
+      console.log("toggling pill");
       const { signUpInMessage, bluePillWrapper, redPillWrapper, signUpInForm } =
         this.#elements();
       const { openClosePill, parsePill, validatePillState } =
@@ -100,6 +101,7 @@ export class PillsPage extends HTMLElement {
       validatePillState(leftPill);
 
       if (pillColor === "red") {
+        console.log(redPillWrapper.classList);
         //CLICKING ON RED PILL
         if (this.#RED_PILL_STATE === "closed") {
           rightPill.classList.remove("text-hidden");
@@ -134,7 +136,7 @@ export class PillsPage extends HTMLElement {
             "scroll-sign-in-message-out",
             "scroll-sign-in-message-in"
           );
-          signUpInForm().animations.scrollSignUpInBtnToClosePosition();
+          signUpInForm.animations.scrollSignUpInBtnToClosePosition();
           //this.#animations.secondary.scrollSignUpInBtnToClosePosition();
           this.#RED_PILL_STATE = "closed";
         }

@@ -414,23 +414,23 @@ form .error-message {
   max-height: 100%;
 }
 
-#backToAboutBtn {
+#navigateToAboutBtn {
   display: flex;
   flex-direction: column;
   border: none;
   margin-left: -2em;
 }
-#backToAboutBtn p {
+#navigateToAboutBtn p {
   font-size: 32px;
   font-weight: 800;
   margin-bottom: -0.75rem;
 }
-#backToAboutBtn p #favoritesIcon {
+#navigateToAboutBtn p #favoritesIcon {
   width: 20px;
   height: auto;
   margin-bottom: 10px;
 }
-#backToAboutBtn span {
+#navigateToAboutBtn span {
   font-size: 20px;
   font-weight: 200;
   font-family: "Dosis", sans-serif;

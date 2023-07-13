@@ -3,7 +3,7 @@ import { db } from "../model/firebase_services.js";
 import { collection, addDoc, getDocs } from "firebase/firestore";
 
 import { fileURLToPath } from "url";
-import  path  from "path";
+import path from "path";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 

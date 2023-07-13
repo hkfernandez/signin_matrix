@@ -7,9 +7,12 @@ import {
   signOut,
   onAuthStateChanged,
 } from "firebase/auth";
+import { getFunctions } from "firebase/functions";
+
 const firebaseApp = initializeApp(firebaseConfig);
 
 let auth = "";
+let cloudFunctions = "";
 
 try {
   auth = getAuth(firebaseApp);
@@ -19,13 +22,23 @@ try {
 } catch (error) {
   console.log("!!!FIREBASE AUTH CONNECTION ERROR!!! ", error);
 }
+try {
+  cloudFunctions = getFunctions(firebaseApp);
+  if (cloudFunctions) {
+    console.log("!Firebase Cloud Functions Initalized!");
+  }
+} catch (error) {
+  console.log("!!!FIREBASE FUNCTIONS INTIALIZATION ERROR!!! ", error);
+}
 
 export function createUser(email, password) {
   createUserWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
-      // Signed in
       const user = userCredential.user;
-      // ...
+      const addRole = cloudFunctions.httpCallable("addRole");
+      addRole({ uid: user.uid, admin: true, user: true })
+        .then((result) => console.log(result))
+        .catch((error) => console.log("error adding roles: ", error));
     })
     .catch((error) => {
       const errorCode = error.code;
@@ -54,17 +67,18 @@ export function signOutUser() {
       // An error happened.
     });
 }
-//console.log("onAuthStateChanged", onAuthStateChanged);
 onAuthStateChanged(auth, (user) => {
   if (user) {
     // User is signed in, see docs for a list of available properties
     // https://firebase.google.com/docs/reference/js/auth.user
     const uid = user.uid;
     console.log("USER_ID:", uid);
+    return user;
     // ...
   } else {
     // User is signed out
     // ...
     console.log("user is signed out");
+    document.getElementById("navigateToPillsBtn").click();
   }
 });

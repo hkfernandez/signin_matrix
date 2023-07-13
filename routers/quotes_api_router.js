@@ -1,6 +1,6 @@
 import express from "express";
 const router = express.Router();
-import { quotesController } from "../client/controllers/quotes_controller.js";
+import { quotesController } from "../controllers/quotes_controller.js";
 
 router
   .route("/")
