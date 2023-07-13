@@ -1,5 +1,3 @@
-//import { signOutUser } from "./dependencies/firebaseServices.js";
-
 import { SiteHeader } from "../components/SiteHeader/site-header.js";
 import { PageRouter } from "../components/PageRouter/page-router.js";
 import { PillsPage } from "../components/PillsPage/pills-page.js";

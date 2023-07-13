@@ -4,3 +4,4 @@ Dockerfile
 dist
 *.scss
 *.map
+firebase_config.js

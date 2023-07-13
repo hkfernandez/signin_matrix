@@ -1,5 +1,5 @@
 //MODULES
-import { db } from "../model/firebase_services.js";
+import { db } from "../model/firebaseBackendServices.js";
 import { collection, addDoc, getDocs } from "firebase/firestore";
 
 import { fileURLToPath } from "url";

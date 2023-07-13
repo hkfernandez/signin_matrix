@@ -37,7 +37,7 @@ export function createUser(email, password) {
       const user = userCredential.user;
       const addRole = cloudFunctions.httpCallable("addRole");
       addRole({ uid: user.uid, admin: true, user: true })
-        .then((result) => console.log(result))
+        .then((message) => console.log(message))
         .catch((error) => console.log("error adding roles: ", error));
     })
     .catch((error) => {
@@ -73,7 +73,6 @@ onAuthStateChanged(auth, (user) => {
     // https://firebase.google.com/docs/reference/js/auth.user
     const uid = user.uid;
     console.log("USER_ID:", uid);
-    return user;
     // ...
   } else {
     // User is signed out
