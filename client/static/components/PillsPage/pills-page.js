@@ -85,11 +85,21 @@ export class PillsPage extends HTMLElement {
         this.#animations.secondary.transitionToQuotesPage();
       }
     },
-    switchToSignIn: () => {
+    signUpAndContinue: async () => {
+      console.log("signing up");
       const { signUpInForm } = this.#elements();
-      signUpInForm.animations.switchToSignIn();
+      const returnValue = await signUpInForm.signUp();
+      console.log("return value after sign up: ", returnValue);
+      if (returnValue) {
+        this.#animations.secondary.transitionToQuotesPage();
+      }
     },
-    togglePillOpenClose: (pill) => {
+    //switchToSignIn: () => {
+    //  const { signUpInForm } = this.#elements();
+    //  signUpInForm.animations.switchToSignIn();
+    //},
+    togglePillOpenClose: (event) => {
+      const pill = event.composedPath()[0];
       console.log("toggling pill");
       const { signUpInMessage, bluePillWrapper, redPillWrapper, signUpInForm } =
         this.#elements();
@@ -101,7 +111,6 @@ export class PillsPage extends HTMLElement {
       validatePillState(leftPill);
 
       if (pillColor === "red") {
-        console.log(redPillWrapper.classList);
         //CLICKING ON RED PILL
         if (this.#RED_PILL_STATE === "closed") {
           rightPill.classList.remove("text-hidden");
@@ -175,17 +184,23 @@ export class PillsPage extends HTMLElement {
   }
   connectedCallback() {
     this.innerHTML = html;
-    document.addEventListener("click", (event) =>
-      this.#handleClickEventAnimations(event)
+    //document.addEventListener("click", (event) =>
+    //  this.#handleClickEventAnimations(event)
+    //);
+    const pillElements = Array.from(document.getElementsByClassName("pill"));
+    pillElements.forEach((element) =>
+      element.addEventListener("click", (event) =>
+        this.#animations.togglePillOpenClose(event)
+      )
     );
   }
-  #handleClickEventAnimations(event) {
-    event.preventDefault();
-    const target = event.composedPath()[0];
-    const animation = target.dataset.animation;
-    if (!animation) return;
-    console.log("animation name: ", animation);
-    if (this.#animations[animation] === undefined) return;
-    this.#animations[animation](target);
-  }
+  //#handleClickEventAnimations(event) {
+  //  event.preventDefault();
+  //  const target = event.composedPath()[0];
+  //  const animation = target.dataset.animation;
+  //  if (!animation) return;
+  //  console.log("animation name: ", animation);
+  //  if (this.#animations[animation] === undefined) return;
+  //  this.#animations[animation](target);
+  //}
 }

@@ -7,7 +7,7 @@ import {
   signOut,
   onAuthStateChanged,
 } from "firebase/auth";
-import { getFunctions } from "firebase/functions";
+import { getFunctions, httpsCallable } from "firebase/functions";
 
 const firebaseApp = initializeApp(firebaseConfig);
 
@@ -31,22 +31,29 @@ try {
   console.log("!!!FIREBASE FUNCTIONS INTIALIZATION ERROR!!! ", error);
 }
 
-export function createUser(email, password) {
-  createUserWithEmailAndPassword(auth, email, password)
+export async function createUser(email, password) {
+  const newUserUid = await createUserWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
       const user = userCredential.user;
-      const addRole = cloudFunctions.httpCallable("addRole");
-      addRole({ uid: user.uid, admin: true, user: true })
-        .then((message) => console.log(message))
-        .catch((error) => console.log("error adding roles: ", error));
+      console.log("new user.uid", user.uid);
+      return user.uid;
     })
     .catch((error) => {
       const errorCode = error.code;
       const errorMessage = error.message;
+      console.log("SIGN UP USER ERROR: ", errorMessage);
       // ..
     });
+  const addRoles = httpsCallable(cloudFunctions, "addRoles");
+  console.log("addRole: ", addRoles);
+  return addRoles({ uid: newUserUid, admin: true, user: true })
+    .then((message) => {
+      console.log(message);
+      return message;
+    })
+    .catch((error) => console.log("error adding roles: ", error));
 }
-export function signInUser(email, password) {
+export async function signInUser(email, password) {
   return signInWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
       console.log("user signed in");

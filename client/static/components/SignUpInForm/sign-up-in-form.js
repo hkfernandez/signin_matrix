@@ -25,6 +25,7 @@ export class SignUpInForm extends HTMLElement {
       userNameInput: document.getElementById("userNameInput"),
     };
   };
+  //animations are called from the pills-page animations
   animations = {
     scrollSignUpInBtnToClosePosition: () => {
       const { btnAnimationWrapper } = this.#elements();
@@ -37,6 +38,7 @@ export class SignUpInForm extends HTMLElement {
       btnAnimationWrapper.classList.remove("scoll-sign-up-btn-to-cover-input");
     },
     switchToSignIn: () => {
+      console.log("switching to signIN");
       const {
         signUpInMessageSpan,
         signUpInBtn,
@@ -46,17 +48,21 @@ export class SignUpInForm extends HTMLElement {
 
       signUpInMessageSpan.textContent =
         "If you need to create an account click ";
+
       signUpInBtn.innerHTML = "RE-ENTER";
+      signUpInBtn.onclick = () => this.signIn();
+
       addRemoveClass(
         btnAnimationWrapper,
         "scoll-sign-up-btn-to-cover-input",
         "scroll-sign-up-btn-in-with-delay"
       );
       btnAnimationWrapper.classList.remove("scroll-sign-up-btn-in-no-delay");
-      signUpInBtn.dataset.animation = "signInAndContinue";
-      toggleSignUpInFormBtn.dataset.animation = "switchToSignUp";
+
+      toggleSignUpInFormBtn.onclick = () => this.animations.switchToSignUp();
     },
     switchToSignUp: (PILL_STATE) => {
+      console.log("switching to signUP");
       const {
         signUpInMessageSpan,
         signUpInBtn,
@@ -66,7 +72,9 @@ export class SignUpInForm extends HTMLElement {
 
       signUpInMessageSpan.innerHTML =
         "If you have already created an account and remember your email and password, click ";
+
       signUpInBtn.innerHTML = "WAKE UP";
+      signUpInBtn.onclick = () => this.signUp();
 
       if (PILL_STATE === "closed") {
         addRemoveClass(
@@ -83,8 +91,8 @@ export class SignUpInForm extends HTMLElement {
         );
       }
 
-      signUpInBtn.dataset.animation = "signUpAndContinue";
-      toggleSignUpInFormBtn.dataset.animation = "switchToSignIn";
+      toggleSignUpInFormBtn.onclick = () => this.animations.switchToSignIn();
+      //toggleSignUpInFormBtn.dataset.animation = "switchToSignIn";
     },
   };
 
@@ -104,20 +112,23 @@ export class SignUpInForm extends HTMLElement {
 
   constructor() {
     super();
-    this.thisForm = this;
   }
+
   connectedCallback() {
     this.innerHTML = html;
 
-    const { userNameInput, passwordInput, togglePwVisibilityBtns, signOutBtn } =
-      this.#elements();
+    const {
+      userNameInput,
+      passwordInput,
+      togglePwVisibilityBtns,
+      toggleSignUpInFormBtn,
+    } = this.#elements();
     userNameInput.addEventListener("blur", () => this.#validateUserName());
     passwordInput.addEventListener("blur", () => this.#validatePassword());
     Array.from(togglePwVisibilityBtns).forEach((btn) => {
-      btn.addEventListener("click", togglePwVisibility);
+      btn.onclick = (event) => togglePwVisibility(event);
     });
-    //TODO
-    //signOutBtn().addEventListener("click", this.#signOut);
+    toggleSignUpInFormBtn.onclick = () => this.animations.switchToSignIn();
   }
 
   #setErrorMessage(message, errorMessageDiv) {
@@ -181,17 +192,27 @@ export class SignUpInForm extends HTMLElement {
     this.#checkFormValidity();
   }
 
-  #signUp() {
-    const { signOutBtn } = this.#elements();
-    createUser();
+  async signUp() {
+    console.log("signing up");
+    const { userNameInput, passwordInput } = this.#elements();
+    const returnValue = await createUser(
+      userNameInput.value,
+      passwordInput.value
+    );
+    console.log(returnValue);
+    return returnValue;
   }
 
-  signIn() {
-    const user = signInUser(userNameInput.value, passwordInput.value);
-    return user;
-  }
-  #signOut() {
-    const { signUpInBtn, signOutBtn } = this.#elements();
-    signOutUser();
+  async signIn() {
+    console.log("signing In");
+    const { userNameInput, passwordInput } = this.#elements();
+    const user = await signInUser(userNameInput.value, passwordInput.value);
+    console.log("user: ", user);
+    user
+      .getIdTokenResult()
+      .then((idTokenResult) =>
+        console.log("claims.admin: ", idTokenResult.claims.admin)
+      );
+    //return user;
   }
 }

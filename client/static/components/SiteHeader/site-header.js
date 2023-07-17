@@ -1,4 +1,4 @@
-import { signOutUser } from "../../js/dependencies/firebaseFrontedServices.js";
+import { signOutUser } from "../../js/dependencies/firebaseFrontendServices.js";
 import html from "./site-header.html";
 
 export class SiteHeader extends HTMLElement {

@@ -59,12 +59,14 @@ export class PageRouter extends HTMLElement {
     );
   }
   renderPageLinkOnClick(event) {
-    console.log("renderingPageOnClickEvent");
     //composed path helps when clicking on a web component
     //returns an array of the nodes crossed - innermost node first
-    event.preventDefault();
+    //event.preventDefault();
     const linkPath = event.composedPath()[0].dataset.path;
     if (linkPath) {
+      console.log("renderingPageOnClickEvent");
+      console.log(event.target);
+      console.log(linkPath);
       for (const current in pages) {
         if (pages[current].path === linkPath) {
           this.#currentPageInfo = pages[current];

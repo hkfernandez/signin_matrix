@@ -42,6 +42,8 @@ exports.addRoles = functions.https.onCall((data, context) => {
           message: `Success, ${data.email} has been added with roles of admin: ${data.admin} and user: ${data.user}`,
         };
       })
-      .catch((error) => console.log(error))
+      .catch((error) =>
+        console.log("error with Firebase cloud function", error)
+      )
   );
 });
