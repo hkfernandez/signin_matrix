@@ -50,7 +50,6 @@ export class PillsPage extends HTMLElement {
         return { pillColor, leftPill, rightPill };
       },
       transitionToQuotesPage: () => {
-        console.log("transitioning to quotes page");
         const { fullPageOverlay } = this.#elements();
         addRemoveClass(fullPageOverlay, "fade-overlay-in", "hidden");
         rain();
@@ -80,13 +79,11 @@ export class PillsPage extends HTMLElement {
     signInAndContinue: async () => {
       const { signUpInForm } = this.#elements();
       const user = await signUpInForm.signIn();
-      console.log("userInfo: ", user);
       if (user.uid) {
         this.#animations.secondary.transitionToQuotesPage();
       }
     },
     signUpAndContinue: async () => {
-      console.log("signing up");
       const { signUpInForm } = this.#elements();
       const returnValue = await signUpInForm.signUp();
       console.log("return value after sign up: ", returnValue);
@@ -100,7 +97,6 @@ export class PillsPage extends HTMLElement {
     //},
     togglePillOpenClose: (event) => {
       const pill = event.composedPath()[0];
-      console.log("toggling pill");
       const { signUpInMessage, bluePillWrapper, redPillWrapper, signUpInForm } =
         this.#elements();
       const { openClosePill, parsePill, validatePillState } =
@@ -199,7 +195,6 @@ export class PillsPage extends HTMLElement {
   //  const target = event.composedPath()[0];
   //  const animation = target.dataset.animation;
   //  if (!animation) return;
-  //  console.log("animation name: ", animation);
   //  if (this.#animations[animation] === undefined) return;
   //  this.#animations[animation](target);
   //}

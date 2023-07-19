@@ -5,17 +5,19 @@ const { addRemoveClass, disableButtons, enableButtons, togglePwVisibility } =
 import {
   createUser,
   signInUser,
-  signOutUser,
 } from "../../js/dependencies/firebaseFrontendServices.js";
 
 export class SignUpInForm extends HTMLElement {
   #elements = () => {
     return {
       btnAnimationWrapper: document.getElementById("btnAnimationWrapper"),
+      confirmPasswordInput: document.getElementById("confirmPasswordInput"),
+      confirmPasswordErMsgDiv: document.getElementById("confirmPasswordErMsg"),
       passwordErMsgDiv: document.getElementById("passwordErMsg"),
       passwordInput: document.getElementById("passwordInput"),
       signOutBtn: document.getElementById("signOutUserBtn"),
       signUpInBtn: document.getElementById("signUpInBtn"),
+      signUpInForm: document.getElementById("signUpInForm"),
       signUpInMessageSpan: document.getElementById("signUpInMessageSpan"),
       togglePwVisibilityBtns: document.getElementsByClassName(
         "togglePwVisibilityBtn"
@@ -25,7 +27,6 @@ export class SignUpInForm extends HTMLElement {
       userNameInput: document.getElementById("userNameInput"),
     };
   };
-  //animations are called from the pills-page animations
   animations = {
     scrollSignUpInBtnToClosePosition: () => {
       const { btnAnimationWrapper } = this.#elements();
@@ -38,16 +39,26 @@ export class SignUpInForm extends HTMLElement {
       btnAnimationWrapper.classList.remove("scoll-sign-up-btn-to-cover-input");
     },
     switchToSignIn: () => {
-      console.log("switching to signIN");
       const {
         signUpInMessageSpan,
         signUpInBtn,
         btnAnimationWrapper,
         toggleSignUpInFormBtn,
+        confirmPasswordInput,
+        confirmPasswordErMsgDiv,
+        signUpInForm,
       } = this.#elements();
 
       signUpInMessageSpan.textContent =
         "If you need to create an account click ";
+
+      //used to enable submit button in checkFormValidity()
+      signUpInForm.dataset.type = "signIn";
+
+      confirmPasswordInput.value = "";
+      confirmPasswordErMsgDiv.textContent = "";
+
+      this.#checkFormValidity();
 
       signUpInBtn.innerHTML = "RE-ENTER";
       signUpInBtn.onclick = () => this.signIn();
@@ -62,16 +73,21 @@ export class SignUpInForm extends HTMLElement {
       toggleSignUpInFormBtn.onclick = () => this.animations.switchToSignUp();
     },
     switchToSignUp: (PILL_STATE) => {
-      console.log("switching to signUP");
       const {
         signUpInMessageSpan,
         signUpInBtn,
         btnAnimationWrapper,
         toggleSignUpInFormBtn,
+        signUpInForm,
       } = this.#elements();
 
       signUpInMessageSpan.innerHTML =
         "If you have already created an account and remember your email and password, click ";
+
+      //used to enable submit button in checkFormValidity()
+      signUpInForm.dataset.type = "signUp";
+
+      this.#checkFormValidity();
 
       signUpInBtn.innerHTML = "WAKE UP";
       signUpInBtn.onclick = () => this.signUp();
@@ -98,11 +114,13 @@ export class SignUpInForm extends HTMLElement {
 
   #INPUT_ERROR_MESSAGES = {
     USENAME: {
-      INVALID_FORMAT:
-        "Username can only be letters and numbers or an email address",
+      INVALID_FORMAT: "Username must be an email address",
     },
     PASSWORD: {
       TOO_LONG: "Password is limited to 10 characters",
+    },
+    CONFIRM_PASSWORD: {
+      PASSWORDS_NOT_MATCHING: "Passwords do not match",
     },
   };
   #limitedToCharAndNumRegex = /^[a-zA-Z0-9]+$/;
@@ -120,36 +138,49 @@ export class SignUpInForm extends HTMLElement {
     const {
       userNameInput,
       passwordInput,
+      confirmPasswordInput,
       togglePwVisibilityBtns,
       toggleSignUpInFormBtn,
     } = this.#elements();
     userNameInput.addEventListener("blur", () => this.#validateUserName());
     passwordInput.addEventListener("blur", () => this.#validatePassword());
+    confirmPasswordInput.addEventListener("blur", () =>
+      this.#confirmPassword()
+    );
     Array.from(togglePwVisibilityBtns).forEach((btn) => {
       btn.onclick = (event) => togglePwVisibility(event);
     });
     toggleSignUpInFormBtn.onclick = () => this.animations.switchToSignIn();
   }
 
-  #setErrorMessage(message, errorMessageDiv) {
-    errorMessageDiv.textContent = message;
-  }
   #checkFormValidity() {
     let formValid = false;
     const {
       userNameInput,
       passwordInput,
+      confirmPasswordInput,
       signUpInBtn,
       usernameErMsgDiv,
       passwordErMsgDiv,
+      confirmPasswordErMsgDiv,
+      signUpInForm,
     } = this.#elements();
     const userNameErMessage = usernameErMsgDiv.textContent;
     const passwordErMsg = passwordErMsgDiv.textContent;
+    const confirmPasswordErMsg = confirmPasswordErMsgDiv.textContent;
     if (
-      userNameErMessage === "" &&
-      passwordErMsg === "" &&
-      userNameInput.value !== "" &&
-      passwordInput.value !== ""
+      (userNameErMessage === "" &&
+        passwordErMsg === "" &&
+        confirmPasswordErMsg === "" &&
+        userNameInput.value !== "" &&
+        passwordInput.value !== "" &&
+        confirmPasswordInput.value !== "" &&
+        signUpInForm.dataset.type === "signUp") ||
+      (userNameErMessage === "" &&
+        passwordErMsg === "" &&
+        userNameInput.value !== "" &&
+        passwordInput.value !== "" &&
+        signUpInForm.dataset.type === "signIn")
     ) {
       formValid = true;
     }
@@ -160,59 +191,68 @@ export class SignUpInForm extends HTMLElement {
 
   #validateUserName() {
     const { usernameErMsgDiv, userNameInput } = this.#elements();
-    this.#setErrorMessage("", usernameErMsgDiv);
+    usernameErMsgDiv.textContent = "";
     const userInput = userNameInput.value.trim();
-    if (userInput === "") {
-      return;
-    }
-    if (
-      !this.#limitedToCharAndNumRegex.test(userInput) &&
-      !this.#emailFormatRegex.test(userInput)
-    ) {
-      setErrorMessage(
-        this.#INPUT_ERROR_MESSAGES.USENAME.INVALID_FORMAT,
-        usernameErMsgDiv
-      );
+
+    if (!this.#emailFormatRegex.test(userInput)) {
+      console.log("setting error message");
+      usernameErMsgDiv.textContent =
+        this.#INPUT_ERROR_MESSAGES.USENAME.INVALID_FORMAT;
     }
     this.#checkFormValidity();
   }
   #validatePassword() {
     const { passwordErMsgDiv, passwordInput } = this.#elements();
-    this.#setErrorMessage("", passwordErMsgDiv);
+    passwordErMsgDiv.textContent = "";
     const userInput = passwordInput.value.trim();
-    if (userInput === "") {
-      return;
-    }
+
     if (!this.#limitedToTenCharRegex.test(userInput)) {
-      this.#setErrorMessage(
-        this.#INPUT_ERROR_MESSAGES.PASSWORD.TOO_LONG,
-        passwordErMsgDiv
-      );
+      passwordErMsgDiv.textContent =
+        this.#INPUT_ERROR_MESSAGES.PASSWORD.TOO_LONG;
+    }
+    this.#checkFormValidity();
+  }
+
+  #confirmPassword() {
+    const { confirmPasswordErMsgDiv, confirmPasswordInput } = this.#elements();
+    confirmPasswordErMsgDiv.textContent = "";
+    const password = passwordInput.value.trim();
+    const confirmedPassword = confirmPasswordInput.value.trim();
+
+    if (password !== confirmedPassword) {
+      confirmPasswordErMsgDiv.textContent =
+        this.#INPUT_ERROR_MESSAGES.CONFIRM_PASSWORD.PASSWORDS_NOT_MATCHING;
     }
     this.#checkFormValidity();
   }
 
   async signUp() {
-    console.log("signing up");
     const { userNameInput, passwordInput } = this.#elements();
-    const returnValue = await createUser(
-      userNameInput.value,
-      passwordInput.value
-    );
-    console.log(returnValue);
-    return returnValue;
+    try {
+      const returnValue = await createUser(
+        userNameInput.value,
+        passwordInput.value
+      );
+      //TODO navigate to quotes page
+    } catch (error) {
+      //TODO display error to user
+    }
   }
 
   async signIn() {
-    console.log("signing In");
     const { userNameInput, passwordInput } = this.#elements();
-    const user = await signInUser(userNameInput.value, passwordInput.value);
-    console.log("user: ", user);
-    user
-      .getIdTokenResult()
-      .then((idTokenResult) =>
-        console.log("claims.admin: ", idTokenResult.claims.admin)
+
+    try {
+      const userInfo = await signInUser(
+        userNameInput.value,
+        passwordInput.value
       );
-    //return user;
+      console.log("userInfo", userInfo);
+      if (userInfo.user_id) {
+        //TODO navigate to quotes page
+      }
+    } catch (error) {
+      console.log("signin error", error);
+    }
   }
 }

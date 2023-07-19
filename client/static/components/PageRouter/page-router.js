@@ -37,7 +37,6 @@ export class PageRouter extends HTMLElement {
   }
   renderPage() {
     //remove the previous page
-    console.log("rendering");
     const pageId = "currentPage";
     const prevPage = document.getElementById(pageId);
     if (prevPage != null) {
@@ -64,9 +63,6 @@ export class PageRouter extends HTMLElement {
     //event.preventDefault();
     const linkPath = event.composedPath()[0].dataset.path;
     if (linkPath) {
-      console.log("renderingPageOnClickEvent");
-      console.log(event.target);
-      console.log(linkPath);
       for (const current in pages) {
         if (pages[current].path === linkPath) {
           this.#currentPageInfo = pages[current];
