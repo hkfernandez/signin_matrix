@@ -16,9 +16,11 @@ export class PageRouter extends HTMLElement {
     this.renderPage();
 
     window.addEventListener("click", (event) =>
-      this.renderPageLinkOnClick(event)
+      this.handleNavigationOnClick(event)
     );
-    window.addEventListener("click", (event) => this.manageBackBtnUse(event));
+    window.addEventListener("popstate", (event) =>
+      this.manageBackBtnUse(event)
+    );
   }
 
   manageBackBtnUse(event) {
@@ -35,8 +37,11 @@ export class PageRouter extends HTMLElement {
     }
     return this.#defaultPageInfo;
   }
-  renderPage() {
-    //remove the previous page
+  renderPage(page) {
+    //allows calling of the function for programatic navigation
+    if (page) {
+      this.#currentPageInfo = pages[page];
+    }
     const pageId = "currentPage";
     const prevPage = document.getElementById(pageId);
     if (prevPage != null) {
@@ -57,7 +62,7 @@ export class PageRouter extends HTMLElement {
       window.location.origin + this.#currentPageInfo.path
     );
   }
-  renderPageLinkOnClick(event) {
+  handleNavigationOnClick(event) {
     //composed path helps when clicking on a web component
     //returns an array of the nodes crossed - innermost node first
     //event.preventDefault();

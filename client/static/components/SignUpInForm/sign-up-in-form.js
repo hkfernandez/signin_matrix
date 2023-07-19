@@ -6,6 +6,8 @@ import {
   createUser,
   signInUser,
 } from "../../js/dependencies/firebaseFrontendServices.js";
+import { rain } from "../../js/dependencies/digitalRain.js";
+import { pages } from "../../js/dependencies/pages.js";
 
 export class SignUpInForm extends HTMLElement {
   #elements = () => {
@@ -13,6 +15,8 @@ export class SignUpInForm extends HTMLElement {
       btnAnimationWrapper: document.getElementById("btnAnimationWrapper"),
       confirmPasswordInput: document.getElementById("confirmPasswordInput"),
       confirmPasswordErMsgDiv: document.getElementById("confirmPasswordErMsg"),
+      fullPageOverlay: document.getElementById("fullPageOverlay"),
+      pageRouter: document.getElementById("pageRouter"),
       passwordErMsgDiv: document.getElementById("passwordErMsg"),
       passwordInput: document.getElementById("passwordInput"),
       signOutBtn: document.getElementById("signOutUserBtn"),
@@ -28,6 +32,17 @@ export class SignUpInForm extends HTMLElement {
     };
   };
   animations = {
+    transitionToQuotesPage: () => {
+      const { fullPageOverlay, pageRouter } = this.#elements();
+      addRemoveClass(fullPageOverlay, "fade-overlay-in", "hidden");
+      rain();
+      //setTimeout(() => {
+      //  fullPageOverlay.classList.add("fade-overlay-to-green");
+      //}, 3000);
+      setTimeout(() => {
+        pageRouter.renderPage("quotes");
+      }, 13000);
+    },
     scrollSignUpInBtnToClosePosition: () => {
       const { btnAnimationWrapper } = this.#elements();
       addRemoveClass(
@@ -229,18 +244,16 @@ export class SignUpInForm extends HTMLElement {
   async signUp() {
     const { userNameInput, passwordInput } = this.#elements();
     try {
-      const returnValue = await createUser(
-        userNameInput.value,
-        passwordInput.value
-      );
-      //TODO navigate to quotes page
+      await createUser(userNameInput.value, passwordInput.value);
+      console.log("transitioning to quotes page");
+      this.animations.transitionToQuotesPage();
     } catch (error) {
       //TODO display error to user
     }
   }
 
   async signIn() {
-    const { userNameInput, passwordInput } = this.#elements();
+    const { userNameInput, passwordInput, pageRouter } = this.#elements();
 
     try {
       const userInfo = await signInUser(
@@ -249,9 +262,10 @@ export class SignUpInForm extends HTMLElement {
       );
       console.log("userInfo", userInfo);
       if (userInfo.user_id) {
-        //TODO navigate to quotes page
+        pageRouter.renderPage("quotes");
       }
     } catch (error) {
+      //TODO display error
       console.log("signin error", error);
     }
   }

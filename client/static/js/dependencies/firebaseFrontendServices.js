@@ -33,26 +33,19 @@ try {
 }
 
 export async function createUser(email, password) {
-  const newUserUid = await createUserWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      const user = userCredential.user;
-      return user.uid;
+  return await createUserWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => userCredential.user)
+    .then((user) => {
+      const addRoles = httpsCallable(cloudFunctions, "addRoles");
+      addRoles({ uid: user.uid, admin: true, user: true });
     })
     .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      console.log("SIGN UP USER ERROR: ", errorMessage);
-      // ..
+      throw error.message;
     });
-  const addRoles = httpsCallable(cloudFunctions, "addRoles");
-  return addRoles({ uid: newUserUid, admin: true, user: true })
-    .then((message) => {
-      return message;
-    })
-    .catch((error) => console.log("error adding roles: ", error));
 }
+
 export async function signInUser(email, password) {
-  return signInWithEmailAndPassword(auth, email, password)
+  return await signInWithEmailAndPassword(auth, email, password)
     .then((userCredential) => userCredential.user.getIdTokenResult())
     .then((idTokenResult) => idTokenResult.claims)
     .catch((error) => {
@@ -62,7 +55,7 @@ export async function signInUser(email, password) {
 
 export function signOutUser() {
   signOut(auth).catch((error) => {
-    return error.message;
+    throw error.message;
   });
 }
 onAuthStateChanged(auth, (user) => {

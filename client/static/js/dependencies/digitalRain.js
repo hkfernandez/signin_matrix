@@ -52,6 +52,7 @@ function update(j) {
     let opacity = 1 - (timer - i) / 16;
     if (i < chars.length && chars[i].style) {
       chars[i].style.opacity = opacity;
+      if (chars[i].style.opacity <= 0) chars[i].remove();
     }
   }
 }
