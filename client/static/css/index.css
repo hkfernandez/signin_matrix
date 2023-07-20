@@ -408,10 +408,36 @@ form .error-message {
 #siteHeader nav {
   display: flex;
   flex-direction: column;
+  margin-bottom: 1rem;
+}
+#siteHeader nav ul {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+#navLoginInfoAboutWrappper {
+  display: flex;
+  flex-direction: column;
+}
+
+#loginInfoSignOutWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  margin-bottom: 1rem;
+}
+
+#signOutBtn {
+  text-align: right;
 }
 
 #loginInfo {
   text-align: right;
+}
+
+#aboutThisPage {
+  margin-left: 1rem;
 }
 
 #tileAndLinksWrapper {
@@ -480,6 +506,18 @@ quote-component {
   margin-bottom: 1em;
   -moz-column-break-inside: avoid;
        break-inside: avoid;
+}
+
+#aboutThisPageComponentWrapper {
+  margin-left: 1rem;
+  padding: 0.5em 0.5em 0.25em 0.5em;
+  border: 3px solid #301014;
+  border-radius: 0 0 10px 10px;
+}
+
+#aboutThisPageTitle {
+  font-size: 24px;
+  font-weight: 800;
 }
 
 #contentWrapper {
@@ -612,6 +650,10 @@ quote-component {
   animation: none;
   color: #008f11;
   box-shadow: none;
+}
+
+#signUpInErMsg {
+  z-index: -1;
 }
 
 #continueBtnAndMessagesWrapper {
@@ -768,6 +810,20 @@ quote-component {
 .scroll-sign-up-btn-out {
   transform: translateY(0px);
   transition-timing-function: linear;
+  transition-duration: 1s;
+  transition-delay: 0s;
+}
+
+.scroll-sign-up-in-er-msg-in {
+  transform: translateY(80px);
+  transition-timing-function: ease-out;
+  transition-duration: 1s;
+  transition-delay: 0s;
+}
+
+.scroll-sign-up-in-er-msg-out {
+  transform: translateY(0px);
+  transition-timing-function: ease-out;
   transition-duration: 1s;
   transition-delay: 0s;
 }

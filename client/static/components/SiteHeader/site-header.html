@@ -1,4 +1,4 @@
-<header>
+<header style="position: relative">
   <div id="tileAndLinksWrapper">
     <button
       id="navigateToAboutBtn"
@@ -14,38 +14,32 @@
       </p>
       <span data-path="/about">a tech stack portfolio</span>
     </button>
-    <nav id="siteHeaderNavbar">
-      <div id="loginInfo"></div>
-      <ul>
-        <li>
-          <button
-            id="navigateToPillsBtn"
-            data-path="/pills"
-            class="btn-text btn-site-header"
-          >
-            Auth
-          </button>
-        </li>
-        <li></li>
-        <li>
-          <button id="dockerBtn" class="btn-text btn-site-header">
-            Docker
-          </button>
-        </li>
-        <li></li>
-        <li>
-          <button id="signOutBtn" class="btn-text btn-site-header">
-            Signout
-          </button>
-        </li>
-        <li></li>
-        <li>
-          <button id="checkAuthBtn" class="btn-text btn-site-header">
-            Check
-          </button>
-        </li>
-        <li></li>
-      </ul>
-    </nav>
+    <div id="navLoginInfoAboutWrappper">
+      <nav id="siteHeaderNavbar">
+        <ul>
+          <li>
+            <button
+              id="navigateToPillsBtn"
+              data-path="/pills"
+              class="btn-text btn-site-header"
+            >
+              Auth
+            </button>
+          </li>
+          <li>
+            <button id="dockerBtn" class="btn-text btn-site-header">
+              Docker
+            </button>
+          </li>
+        </ul>
+      </nav>
+      <div id="loginInfoSignOutWrapper">
+        <div id="loginInfo"></div>
+        <button id="signOutBtn" class="btn-text">Signout</button>
+      </div>
+    </div>
   </div>
+  <about-this-page
+    style="position: absolute; bottom: -36px; right: 16px"
+  ></about-this-page>
 </header>

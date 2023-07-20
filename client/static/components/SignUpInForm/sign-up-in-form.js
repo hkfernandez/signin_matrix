@@ -7,7 +7,6 @@ import {
   signInUser,
 } from "../../js/dependencies/firebaseFrontendServices.js";
 import { rain } from "../../js/dependencies/digitalRain.js";
-import { pages } from "../../js/dependencies/pages.js";
 
 export class SignUpInForm extends HTMLElement {
   #elements = () => {
@@ -21,6 +20,7 @@ export class SignUpInForm extends HTMLElement {
       passwordInput: document.getElementById("passwordInput"),
       signOutBtn: document.getElementById("signOutUserBtn"),
       signUpInBtn: document.getElementById("signUpInBtn"),
+      signUpInErMsg: document.getElementById("signUpInErMsg"),
       signUpInForm: document.getElementById("signUpInForm"),
       signUpInMessageSpan: document.getElementById("signUpInMessageSpan"),
       togglePwVisibilityBtns: document.getElementsByClassName(
@@ -217,7 +217,8 @@ export class SignUpInForm extends HTMLElement {
     this.#checkFormValidity();
   }
   #validatePassword() {
-    const { passwordErMsgDiv, passwordInput } = this.#elements();
+    const { passwordErMsgDiv, passwordInput, confirmPasswordInput } =
+      this.#elements();
     passwordErMsgDiv.textContent = "";
     const userInput = passwordInput.value.trim();
 
@@ -225,6 +226,9 @@ export class SignUpInForm extends HTMLElement {
       passwordErMsgDiv.textContent =
         this.#INPUT_ERROR_MESSAGES.PASSWORD.TOO_LONG;
     }
+
+    if (confirmPasswordInput !== "") this.#confirmPassword;
+
     this.#checkFormValidity();
   }
 
@@ -240,33 +244,54 @@ export class SignUpInForm extends HTMLElement {
     }
     this.#checkFormValidity();
   }
+  #displaySignUpInErMsg(errorMessage) {
+    const { passwordInput, confirmPasswordInput, signUpInErMsg } =
+      this.#elements();
+    signUpInErMsg.textContent = errorMessage;
+    addRemoveClass(
+      signUpInErMsg,
+      "scroll-sign-up-in-er-msg-in",
+      "scroll-sign-up-in-er-msg-out"
+    );
+    setTimeout(() => {
+      addRemoveClass(
+        signUpInErMsg,
+        "scroll-sign-up-in-er-msg-out",
+        "scroll-sign-up-in-er-msg-in"
+      );
+    }, 5000);
+
+    passwordInput.value = "";
+    confirmPasswordInput.value = "";
+
+    this.#checkFormValidity();
+  }
 
   async signUp() {
     const { userNameInput, passwordInput } = this.#elements();
     try {
       await createUser(userNameInput.value, passwordInput.value);
-      console.log("transitioning to quotes page");
       this.animations.transitionToQuotesPage();
-    } catch (error) {
-      //TODO display error to user
+    } catch (errorMessage) {
+      this.#displaySignUpInErMsg(errorMessage);
     }
   }
 
   async signIn() {
-    const { userNameInput, passwordInput, pageRouter } = this.#elements();
-
+    const { userNameInput, passwordInput, pageRouter, signUpInErMsg } =
+      this.#elements();
+    console.log("signUpInMsg", signUpInErMsg);
     try {
       const userInfo = await signInUser(
         userNameInput.value,
         passwordInput.value
       );
       console.log("userInfo", userInfo);
-      if (userInfo.user_id) {
+      if (userInfo) {
         pageRouter.renderPage("quotes");
       }
-    } catch (error) {
-      //TODO display error
-      console.log("signin error", error);
+    } catch (errorMessage) {
+      this.#displaySignUpInErMsg(errorMessage);
     }
   }
 }

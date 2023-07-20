@@ -67,14 +67,23 @@
   </div>
   <!--animation wrapper allows the button to pulse and move at the same time-->
   <div id="btnAnimationWrapper" style="position: absolute">
-    <button
-      id="signUpInBtn"
-      class="navigation-btn btn-green"
-      type="button"
-      disabled
-    >
-      SIGN UP
-    </button>
+    <div style="position: relative">
+      <button
+        id="signUpInBtn"
+        class="navigation-btn btn-green"
+        type="button"
+        disabled
+      >
+        SIGN UP
+      </button>
+      <div
+        id="signUpInErMsg"
+        class="error-message"
+        style="position: absolute; top: 0"
+      >
+        Test error message
+      </div>
+    </div>
   </div>
   <p id="signUpInMessage" style="position: absolute; top: 0" class="message">
     <span id="signUpInMessageSpan"></span>
