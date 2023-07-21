@@ -3,6 +3,7 @@ export function setUpUi(userInfo) {
     return {
       adminElements: document.getElementsByClassName("admin"),
       loginInfo: document.getElementById("loginInfo"),
+      signOutBtn: document.getElementById("signOutBtn"),
     };
   };
 
@@ -11,14 +12,18 @@ export function setUpUi(userInfo) {
     return email.slice(0, ampersandLocation);
   }
 
-  const { loginInfo } = elements();
+  const { loginInfo, signOutBtn } = elements();
   console.log("setting up ui with : ", userInfo);
   if (userInfo) {
     console.log("adding logged in user information");
-    loginInfo.innerHTML =
-      `Hi ${extractUserName(userInfo.email)}! ` + "&#128512";
+    loginInfo.innerText = `Hi ${extractUserName(userInfo.email)}!`;
     loginInfo.style.display = "block";
+    signOutBtn.style.display = "block";
+    console.log("signOutBtn", signOutBtn);
   } else {
+    loginInfo.innerText = "";
     loginInfo.style.display = "none";
+    signOutBtn.style.display = "none";
+    console.log("signOutBtn", signOutBtn);
   }
 }

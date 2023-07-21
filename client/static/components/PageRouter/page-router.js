@@ -1,7 +1,5 @@
 import html from "./page-router.html";
-import css from "./page-router.css";
 import { pages } from "../../js/dependencies/pages.js";
-//import { validateUser } from "../../js/dependencies/firebaseaAuth.js";
 
 export class PageRouter extends HTMLElement {
   #currentPageInfo;

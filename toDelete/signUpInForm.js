@@ -1,4 +1,4 @@
-import { helperFunctions } from "./helperFunctions.js";
+import { helperFunctions } from "../client/static/js/dependencies/helperFunctions.js";
 //import { fetchQuotesPage } from "../index.js";
 
 //IMPORTED FUNCTIONS

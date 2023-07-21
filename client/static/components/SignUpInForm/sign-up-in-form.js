@@ -18,7 +18,6 @@ export class SignUpInForm extends HTMLElement {
       pageRouter: document.getElementById("pageRouter"),
       passwordErMsgDiv: document.getElementById("passwordErMsg"),
       passwordInput: document.getElementById("passwordInput"),
-      signOutBtn: document.getElementById("signOutUserBtn"),
       signUpInBtn: document.getElementById("signUpInBtn"),
       signUpInErMsg: document.getElementById("signUpInErMsg"),
       signUpInForm: document.getElementById("signUpInForm"),

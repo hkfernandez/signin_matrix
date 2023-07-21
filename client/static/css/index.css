@@ -508,16 +508,40 @@ quote-component {
        break-inside: avoid;
 }
 
-#aboutThisPageComponentWrapper {
-  margin-left: 1rem;
-  padding: 0.5em 0.5em 0.25em 0.5em;
+#aboutThisPage {
   border: 3px solid #301014;
   border-radius: 0 0 10px 10px;
 }
 
+.about-this-page-base-style {
+  background-color: white;
+  width: 136px;
+  height: 24px;
+}
+
+#aboutThisPageTitleBtn {
+  width: 100%;
+}
+
 #aboutThisPageTitle {
-  font-size: 24px;
   font-weight: 800;
+  text-align: center;
+}
+
+#aboutThisPageText {
+  color: white;
+  padding: 1em;
+}
+
+#closeAboutThisPageBtn {
+  bottom: 0;
+  right: 0;
+}
+#closeAboutThisPageBtn span {
+  font-size: 48px;
+  height: 32px;
+  width: 32px;
+  font-style: normal;
 }
 
 #contentWrapper {
@@ -525,173 +549,6 @@ quote-component {
   align-items: center;
   justify-content: center;
   flex-direction: column;
-}
-
-.pills-wrapper {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100vw;
-  margin-left: 0px;
-}
-
-#fullPageOverlay {
-  height: 100vh;
-  width: 100vw;
-  top: calc((88px + 5rem) * -1);
-  color: #00ff41;
-  opacity: 1;
-}
-
-.digital-rain-drop {
-  width: 1em;
-  position: absolute;
-}
-
-.pill-wrapper {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: row;
-  margin-bottom: 3rem;
-}
-
-.pill {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  font-size: 24px;
-  font-weight: 600;
-  border: 1px solid #0d0208;
-  color: #0d0208;
-  cursor: pointer;
-}
-
-.red {
-  background-color: #9e0028;
-}
-
-.blue {
-  background-color: #005f9e;
-}
-
-.shiny {
-  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.25), 0 1px 0 rgba(255, 255, 255, 0.25) inset, 0 0 0 rgba(0, 0, 0, 0.5) inset, 0 1.25rem 0 rgba(255, 255, 255, 0.08) inset, 0 -1.25rem 1.25rem rgba(0, 0, 0, 0.3) inset, 0 1.25rem 1.25rem rgba(255, 255, 255, 0.1) inset;
-}
-
-.left {
-  z-index: 2;
-  width: 290px;
-  height: 220px;
-  border-radius: 120px 0 0 120px;
-  box-shadow: 0.5em -0.125em -0.25em 0.25em 0;
-}
-
-.right {
-  z-index: 1;
-  margin-left: -40px;
-  width: 290px;
-  height: 210px;
-  border-radius: 0 120px 120px 0;
-}
-
-#signUpInWrapper {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  width: 250px;
-  background-color: white;
-}
-#signUpInWrapper #signUpInForm {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-}
-#signUpInWrapper #signUpInForm #inputsWrapper {
-  margin-bottom: 0.5em;
-}
-#signUpInWrapper #signUpInForm #inputsWrapper .togglePwVisibilityBtn {
-  width: 24px;
-  height: 24px;
-  margin: 0;
-  padding: 0;
-  background: transparent;
-}
-#signUpInWrapper #signUpInForm #inputsWrapper .show-hide-icon {
-  width: 100%;
-  height: 100%;
-}
-
-#signUpInMessage {
-  z-index: -1;
-  text-align: center;
-}
-
-.text-hidden {
-  color: transparent;
-}
-
-.navigation-btn {
-  width: 250px;
-  margin: auto;
-  margin-bottom: 0.75rem;
-}
-
-.btn-green {
-  background: #00ff41;
-  box-shadow: 0 0 0.25em 0.5em #008f11;
-  animation: greenPulse 4s infinite;
-}
-.btn-green:disabled {
-  animation: none;
-  color: #008f11;
-  box-shadow: none;
-}
-
-#signUpInErMsg {
-  z-index: -1;
-}
-
-#continueBtnAndMessagesWrapper {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  justify-content: space-between;
-  width: 250px;
-}
-#continueBtnAndMessagesWrapper .quote {
-  font-style: italic;
-  color: #00ff41;
-  padding-right: 10px;
-  margin-bottom: 1.5rem;
-}
-#continueBtnAndMessagesWrapper .quote span {
-  font-style: normal;
-  display: block;
-  text-align: right;
-  margin-right: -10px;
-}
-#continueBtnAndMessagesWrapper .btn-blue {
-  background: #7dc3f1;
-  box-shadow: 0 0 0.25em 0.5em #005f9e;
-  animation: bluePulse 4s infinite;
-}
-#continueBtnAndMessagesWrapper .message {
-  text-align: center;
-}
-
-#btnAnimationWrapper {
-  width: 100%;
-}
-
-.fade-in-green-background {
-  z-index: 5;
-  animation: fadeInGreenBackground 8s forwards;
 }
 
 .left-pill-open-red {
@@ -915,6 +772,233 @@ quote-component {
     color: white;
   }
 }
+.expand-about-this-page {
+  top: 100px;
+  right: 0;
+  animation: expandAboutThisPage 2s forwards;
+}
+
+.collapse-about-this-page {
+  top: 100px;
+  right: 0;
+  animation: collapseAboutThisPage 1s forwards;
+}
+
+.expand-about-this-page-title {
+  animation: expandAboutThisPageTitle 2s forwards;
+}
+
+.shrink-about-this-page-title {
+  animation: shrinkAboutThisPageTitle 1s forwards;
+}
+
+@keyframes expandAboutThisPage {
+  0% {
+    width: 136px;
+    background-color: white;
+    height: 24px;
+  }
+  100% {
+    background-color: #301014;
+    width: 98%;
+    height: 80vh;
+  }
+}
+@keyframes collapseAboutThisPage {
+  0% {
+    background-color: #301014;
+    width: 98%;
+    height: 80vh;
+  }
+  100% {
+    width: 136px;
+    background-color: white;
+    height: 24px;
+  }
+}
+@keyframes expandAboutThisPageTitle {
+  0% {
+    font-size: 16px;
+  }
+  100% {
+    font-size: 32px;
+  }
+}
+@keyframes shrinkAboutThisPageTitle {
+  0% {
+    font-size: 32px;
+  }
+  100% {
+    font-size: 16px;
+  }
+}
+.pills-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  margin-left: 0px;
+}
+
+#fullPageOverlay {
+  height: 100vh;
+  width: 100vw;
+  top: calc((88px + 5rem) * -1);
+  color: #00ff41;
+  opacity: 1;
+}
+
+.digital-rain-drop {
+  width: 1em;
+  position: absolute;
+}
+
+.pill-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  margin-bottom: 3rem;
+}
+
+.pill {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  font-size: 24px;
+  font-weight: 600;
+  border: 1px solid #0d0208;
+  color: #0d0208;
+  cursor: pointer;
+}
+
+.red {
+  background-color: #9e0028;
+}
+
+.blue {
+  background-color: #005f9e;
+}
+
+.shiny {
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.25), 0 1px 0 rgba(255, 255, 255, 0.25) inset, 0 0 0 rgba(0, 0, 0, 0.5) inset, 0 1.25rem 0 rgba(255, 255, 255, 0.08) inset, 0 -1.25rem 1.25rem rgba(0, 0, 0, 0.3) inset, 0 1.25rem 1.25rem rgba(255, 255, 255, 0.1) inset;
+}
+
+.left {
+  z-index: 2;
+  width: 290px;
+  height: 220px;
+  border-radius: 120px 0 0 120px;
+  box-shadow: 0.5em -0.125em -0.25em 0.25em 0;
+}
+
+.right {
+  z-index: 1;
+  margin-left: -40px;
+  width: 290px;
+  height: 210px;
+  border-radius: 0 120px 120px 0;
+}
+
+#signUpInWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 250px;
+  background-color: white;
+}
+#signUpInWrapper #signUpInForm {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+#signUpInWrapper #signUpInForm #inputsWrapper {
+  margin-bottom: 0.5em;
+}
+#signUpInWrapper #signUpInForm #inputsWrapper .togglePwVisibilityBtn {
+  width: 24px;
+  height: 24px;
+  margin: 0;
+  padding: 0;
+  background: transparent;
+}
+#signUpInWrapper #signUpInForm #inputsWrapper .show-hide-icon {
+  width: 100%;
+  height: 100%;
+}
+
+#signUpInMessage {
+  z-index: -1;
+  text-align: center;
+}
+
+.text-hidden {
+  color: transparent;
+}
+
+.navigation-btn {
+  width: 250px;
+  margin: auto;
+  margin-bottom: 0.75rem;
+}
+
+.btn-green {
+  background: #00ff41;
+  box-shadow: 0 0 0.25em 0.5em #008f11;
+  animation: greenPulse 4s infinite;
+}
+.btn-green:disabled {
+  animation: none;
+  color: #008f11;
+  box-shadow: none;
+}
+
+#signUpInErMsg {
+  z-index: -1;
+}
+
+#continueBtnAndMessagesWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 250px;
+}
+#continueBtnAndMessagesWrapper .quote {
+  font-style: italic;
+  color: #00ff41;
+  padding-right: 10px;
+  margin-bottom: 1.5rem;
+}
+#continueBtnAndMessagesWrapper .quote span {
+  font-style: normal;
+  display: block;
+  text-align: right;
+  margin-right: -10px;
+}
+#continueBtnAndMessagesWrapper .btn-blue {
+  background: #7dc3f1;
+  box-shadow: 0 0 0.25em 0.5em #005f9e;
+  animation: bluePulse 4s infinite;
+}
+#continueBtnAndMessagesWrapper .message {
+  text-align: center;
+}
+
+#btnAnimationWrapper {
+  width: 100%;
+}
+
+.fade-in-green-background {
+  z-index: 5;
+  animation: fadeInGreenBackground 8s forwards;
+}
+
 body {
   background: white;
   display: flex;
