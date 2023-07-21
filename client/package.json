@@ -2,7 +2,7 @@
   "name": "favorites_client",
   "version": "1.0.0",
   "description": "Application highlighting web technologies",
-  "main": "./static/js/index.js",
+  "main": "/dis/index.js",
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

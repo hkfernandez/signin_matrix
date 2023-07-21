@@ -6,7 +6,7 @@ const CopyPlugin = require("copy-webpack-plugin");
 module.exports = (env, argv) => {
   return {
     entry: {
-      main: "./static/js/index.js",
+      main: "./src/js/index.js",
     },
     output: {
       path: path.resolve(__dirname, "./dist"),
@@ -51,7 +51,7 @@ module.exports = (env, argv) => {
     plugins: [
       new CleanWebpackPlugin(),
       new HtmlWebpackPlugin({
-        template: "./static/html/index.html", // template file
+        template: "./src/html/index.html", // template file
         filename: "index.html", // output file
       }),
       new CopyPlugin({
@@ -60,11 +60,11 @@ module.exports = (env, argv) => {
           //    { from: "src/assets", to: "assets" },
           //    { from: "src/styles.css", to: "styles.css" },
           {
-            from: path.resolve(__dirname, "./static/css/index.css"),
+            from: path.resolve(__dirname, "./src/css/index.css"),
             to: "",
           },
           {
-            from: path.resolve(__dirname, "./static/images"),
+            from: path.resolve(__dirname, "./src/images"),
             to: "images",
           },
           //    { from: "src/normalize.css", to: "normalize.css" },
