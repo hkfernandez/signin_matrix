@@ -7,8 +7,11 @@ export class QuotesPage extends HTMLElement {
   #elements = () => {
     return {
       authorInput: document.getElementById("authorInput"),
+      goToSignInPageBtn: document.getElementById("goToSignInPageBtn"),
+      loginInfo: document.getElementById("loginInfo"),
       mouthPiece: document.getElementById("mouthPiece"),
       openBtn: document.getElementById("openBtn"),
+      pageRouter: document.getElementById("pageRouter"),
       quoteInput: document.getElementById("quoteInput"),
       quotesList: document.getElementById("quotesList"),
       screen: document.getElementById("screen"),
@@ -23,26 +26,20 @@ export class QuotesPage extends HTMLElement {
   }
   connectedCallback() {
     this.innerHTML = html;
-    const { screen, mouthPiece, openBtn } = this.#elements();
+    this.#setUpUi();
+    const { screen, goToSignInPageBtn, mouthPiece, openBtn, pageRouter } =
+      this.#elements();
     screen.addEventListener("click", (event) => this.#clickScreen(event));
     mouthPiece.addEventListener("click", (event) =>
       this.#openClosePhone(event)
     );
     openBtn.addEventListener("click", (event) => this.#openClosePhone(event));
-
+    goToSignInPageBtn.addEventListener("click", () =>
+      pageRouter.renderPage("pills")
+    );
     this.#addQuotesToPage();
   }
 
-  //HELPER FUNCTIONS
-  #createElementWithTextAndClass(elementType, text, classString) {
-    const element = document.createElement(elementType);
-    element.textContent = text;
-    element.classList.add(classString);
-    return element;
-  }
-  #appendChildren(parentElement, childernArray) {
-    childernArray.forEach((child) => parentElement.appendChild(child));
-  }
   #clearFormInputs() {
     const { quoteInput, authorInput } = this.#elements();
     quoteInput.value = "";
@@ -163,5 +160,17 @@ export class QuotesPage extends HTMLElement {
     quotes.forEach((quote) => {
       this.#addQuoteToPage(quote);
     });
+  }
+  #setUpUi() {
+    const { loginInfo } = this.#elements();
+    console.log("loginInfo.textContent", loginInfo.textContent);
+    if (!loginInfo.textContent) {
+      console.log("hiding elements");
+      const adminElements = document.getElementsByClassName("admin");
+      console.log(adminElements);
+      Array.from(adminElements).forEach((element) => {
+        element.classList.add("hidden");
+      });
+    }
   }
 }

@@ -2,18 +2,24 @@ import html from "./pills-page.html";
 import { helperFunctions } from "../../js/dependencies/helperFunctions.js";
 const { addRemoveClass } = helperFunctions;
 import { rain } from "../../js/dependencies/digitalRain.js";
+import { PageRouter } from "../PageRouter/page-router.js";
 
 export class PillsPage extends HTMLElement {
   #RED_PILL_STATE = "closed";
   #BLUE_PILL_STATE = "closed";
+  #ANIMATING = false;
   #elements = () => {
     return {
-      signUpInMessage: document.getElementById("signUpInMessage"),
       bluePillWrapper: document.getElementById("bluePillWrapper"),
+      continueWithoutSigningInBtn: document.getElementById(
+        "continueWithoutSigningInBtn"
+      ),
+      fullPageOverlay: document.getElementById("fullPageOverlay"),
+      pageRouter: document.getElementById("pageRouter"),
       redPillWrapper: document.getElementById("redPillWrapper"),
       signUpInBtn: document.getElementById("signUpInBtn"),
       signUpInForm: document.getElementById("signUpInForm"),
-      fullPageOverlay: document.getElementById("fullPageOverlay"),
+      signUpInMessage: document.getElementById("signUpInMessage"),
     };
   };
   #animations = {
@@ -86,7 +92,6 @@ export class PillsPage extends HTMLElement {
     signUpAndContinue: async () => {
       const { signUpInForm } = this.#elements();
       const returnValue = await signUpInForm.signUp();
-      console.log("return value after sign up: ", returnValue);
       if (returnValue) {
         this.#animations.secondary.transitionToQuotesPage();
       }
@@ -96,6 +101,8 @@ export class PillsPage extends HTMLElement {
     //  signUpInForm.animations.switchToSignIn();
     //},
     togglePillOpenClose: (event) => {
+      if (this.#ANIMATING) return;
+      this.#ANIMATING = true;
       const pill = event.composedPath()[0];
       const { signUpInMessage, bluePillWrapper, redPillWrapper, signUpInForm } =
         this.#elements();
@@ -124,6 +131,7 @@ export class PillsPage extends HTMLElement {
           );
           signUpInForm.animations.switchToSignUp(this.#RED_PILL_STATE);
           this.#RED_PILL_STATE = "open";
+          setTimeout(() => (this.#ANIMATING = false), 5000);
         } else {
           openClosePill(parsedPill, "close");
           addRemoveClass(
@@ -144,6 +152,7 @@ export class PillsPage extends HTMLElement {
           signUpInForm.animations.scrollSignUpInBtnToClosePosition();
           //this.#animations.secondary.scrollSignUpInBtnToClosePosition();
           this.#RED_PILL_STATE = "closed";
+          setTimeout(() => (this.#ANIMATING = false), 4000);
         }
       } else {
         //CLICKING ON BLUE PILL
@@ -157,6 +166,7 @@ export class PillsPage extends HTMLElement {
           );
           addRemoveClass(redPillWrapper, "fade-pill-out", "fade-pill-in");
           this.#BLUE_PILL_STATE = "open";
+          setTimeout(() => (this.#ANIMATING = false), 5000);
         } else {
           setTimeout(
             () =>
@@ -170,6 +180,7 @@ export class PillsPage extends HTMLElement {
             "scroll-blue-pill-up"
           );
           this.#BLUE_PILL_STATE = "closed";
+          setTimeout(() => (this.#ANIMATING = false), 4000);
         }
       }
     },
@@ -180,9 +191,10 @@ export class PillsPage extends HTMLElement {
   }
   connectedCallback() {
     this.innerHTML = html;
-    //document.addEventListener("click", (event) =>
-    //  this.#handleClickEventAnimations(event)
-    //);
+    const { continueWithoutSigningInBtn, pageRouter } = this.#elements();
+    continueWithoutSigningInBtn.addEventListener("click", () =>
+      pageRouter.renderPage("quotes")
+    );
     const pillElements = Array.from(document.getElementsByClassName("pill"));
     pillElements.forEach((element) =>
       element.addEventListener("click", (event) =>
@@ -190,12 +202,4 @@ export class PillsPage extends HTMLElement {
       )
     );
   }
-  //#handleClickEventAnimations(event) {
-  //  event.preventDefault();
-  //  const target = event.composedPath()[0];
-  //  const animation = target.dataset.animation;
-  //  if (!animation) return;
-  //  if (this.#animations[animation] === undefined) return;
-  //  this.#animations[animation](target);
-  //}
 }

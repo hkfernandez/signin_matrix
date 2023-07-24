@@ -1,6 +1,6 @@
 redirecting user to about page on auth state change is creating an infinate loop
 
-keep working on handling errors when signing in
+fix about this page in aligned correctly on intial page load
 
 form and page now working as separate components
 need to get the transition into the quotes page after auth working

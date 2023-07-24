@@ -36,7 +36,6 @@ export const quotesController = {
     };
     addDoc(quotesCollection, quote)
       .then((quoteData) => {
-        console.log("new quote id: ", quoteData.id);
         res.send(quoteData.id);
       })
       .catch((error) => console.log(error));

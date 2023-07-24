@@ -59,10 +59,8 @@ export function signOutUser() {
   });
 }
 onAuthStateChanged(auth, (user) => {
-  console.log("onAuthStateChanged");
   if (user) {
     const uid = user.uid;
-    console.log("USER_ID:", uid);
     user.getIdTokenResult().then((idTokenResult) => {
       const userInfo = idTokenResult.claims;
       setUpUi(userInfo);
@@ -71,7 +69,6 @@ onAuthStateChanged(auth, (user) => {
   } else {
     // User is signed out
     // ...
-    console.log("user is signed out");
     setUpUi(null);
     document.getElementById("navigateToPillsBtn").click();
   }

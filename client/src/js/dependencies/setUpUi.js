@@ -13,17 +13,13 @@ export function setUpUi(userInfo) {
   }
 
   const { loginInfo, signOutBtn } = elements();
-  console.log("setting up ui with : ", userInfo);
   if (userInfo) {
-    console.log("adding logged in user information");
     loginInfo.innerText = `Hi ${extractUserName(userInfo.email)}!`;
     loginInfo.style.display = "block";
     signOutBtn.style.display = "block";
-    console.log("signOutBtn", signOutBtn);
   } else {
     loginInfo.innerText = "";
     loginInfo.style.display = "none";
     signOutBtn.style.display = "none";
-    console.log("signOutBtn", signOutBtn);
   }
 }

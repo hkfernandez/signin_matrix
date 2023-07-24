@@ -209,7 +209,6 @@ export class SignUpInForm extends HTMLElement {
     const userInput = userNameInput.value.trim();
 
     if (!this.#emailFormatRegex.test(userInput)) {
-      console.log("setting error message");
       usernameErMsgDiv.textContent =
         this.#INPUT_ERROR_MESSAGES.USENAME.INVALID_FORMAT;
     }
@@ -279,13 +278,11 @@ export class SignUpInForm extends HTMLElement {
   async signIn() {
     const { userNameInput, passwordInput, pageRouter, signUpInErMsg } =
       this.#elements();
-    console.log("signUpInMsg", signUpInErMsg);
     try {
       const userInfo = await signInUser(
         userNameInput.value,
         passwordInput.value
       );
-      console.log("userInfo", userInfo);
       if (userInfo) {
         pageRouter.renderPage("quotes");
       }
