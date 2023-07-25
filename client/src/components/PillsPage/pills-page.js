@@ -2,7 +2,6 @@ import html from "./pills-page.html";
 import { helperFunctions } from "../../js/dependencies/helperFunctions.js";
 const { addRemoveClass } = helperFunctions;
 import { rain } from "../../js/dependencies/digitalRain.js";
-import { PageRouter } from "../PageRouter/page-router.js";
 
 export class PillsPage extends HTMLElement {
   #RED_PILL_STATE = "closed";

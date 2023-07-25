@@ -1,7 +1,8 @@
 import html from "./quotes-page.html";
 import { helperFunctions } from "../../js/dependencies/helperFunctions.js";
 const { addRemoveClass } = helperFunctions;
-import { QuoteLi } from "../QuoteLi.js";
+import { QuoteLi } from "../QuoteLi/quote-li.js";
+import { setUpUi } from "../../js/dependencies/setUpUi.js";
 
 export class QuotesPage extends HTMLElement {
   #elements = () => {
@@ -19,14 +20,14 @@ export class QuotesPage extends HTMLElement {
   };
   #PHONE_MESSAGES = {
     ANSWER: "ANSWER THE PHONE",
-    ADD_QUOTE: "ADD A QUOTE",
+    LOGGED_IN_MESSAGE: "ADD A QUOTE",
+    NOT_LOGGED_IN_MESSAGE: "SORRY COPPERTOP",
   };
   constructor() {
     super();
   }
   connectedCallback() {
     this.innerHTML = html;
-    this.#setUpUi();
     const { screen, goToSignInPageBtn, mouthPiece, openBtn, pageRouter } =
       this.#elements();
     screen.addEventListener("click", (event) => this.#clickScreen(event));
@@ -37,7 +38,9 @@ export class QuotesPage extends HTMLElement {
     goToSignInPageBtn.addEventListener("click", () =>
       pageRouter.renderPage("pills")
     );
+    console.log("pathname inside quotes_page", window.location.pathname);
     this.#addQuotesToPage();
+    setUpUi();
   }
 
   #clearFormInputs() {
@@ -56,11 +59,15 @@ export class QuotesPage extends HTMLElement {
     }
   }
   #openClosePhone({ target }) {
-    const { screen, mouthPiece, openBtn, quoteInput, authorInput } =
+    const { screen, mouthPiece, openBtn, quoteInput, authorInput, loginInfo } =
       this.#elements();
     if (screen.textContent === this.#PHONE_MESSAGES.ANSWER) {
       addRemoveClass(mouthPiece, "open-phone", "close-phone");
-      screen.textContent = this.#PHONE_MESSAGES.ADD_QUOTE;
+      if (loginInfo.textContent) {
+        screen.textContent = this.#PHONE_MESSAGES.LOGGED_IN_MESSAGE;
+      } else {
+        screen.textContent = this.#PHONE_MESSAGES.NOT_LOGGED_IN_MESSAGE;
+      }
       openBtn.classList.add("btn-disabled");
       screen.classList.remove("btn-disabled");
       return;
@@ -160,17 +167,5 @@ export class QuotesPage extends HTMLElement {
     quotes.forEach((quote) => {
       this.#addQuoteToPage(quote);
     });
-  }
-  #setUpUi() {
-    const { loginInfo } = this.#elements();
-    console.log("loginInfo.textContent", loginInfo.textContent);
-    if (!loginInfo.textContent) {
-      console.log("hiding elements");
-      const adminElements = document.getElementsByClassName("admin");
-      console.log(adminElements);
-      Array.from(adminElements).forEach((element) => {
-        element.classList.add("hidden");
-      });
-    }
   }
 }

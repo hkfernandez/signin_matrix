@@ -70,6 +70,5 @@ onAuthStateChanged(auth, (user) => {
     // User is signed out
     // ...
     setUpUi(null);
-    document.getElementById("navigateToPillsBtn").click();
   }
 });

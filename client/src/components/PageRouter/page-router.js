@@ -45,7 +45,13 @@ export class PageRouter extends HTMLElement {
     if (prevPage != null) {
       prevPage.remove();
     }
-    //const user = validateUser();
+    document.title = this.#currentPageInfo.title;
+    //puts the path in the URL
+    history.pushState(
+      this.#currentPageInfo,
+      this.#currentPageInfo,
+      window.location.origin + this.#currentPageInfo.path
+    );
     const newPage = document.createElement(this.#currentPageInfo.component);
     newPage.id = pageId;
     //TODO
@@ -53,12 +59,6 @@ export class PageRouter extends HTMLElement {
     //  this.#gotoNewPage(event.detail)
     //);
     this.appendChild(newPage);
-    document.title = this.#currentPageInfo.title;
-    history.pushState(
-      this.#currentPageInfo,
-      this.#currentPageInfo,
-      window.location.origin + this.#currentPageInfo.path
-    );
   }
   handleNavigationOnClick(event) {
     //composed path helps when clicking on a web component
