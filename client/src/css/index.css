@@ -1,3 +1,7 @@
+* {
+  box-sizing: border-box;
+}
+
 html,
 body,
 div,
@@ -134,7 +138,12 @@ body {
   font-size: 16px;
   background-color: white;
   color: black;
-  padding-top: calc(88px + 5rem);
+  overflow-y: hidden;
+  overflow-x: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 }
 
 .hidden {
@@ -142,10 +151,6 @@ body {
   display: none;
   opacity: 0%;
   z-index: -2;
-}
-
-.text-hidden {
-  color: transparent;
 }
 
 @keyframes greenPulse {
@@ -401,18 +406,18 @@ form .error-message {
 
 #siteHeader {
   width: calc(100% - 4rem);
-  max-height: 88px;
+  height: 100px;
   box-shadow: -10px 10px 0px 1px #301014;
   margin: 2rem;
   border: 6px solid #301014;
   border-radius: 10px;
   background: white;
-  z-index: 3;
 }
 #siteHeader nav {
+  height: 100%;
   display: flex;
   flex-direction: column;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
 }
 #siteHeader nav ul {
   display: flex;
@@ -420,23 +425,24 @@ form .error-message {
   justify-content: flex-end;
 }
 
-#navLoginInfoAboutWrappper {
+#navUsernameAboutWrappper {
   display: flex;
   flex-direction: column;
+  justify-content: center;
 }
 
-#loginInfoSignOutWrapper {
+#usernameSignOutWrapper {
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  margin-bottom: 1rem;
+  height: 40px;
 }
 
 #signOutBtn {
   text-align: right;
 }
 
-#loginInfo {
+#signedInUsername {
   text-align: right;
 }
 
@@ -514,12 +520,10 @@ quote-component {
 #aboutThisPage {
   border: 3px solid #301014;
   border-radius: 0 0 10px 10px;
-}
-
-.about-this-page-base-style {
+  right: 1em;
   background-color: white;
   width: 136px;
-  height: 24px;
+  height: 40px;
 }
 
 #aboutThisPageTitleBtn {
@@ -529,15 +533,15 @@ quote-component {
 #aboutThisPageTitle {
   font-weight: 800;
   text-align: center;
+  padding: 0.5em 0;
 }
 
 #aboutThisPageText {
   color: white;
-  padding: 1em;
 }
 
 #closeAboutThisPageBtn {
-  bottom: 0;
+  bottom: -0.75em;
   right: 0;
 }
 #closeAboutThisPageBtn span {
@@ -589,11 +593,60 @@ quote-component {
   z-index: -1;
 }
 
-#contentWrapper {
+#loadingAnimation {
+  width: 100vw;
+  z-index: -1;
+  position: relative;
+  top: calc(-2rem - 12px);
+}
+
+#loadingAnimationText {
+  color: #00ff41;
+  font-size: 24px;
+  font-family: "Courier New", Courier, monospace;
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: row;
+  text-align: right;
+  letter-spacing: 1rem;
+  padding-left: 1rem;
+  font-weight: 600;
+}
+
+.scroll-loading-animation-in {
+  animation: scrollLoadingAnimationIn 0.5s forwards;
+}
+
+.scroll-loading-animation-out {
+  animation: scrollLoadingAnimationOut 0.5s forwards;
+}
+
+@keyframes scrollLoadingAnimationIn {
+  0% {
+    top: calc(-2rem - 12px);
+  }
+  100% {
+    top: 0;
+  }
+}
+@keyframes scrollLoadingAnimationOut {
+  0% {
+    top: 0;
+  }
+  100% {
+    top: calc(-2rem - 12px);
+  }
+}
+#contentWrapper {
+  position: fixed;
+  display: flex;
   flex-direction: column;
+  align-items: center;
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 100%;
+  width: 100%;
 }
 
 .left-pill-open-red {
@@ -827,13 +880,13 @@ quote-component {
   }
 }
 .expand-about-this-page {
-  top: 100px;
+  bottom: -calc(112px);
   right: 0;
   animation: expandAboutThisPage 2s forwards;
 }
 
 .collapse-about-this-page {
-  top: 100px;
+  bottom: -calc(112px);
   right: 0;
   animation: collapseAboutThisPage 1s forwards;
 }
@@ -850,12 +903,14 @@ quote-component {
   0% {
     width: 136px;
     background-color: white;
-    height: 24px;
+    height: 40px;
+    padding: 0;
   }
   100% {
     background-color: #301014;
     width: 98%;
     height: 80vh;
+    padding: 0 1em 1em 1em;
   }
 }
 @keyframes collapseAboutThisPage {
@@ -867,7 +922,7 @@ quote-component {
   100% {
     width: 136px;
     background-color: white;
-    height: 24px;
+    height: 40px;
   }
 }
 @keyframes expandAboutThisPageTitle {
@@ -898,7 +953,7 @@ quote-component {
 #fullPageOverlay {
   height: 100vh;
   width: 100vw;
-  top: calc((88px + 5rem) * -1);
+  top: calc((100px + 5rem) * -1);
   color: #00ff41;
   opacity: 1;
 }
@@ -954,6 +1009,10 @@ quote-component {
   width: 290px;
   height: 210px;
   border-radius: 0 120px 120px 0;
+}
+
+.text-hidden {
+  color: transparent;
 }
 
 .navigation-btn {

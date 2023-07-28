@@ -10,6 +10,9 @@ export const helperFunctions = {
   enableButtons: (buttons) => {
     buttons.forEach((button) => button.removeAttribute("disabled"));
   },
+  randomIntFromInterval: (min, max) => {
+    return Math.floor(Math.random() * (max - min + 1) + min);
+  },
   togglePwVisibility: ({ target: image }) => {
     const input = image.parentElement.previousElementSibling;
     if (input.type === "password") {

@@ -9,7 +9,7 @@ export class QuotesPage extends HTMLElement {
     return {
       authorInput: document.getElementById("authorInput"),
       goToSignInPageBtn: document.getElementById("goToSignInPageBtn"),
-      loginInfo: document.getElementById("loginInfo"),
+      signedInUsername: document.getElementById("signedInUsername"),
       mouthPiece: document.getElementById("mouthPiece"),
       openBtn: document.getElementById("openBtn"),
       pageRouter: document.getElementById("pageRouter"),
@@ -59,11 +59,17 @@ export class QuotesPage extends HTMLElement {
     }
   }
   #openClosePhone({ target }) {
-    const { screen, mouthPiece, openBtn, quoteInput, authorInput, loginInfo } =
-      this.#elements();
+    const {
+      screen,
+      mouthPiece,
+      openBtn,
+      quoteInput,
+      authorInput,
+      signedInUsername,
+    } = this.#elements();
     if (screen.textContent === this.#PHONE_MESSAGES.ANSWER) {
       addRemoveClass(mouthPiece, "open-phone", "close-phone");
-      if (loginInfo.textContent) {
+      if (signedInUsername.textContent) {
         screen.textContent = this.#PHONE_MESSAGES.LOGGED_IN_MESSAGE;
       } else {
         screen.textContent = this.#PHONE_MESSAGES.NOT_LOGGED_IN_MESSAGE;

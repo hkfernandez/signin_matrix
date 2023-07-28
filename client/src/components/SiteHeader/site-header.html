@@ -6,15 +6,16 @@
       class="btn-text-with-border"
     >
       <p data-path="/about">
-        Favorites<img
+        Favorites
+        <!--<img
           id="favoritesIcon"
           src="/static/images/star_in_circle_32x32.png"
           alt="favorites star"
-        />
+        />-->
       </p>
       <span data-path="/about">a tech stack portfolio</span>
     </button>
-    <div id="navLoginInfoAboutWrappper">
+    <div id="navUsernameAboutWrappper">
       <nav id="siteHeaderNavbar">
         <ul>
           <li>
@@ -34,15 +35,14 @@
           </li>
         </ul>
       </nav>
-      <div id="loginInfoSignOutWrapper">
-        <div id="loginInfo"></div>
+      <div id="usernameSignOutWrapper">
+        <div id="signedInUsername"></div>
         <button id="signOutBtn" class="btn-text">Sign Out</button>
       </div>
     </div>
   </div>
   <about-this-page
     id="aboutThisPage"
-    class="about-this-page-base-style"
-    style="position: absolute; bottom: -30px; right: 16px"
+    style="position: absolute"
   ></about-this-page>
 </header>

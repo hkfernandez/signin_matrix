@@ -59,16 +59,28 @@ export function signOutUser() {
   });
 }
 onAuthStateChanged(auth, (user) => {
+  const signedInUsername = document.getElementById("signedInUsername");
+  const signOutBtn = document.getElementById("signOutBtn");
   if (user) {
-    const uid = user.uid;
+    signedInUsername.innerText = `Hi ${extractUserName(user.email)}!`;
+    signedInUsername.style.display = "block";
+    signOutBtn.style.display = "block";
     user.getIdTokenResult().then((idTokenResult) => {
-      const userInfo = idTokenResult.claims;
-      setUpUi(userInfo);
+      const userPermissions = idTokenResult.claims;
+      setUpUi(userPermissions);
     });
     // ...
   } else {
+    signedInUsername.textContent = "";
+    signedInUsername.style.display = "none";
+    signOutBtn.style.display = "none";
     // User is signed out
     // ...
     setUpUi(null);
   }
 });
+
+function extractUserName(email) {
+  const ampersandLocation = email.indexOf("@");
+  return email.slice(0, ampersandLocation);
+}

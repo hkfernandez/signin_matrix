@@ -15,6 +15,7 @@ export class SignUpInForm extends HTMLElement {
       confirmPasswordInput: document.getElementById("confirmPasswordInput"),
       confirmPasswordErMsgDiv: document.getElementById("confirmPasswordErMsg"),
       fullPageOverlay: document.getElementById("fullPageOverlay"),
+      loadingAnimation: document.getElementById("loadingAnimation"),
       pageRouter: document.getElementById("pageRouter"),
       passwordErMsgDiv: document.getElementById("passwordErMsg"),
       passwordInput: document.getElementById("passwordInput"),
@@ -266,28 +267,34 @@ export class SignUpInForm extends HTMLElement {
   }
 
   async signUp() {
-    const { userNameInput, passwordInput } = this.#elements();
+    const { userNameInput, passwordInput, loadingAnimation } = this.#elements();
+    loadingAnimation.start();
     try {
       await createUser(userNameInput.value, passwordInput.value);
+      setTimeout(() => loadingAnimation.stop(), 1000);
       this.animations.transitionToQuotesPage();
     } catch (errorMessage) {
       this.#displaySignUpInErMsg(errorMessage);
+      setTimeout(() => loadingAnimation.stop(), 1000);
     }
   }
 
   async signIn() {
-    const { userNameInput, passwordInput, pageRouter, signUpInErMsg } =
+    const { userNameInput, passwordInput, pageRouter, loadingAnimation } =
       this.#elements();
+    loadingAnimation.start();
     try {
       const userInfo = await signInUser(
         userNameInput.value,
         passwordInput.value
       );
+      setTimeout(() => loadingAnimation.stop(), 1000);
       if (userInfo) {
         pageRouter.renderPage("quotes");
       }
     } catch (errorMessage) {
       this.#displaySignUpInErMsg(errorMessage);
+      setTimeout(() => loadingAnimation.stop(), 1000);
     }
   }
 }
